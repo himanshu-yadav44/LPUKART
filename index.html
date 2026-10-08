@@ -12,40 +12,40 @@
   <style>
     :root {
       --primary-red: #E23744;
-      --veg-green: #0f8a3c;
-      --nonveg-red: #d32f2f;
+      --veg-green: #24963f;
+      --gold-bg: #fdf3d6;
+      --gold-border: #dfa83d;
       --text-black: #1c1c1c;
       --text-gray: #686b78;
-      --bg-gray: #f4f5f7;
       --border-light: #e8e8e8;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; }
-    body { background-color: #ffffff; color: var(--text-black); padding-bottom: 90px; -webkit-tap-highlight-color: transparent; }
+    body { background-color: #f4f5f7; color: var(--text-black); padding-bottom: 80px; -webkit-tap-highlight-color: transparent; }
 
-    /* Top Sticky Header */
-    header { background: #ffffff; position: sticky; top: 0; z-index: 100; padding: 10px 14px 6px; box-shadow: 0 2px 10px rgba(0,0,0,0.03); }
+    /* Sticky Top Header */
+    header { background: #ffffff; position: sticky; top: 0; z-index: 100; padding: 10px 14px 6px; box-shadow: 0 1px 8px rgba(0,0,0,0.04); }
     .header-top { display: flex; justify-content: space-between; align-items: center; max-width: 600px; margin: 0 auto; }
     
     .loc-box { display: flex; align-items: center; gap: 8px; cursor: pointer; flex: 1; }
-    .loc-icon { font-size: 18px; color: var(--text-black); }
+    .loc-icon { font-size: 18px; color: var(--primary-red); }
     .loc-info { display: flex; flex-direction: column; }
     .loc-main { font-size: 14.5px; font-weight: 800; color: var(--text-black); display: flex; align-items: center; gap: 3px; }
-    .loc-sub { font-size: 11px; color: var(--text-gray); max-width: 190px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 500; }
+    .loc-sub { font-size: 11px; color: var(--text-gray); max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 500; }
 
     .header-right { display: flex; align-items: center; gap: 8px; }
     .gold-badge {
-      background: linear-gradient(135deg, #f7d58a 0%, #e2ab4b 100%);
-      color: #3b2800; font-size: 10.5px; font-weight: 900; padding: 4px 8px; border-radius: 8px;
-      display: flex; align-items: center; gap: 3px; border: 1px solid #d89f36;
+      background: var(--gold-bg); color: #694402; font-size: 11px; font-weight: 900;
+      padding: 4px 8px; border-radius: 8px; border: 1px solid var(--gold-border);
+      display: flex; align-items: center; gap: 4px;
     }
-    .profile-avatar { width: 32px; height: 32px; border-radius: 50%; background: #222; color: white; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; cursor: pointer; }
+    .profile-avatar { width: 32px; height: 32px; border-radius: 50%; background: #222; color: white; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; cursor: pointer; }
 
-    /* Search & Veg Mode Toggle */
+    /* Search Bar with Mic & Veg Toggle */
     .search-row { display: flex; align-items: center; gap: 10px; max-width: 600px; margin: 8px auto 2px; }
     .search-box {
       flex: 1; background: #ffffff; border: 1px solid #d4d5d9; border-radius: 12px;
-      display: flex; align-items: center; padding: 8px 12px; gap: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+      display: flex; align-items: center; padding: 8px 12px; gap: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.02);
     }
     .search-box input { border: none; outline: none; width: 100%; font-size: 13px; font-weight: 500; color: #222; }
     .mic-icon { font-size: 14px; color: var(--primary-red); }
@@ -59,7 +59,7 @@
 
     .content-area { max-width: 600px; margin: 0 auto; padding: 10px 14px; }
 
-    /* Welcome Banner */
+    /* Welcome Benefits Banner */
     .welcome-card {
       background: linear-gradient(135deg, #fff2f0 0%, #ffeae8 100%);
       border: 1px solid #fed2ce; border-radius: 16px; padding: 12px 14px; margin-bottom: 12px;
@@ -69,84 +69,106 @@
     .wc-left p { font-size: 11px; color: #555; margin-top: 2px; font-weight: 600; }
     .wc-tag { display: inline-block; background: var(--primary-red); color: white; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 4px; margin-top: 4px; }
 
-    /* 24x7 Break Slots */
-    .slot-bar-wrap {
-      background: #fafafa; border: 1px solid var(--border-light); border-radius: 12px;
-      padding: 8px 12px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;
-    }
-    .slot-bar-wrap select { background: transparent; border: none; font-size: 12px; font-weight: 800; color: #222; outline: none; cursor: pointer; }
+    /* Category Circles */
+    .cat-circles-row { display: flex; gap: 14px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
+    .cat-circles-row::-webkit-scrollbar { display: none; }
+    .cat-circle-item { display: flex; flex-direction: column; align-items: center; width: 62px; flex-shrink: 0; cursor: pointer; }
+    .cat-img-box { width: 56px; height: 56px; border-radius: 50%; overflow: hidden; background: #eee; border: 2px solid transparent; box-shadow: 0 2px 5px rgba(0,0,0,0.06); }
+    .cat-circle-item.active .cat-img-box { border-color: var(--primary-red); transform: scale(1.05); }
+    .cat-img-box img { width: 100%; height: 100%; object-fit: cover; }
+    .cat-name { font-size: 11px; font-weight: 700; color: #333; margin-top: 4px; text-align: center; }
 
-    /* Category Chips */
-    .category-scroll { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
-    .category-scroll::-webkit-scrollbar { display: none; }
-    .cat-chip {
-      background: white; border: 1px solid #d4d5d9; padding: 6px 14px; border-radius: 20px;
+    /* Filter Chips Bar */
+    .filter-scroll { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
+    .filter-scroll::-webkit-scrollbar { display: none; }
+    .chip-btn {
+      background: white; border: 1px solid #d4d5d9; padding: 6px 12px; border-radius: 20px;
       font-size: 11.5px; font-weight: 700; color: #333; white-space: nowrap; cursor: pointer;
     }
-    .cat-chip.active { background: #fff2f3; border-color: var(--primary-red); color: var(--primary-red); }
+    .chip-btn.active { background: #fff2f3; border-color: var(--primary-red); color: var(--primary-red); }
 
-    .section-title { font-size: 13px; font-weight: 900; color: #333; text-transform: uppercase; letter-spacing: 0.5px; margin: 10px 0 8px; }
+    /* Section Headings */
+    .section-title { font-size: 13px; font-weight: 900; color: #444; text-transform: uppercase; letter-spacing: 0.5px; margin: 12px 0 8px; }
 
-    /* Multi-Photo Card Feed */
-    .outlet-feed { display: flex; flex-direction: column; gap: 16px; margin-top: 10px; }
-    .feed-card {
+    /* Recommended For You Carousel */
+    .rec-scroll { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 12px; scrollbar-width: none; }
+    .rec-scroll::-webkit-scrollbar { display: none; }
+    .rec-card {
+      width: 150px; flex-shrink: 0; background: white; border-radius: 14px; overflow: hidden;
+      border: 1px solid var(--border-light); box-shadow: 0 2px 6px rgba(0,0,0,0.04); cursor: pointer;
+    }
+    .rec-img-box { position: relative; height: 100px; background: #eee; }
+    .rec-img-box img { width: 100%; height: 100%; object-fit: cover; }
+    .rec-tag { position: absolute; top: 6px; left: 6px; background: rgba(0,0,0,0.75); color: white; font-size: 8.5px; font-weight: 800; padding: 2px 5px; border-radius: 4px; }
+    .rec-body { padding: 8px; }
+    .rec-title { font-size: 12px; font-weight: 800; color: #222; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .rec-meta { font-size: 10px; color: var(--text-gray); margin-top: 2px; }
+
+    /* Restaurant Card Feed with Swipeable Photo Carousel */
+    .restaurant-feed { display: flex; flex-direction: column; gap: 18px; margin-top: 6px; }
+    .res-card {
       background: white; border-radius: 18px; overflow: hidden;
       border: 1px solid var(--border-light); box-shadow: 0 2px 10px rgba(0,0,0,0.04);
       position: relative;
     }
     
-    .slider-container { position: relative; height: 180px; background: #1c1c1c; overflow: hidden; }
-    .slider-track {
+    .carousel-wrap { position: relative; height: 185px; background: #111; overflow: hidden; }
+    .carousel-track {
       display: flex; height: 100%; overflow-x: auto; scroll-snap-type: x mandatory;
       scrollbar-width: none; -webkit-overflow-scrolling: touch;
     }
-    .slider-track::-webkit-scrollbar { display: none; }
-    .slider-slide { min-width: 100%; height: 100%; scroll-snap-align: start; position: relative; }
-    .slider-slide img { width: 100%; height: 100%; object-fit: cover; }
+    .carousel-track::-webkit-scrollbar { display: none; }
+    .carousel-slide { min-width: 100%; height: 100%; scroll-snap-align: start; position: relative; }
+    .carousel-slide img { width: 100%; height: 100%; object-fit: cover; }
 
-    .slider-dots {
+    /* Black Overlay Label for Dish Name + Price */
+    .dish-tag-overlay {
+      position: absolute; top: 12px; left: 12px; background: rgba(20,20,20,0.85);
+      color: white; font-size: 11px; font-weight: 800; padding: 4px 8px; border-radius: 6px; z-index: 10;
+      backdrop-filter: blur(2px);
+    }
+    .bookmark-icon {
+      position: absolute; top: 12px; right: 12px; width: 30px; height: 30px;
+      background: rgba(255,255,255,0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; z-index: 10;
+    }
+    .free-delivery-badge {
+      position: absolute; bottom: 8px; left: 12px; background: #1976d2;
+      color: white; font-size: 9.5px; font-weight: 900; padding: 3px 6px; border-radius: 4px; text-transform: uppercase; z-index: 10;
+    }
+
+    /* Swipe Indicator Dots (••••) */
+    .dots-box {
       position: absolute; bottom: 8px; right: 12px; display: flex; gap: 4px;
-      z-index: 10; background: rgba(0,0,0,0.4); padding: 3px 6px; border-radius: 12px;
+      z-index: 10; background: rgba(0,0,0,0.45); padding: 3px 6px; border-radius: 12px;
     }
     .dot { width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,0.5); }
     .dot.active { background: #ffffff; width: 12px; border-radius: 4px; }
 
-    .feed-price-tag {
-      position: absolute; top: 12px; left: 12px; background: rgba(15,15,15,0.85);
-      color: white; font-size: 11px; font-weight: 800; padding: 4px 8px; border-radius: 6px; z-index: 10;
-    }
-    .veg-dot-badge {
-      position: absolute; top: 12px; right: 12px; z-index: 10;
-      background: white; padding: 3px 5px; border-radius: 6px; box-shadow: 0 1px 4px rgba(0,0,0,0.2);
-      font-size: 10px; font-weight: 900;
-    }
-    .veg-dot-badge.veg { color: var(--veg-green); border: 1.5px solid var(--veg-green); }
-    .veg-dot-badge.nonVeg { color: var(--nonveg-red); border: 1.5px solid var(--nonveg-red); }
-
-    .feed-body { padding: 12px 14px; }
-    .feed-header-line { display: flex; justify-content: space-between; align-items: flex-start; }
-    .feed-name { font-size: 15.5px; font-weight: 900; color: var(--text-black); }
-    .feed-rating {
+    /* Restaurant Card Body */
+    .res-body { padding: 12px 14px; }
+    .res-header-row { display: flex; justify-content: space-between; align-items: flex-start; }
+    .res-name { font-size: 16px; font-weight: 900; color: var(--text-black); }
+    .res-rating-badge {
       background: var(--veg-green); color: white; font-size: 11px; font-weight: 900;
       padding: 3px 6px; border-radius: 6px; display: flex; align-items: center; gap: 2px;
     }
-
-    .feed-meta-line { font-size: 12px; font-weight: 600; color: var(--text-gray); margin-top: 4px; display: flex; align-items: center; gap: 6px; }
-    .feed-offer-line {
+    .res-meta-line { font-size: 12px; font-weight: 600; color: var(--text-gray); margin-top: 3px; display: flex; align-items: center; gap: 6px; }
+    
+    .res-footer-row {
       margin-top: 8px; padding-top: 8px; border-top: 1px dashed #eee;
       display: flex; align-items: center; justify-content: space-between;
     }
-    .feed-cat-badge { font-size: 11.5px; font-weight: 800; color: #1976d2; }
+    .res-offer-text { font-size: 11.5px; font-weight: 800; color: #1976d2; display: flex; align-items: center; gap: 4px; }
 
-    .feed-btn-add {
+    .btn-add {
       background: #fff2f3; color: var(--primary-red); border: 1px solid var(--primary-red);
       font-weight: 900; font-size: 12px; padding: 6px 14px; border-radius: 8px; cursor: pointer;
     }
-    .feed-qty-ctrl {
+    .qty-box {
       display: flex; align-items: center; gap: 8px; background: var(--primary-red); color: white;
       padding: 4px 8px; border-radius: 8px; font-size: 12px; font-weight: 800;
     }
-    .feed-qty-btn { background: none; border: none; color: white; font-size: 14px; font-weight: 900; cursor: pointer; }
+    .qty-btn { background: none; border: none; color: white; font-size: 14px; font-weight: 900; cursor: pointer; }
 
     /* Floating Cart Bar */
     .cart-float-bar {
@@ -159,7 +181,7 @@
     .cf-total { font-size: 16px; font-weight: 900; }
     .cf-right { background: white; color: var(--primary-red); font-size: 12px; font-weight: 900; padding: 6px 12px; border-radius: 8px; }
 
-    /* Bottom Navigation Tabs */
+    /* Bottom 4 Tabs (Zomato Video Style) */
     .footer-nav {
       position: fixed; bottom: 0; left: 0; right: 0; background: white;
       border-top: 1px solid #ebebeb; display: flex; justify-content: space-around;
@@ -168,6 +190,10 @@
     .tab-item { display: flex; flex-direction: column; align-items: center; color: #888; font-size: 10px; font-weight: 700; cursor: pointer; }
     .tab-item.active { color: var(--primary-red); }
     .tab-icon { font-size: 18px; }
+    .district-pill {
+      background: #48286a; color: #f2e9fb; padding: 3px 10px; border-radius: 8px;
+      font-size: 10.5px; font-weight: 900; display: flex; align-items: center; gap: 3px;
+    }
 
     /* Modals */
     .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; align-items: flex-end; justify-content: center; z-index: 200; }
@@ -182,12 +208,13 @@
 </head>
 <body>
 
+  <!-- Top Location Bar -->
   <header>
     <div class="header-top">
       <div class="loc-box" onclick="openLocationModal()">
         <span class="loc-icon">📍</span>
         <div class="loc-info">
-          <div class="loc-main"><span id="locHeader">BH-1</span> ▾</div>
+          <div class="loc-main"><span id="locHeader">Block 37 / 38</span> ▾</div>
           <div class="loc-sub" id="locSubHeader">Lovely Professional University, Phagwara</div>
         </div>
       </div>
@@ -197,10 +224,11 @@
       </div>
     </div>
 
+    <!-- Search with Mic & Veg Mode -->
     <div class="search-row">
       <div class="search-box">
         <span>🔍</span>
-        <input type="text" id="searchInput" placeholder="Search across all 535 dishes..." onkeyup="renderFeed()">
+        <input type="text" id="searchInput" placeholder="Search across all campus restaurants & dishes..." onkeyup="renderFeed()">
         <span class="mic-icon">🎙️</span>
       </div>
       <div class="veg-mode-toggle" id="vegToggle" onclick="toggleVegMode()">
@@ -211,33 +239,110 @@
   </header>
 
   <div class="content-area">
+
+    <!-- Welcome Benefits Banner -->
     <div class="welcome-card">
       <div class="wc-left">
         <h3>ENJOY WELCOME BENEFITS</h3>
         <p>on first 3 campus orders</p>
         <span class="wc-tag">₹100 OFF + FREE Express Delivery</span>
       </div>
-      <div class="wc-icon">🎁</div>
+      <div style="font-size: 32px;">🎁</div>
     </div>
 
-    <div class="slot-bar-wrap">
-      <span style="font-size:11px; font-weight:800; color:#555;">⚡ TIME SLOT:</span>
-      <select id="slotSelect">
-        <option value="24x7 Anytime Instant (10-15 Mins)">24x7 Instant Delivery (10-15 Mins)</option>
-        <option value="Late Night Express (11:00 PM - 04:00 AM)">Late Night Hostel Express</option>
-        <option value="08:00 AM - 09:30 AM Breakfast">08:00 AM - 09:30 AM Breakfast</option>
-        <option value="10:45 AM - 11:00 AM Class Break">10:45 AM - 11:00 AM Class Break</option>
-        <option value="12:45 PM - 01:15 PM Lunch Break">12:45 PM - 01:15 PM Lunch Break</option>
-        <option value="04:45 PM Evening Snacks">04:45 PM Evening Snacks</option>
-      </select>
+    <!-- Category Round Circles -->
+    <div class="cat-circles-row">
+      <div class="cat-circle-item active" onclick="filterCategory('All', this)">
+        <div class="cat-img-box"><img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=150" alt="All"></div>
+        <div class="cat-name">All</div>
+      </div>
+      <div class="cat-circle-item" onclick="filterCategory('Pizza', this)">
+        <div class="cat-img-box"><img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=150" alt="Pizza"></div>
+        <div class="cat-name">Pizza</div>
+      </div>
+      <div class="cat-circle-item" onclick="filterCategory('Biryani', this)">
+        <div class="cat-img-box"><img src="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=150" alt="Biryani"></div>
+        <div class="cat-name">Biryani</div>
+      </div>
+      <div class="cat-circle-item" onclick="filterCategory('North Indian', this)">
+        <div class="cat-img-box"><img src="https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=150" alt="North Indian"></div>
+        <div class="cat-name">North Indian</div>
+      </div>
+      <div class="cat-circle-item" onclick="filterCategory('Burger', this)">
+        <div class="cat-img-box"><img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=150" alt="Burger"></div>
+        <div class="cat-name">Burger</div>
+      </div>
+      <div class="cat-circle-item" onclick="filterCategory('Momos', this)">
+        <div class="cat-img-box"><img src="https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=150" alt="Momos"></div>
+        <div class="cat-name">Momos</div>
+      </div>
+      <div class="cat-circle-item" onclick="filterCategory('Fruits', this)">
+        <div class="cat-img-box"><img src="https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=150" alt="Fruits"></div>
+        <div class="cat-name">Fruits</div>
+      </div>
     </div>
 
-    <div class="category-scroll" id="categoryScroll"></div>
+    <!-- Filter Buttons Bar -->
+    <div class="filter-scroll">
+      <div class="chip-btn active" onclick="setQuickFilter('All', this)">⚡ Filters</div>
+      <div class="chip-btn" onclick="setQuickFilter('Near', this)">Near & Fast</div>
+      <div class="chip-btn" onclick="setQuickFilter('Under150', this)">Under ₹150</div>
+      <div class="chip-btn" onclick="setQuickFilter('Uni-Mall', this)">Uni-Mall Food Court</div>
+      <div class="chip-btn" onclick="setQuickFilter('Robo Park', this)">Robo Park</div>
+    </div>
 
-    <div class="section-title" id="feedCountTitle">535 ITEMS AVAILABLE ON CAMPUS</div>
-    <div class="outlet-feed" id="outletContainer"></div>
+    <!-- Recommended For You Carousel -->
+    <div class="section-title">RECOMMENDED FOR YOU</div>
+    <div class="rec-scroll">
+      <div class="rec-card" onclick="quickSelect(1)">
+        <div class="rec-img-box">
+          <img src="https://images.unsplash.com/photo-1562967914-608f82629710?w=250" alt="KFC">
+          <span class="rec-tag">50% OFF</span>
+        </div>
+        <div class="rec-body">
+          <div class="rec-title">KFC Express</div>
+          <div class="rec-meta">★ 4.1 • 15-20 mins</div>
+        </div>
+      </div>
+      <div class="rec-card" onclick="quickSelect(2)">
+        <div class="rec-img-box">
+          <img src="https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=250" alt="Om Vaishno">
+          <span class="rec-tag">50% OFF UPTO ₹100</span>
+        </div>
+        <div class="rec-body">
+          <div class="rec-title">Om Vaishno Dhaba</div>
+          <div class="rec-meta">★ 3.8 • 20-25 mins</div>
+        </div>
+      </div>
+      <div class="rec-card" onclick="quickSelect(3)">
+        <div class="rec-img-box">
+          <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=250" alt="Dominos">
+          <span class="rec-tag">55% OFF</span>
+        </div>
+        <div class="rec-body">
+          <div class="rec-title">Domino's Pizza</div>
+          <div class="rec-meta">★ 4.6 • 20-25 mins</div>
+        </div>
+      </div>
+      <div class="rec-card" onclick="quickSelect(4)">
+        <div class="rec-img-box">
+          <img src="https://images.unsplash.com/photo-1562376552-0d160a2f238d?w=250" alt="Waffles">
+          <span class="rec-tag">FLAT ₹100 OFF</span>
+        </div>
+        <div class="rec-body">
+          <div class="rec-title">The Belgian Waffle Co.</div>
+          <div class="rec-meta">★ 4.3 • 25-30 mins</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Restaurant Feed -->
+    <div class="section-title" id="feedCountTitle">309 RESTAURANTS DELIVERING TO YOU</div>
+    <div class="restaurant-feed" id="restaurantContainer"></div>
+
   </div>
 
+  <!-- Floating Cart Bar -->
   <div class="cart-float-bar" id="cartFloat" style="display:none;" onclick="openCheckoutModal()">
     <div>
       <div class="cf-left" id="cartItemsCount">0 ITEMS</div>
@@ -246,26 +351,23 @@
     <div class="cf-right">View Cart ➔</div>
   </div>
 
+  <!-- Bottom Tabs Bar -->
   <div class="footer-nav">
-    <div class="tab-item active" onclick="filterCategory('All')">
+    <div class="tab-item active">
       <span class="tab-icon">🛵</span>
       <span>Delivery</span>
     </div>
-    <div class="tab-item" onclick="filterCategory('Burger')">
-      <span class="tab-icon">🍔</span>
-      <span>Burgers</span>
-    </div>
-    <div class="tab-item" onclick="filterCategory('Pizza')">
-      <span class="tab-icon">🍕</span>
-      <span>Pizza</span>
-    </div>
-    <div class="tab-item" onclick="filterCategory('Fruits')">
-      <span class="tab-icon">🍎</span>
-      <span>Fruits</span>
+    <div class="tab-item" onclick="setQuickFilter('Under150', null)">
+      <span class="tab-icon">🏷️</span>
+      <span>Under ₹250</span>
     </div>
     <div class="tab-item" onclick="openLocationModal()">
-      <span class="tab-icon">👤</span>
-      <span>Profile</span>
+      <span class="tab-icon">🍽️</span>
+      <span>Dining</span>
+    </div>
+    <div class="district-pill" onclick="openLocationModal()">
+      <span>district</span>
+      <span>✨</span>
     </div>
   </div>
 
@@ -313,13 +415,11 @@
               <option value="GH-8">Girls Hostel (GH-8)</option>
             </optgroup>
             <optgroup label="Campus Spots & Blocks">
+              <option value="Block 37 / 38 (Law School)">Block 37 / 38 (Law School)</option>
+              <option value="Block 33 / 34 (CSE & IT Hub)">Block 33 / 34 (CSE)</option>
               <option value="Uni-Mall Food Court">Uni-Mall Food Court</option>
               <option value="Robo Park (Robotics Garden)">🤖 Robo Park</option>
-              <option value="Block 37 / 38 (Law School)">⚖️ Block 37 / 38 (Law School)</option>
-              <option value="Block 33 / 34 (CSE & IT Hub)">Block 33 / 34 (CSE)</option>
               <option value="Block 13 / 14 (Food Court)">Block 13 / 14 Food Court</option>
-              <option value="Baldev Raj Mittal Unipolis">Baldev Raj Mittal Unipolis</option>
-              <option value="Shanti Devi Mittal Park">Shanti Devi Mittal Park</option>
             </optgroup>
           </select>
         </div>
@@ -351,295 +451,231 @@
   <script>
     const ADMIN_WHATSAPP = "918957645702";
 
-    // 535 Full Compact Database: [id, name, category, price, isVeg]
-    const RAW_COMPACT = [
-      [1,"Aloo Tikki Burger","Burger",59,1],[2,"Veg Burger","Burger",69,1],[3,"Cheese Burger","Burger",89,1],[4,"Double Cheese Burger","Burger",119,1],[5,"Paneer Burger","Burger",99,1],[6,"Crispy Veg Burger","Burger",89,1],[7,"Mexican Burger","Burger",109,1],[8,"Peri Peri Burger","Burger",109,1],[9,"Mushroom Burger","Burger",99,1],[10,"Corn Cheese Burger","Burger",99,1],[11,"BBQ Veg Burger","Burger",119,1],[12,"Maharaja Veg Burger","Burger",149,1],[13,"Chicken Burger","Burger",109,0],[14,"Chicken Cheese Burger","Burger",129,0],[15,"Crispy Chicken Burger","Burger",139,0],[16,"Peri Peri Chicken Burger","Burger",149,0],[17,"BBQ Chicken Burger","Burger",149,0],[18,"Tandoori Chicken Burger","Burger",159,0],[19,"Double Chicken Burger","Burger",179,0],[20,"Chicken Maharaja Burger","Burger",199,0],
-      [21,"Margherita Pizza","Pizza",149,1],[22,"Cheese Pizza","Pizza",169,1],[23,"Onion Pizza","Pizza",159,1],[24,"Capsicum Pizza","Pizza",159,1],[25,"Corn Pizza","Pizza",169,1],[26,"Tomato Pizza","Pizza",169,1],[27,"Onion Capsicum Pizza","Pizza",179,1],[28,"Veggie Pizza","Pizza",199,1],[29,"Farmhouse Pizza","Pizza",229,1],[30,"Paneer Pizza","Pizza",219,1],[31,"Paneer Tikka Pizza","Pizza",249,1],[32,"Mushroom Pizza","Pizza",219,1],[33,"Corn Mushroom Pizza","Pizza",229,1],[34,"Mexican Pizza","Pizza",239,1],[35,"Peri Peri Paneer Pizza","Pizza",259,1],[36,"Cheese Burst Pizza","Pizza",249,1],[37,"Chicken Pizza","Pizza",239,0],[38,"Chicken Tikka Pizza","Pizza",269,0],[39,"BBQ Chicken Pizza","Pizza",279,0],[40,"Pepperoni Pizza","Pizza",299,0],
-      [41,"French Fries","Fast Food",79,1],[42,"Peri Peri Fries","Fast Food",99,1],[43,"Cheese Fries","Fast Food",119,1],[44,"Masala Fries","Fast Food",89,1],[45,"Loaded Fries","Fast Food",149,1],[46,"Potato Wedges","Fast Food",99,1],[47,"Cheese Potato Wedges","Fast Food",129,1],[48,"Garlic Bread","Fast Food",99,1],[49,"Cheese Garlic Bread","Fast Food",129,1],[50,"Chilli Cheese Toast","Fast Food",119,1],[51,"Veg Nuggets","Fast Food",109,1],[52,"Chicken Nuggets","Fast Food",139,0],[53,"Chicken Popcorn","Fast Food",149,0],[54,"Chicken Wings","Fast Food",169,0],[55,"BBQ Chicken Wings","Fast Food",189,0],[56,"Peri Peri Wings","Fast Food",189,0],[57,"Mozzarella Sticks","Fast Food",149,1],[58,"Onion Rings","Fast Food",99,1],[59,"Nachos","Fast Food",109,1],[60,"Cheese Nachos","Fast Food",139,1],
-      [61,"Veg Momos","Momos",79,1],[62,"Steamed Veg Momos","Momos",89,1],[63,"Fried Veg Momos","Momos",99,1],[64,"Paneer Momos","Momos",109,1],[65,"Fried Paneer Momos","Momos",119,1],[66,"Tandoori Paneer Momos","Momos",139,1],[67,"Afghani Momos","Momos",149,1],[68,"Schezwan Momos","Momos",129,1],[69,"Chicken Momos","Momos",119,0],[70,"Steamed Chicken Momos","Momos",129,0],[71,"Fried Chicken Momos","Momos",139,0],[72,"Tandoori Chicken Momos","Momos",159,0],[73,"Peri Peri Chicken Momos","Momos",159,0],[74,"Afghani Chicken Momos","Momos",169,0],[75,"Chicken Cheese Momos","Momos",169,0],
-      [76,"Veg Hakka Noodles","Chinese",129,1],[77,"Chicken Hakka Noodles","Chinese",159,0],[78,"Schezwan Noodles","Chinese",149,1],[79,"Schezwan Chicken Noodles","Chinese",179,0],[80,"Chilli Garlic Noodles","Chinese",149,1],[81,"Veg Chowmein","Chinese",119,1],[82,"Chicken Chowmein","Chinese",159,0],[83,"Singapore Noodles","Chinese",159,1],[84,"Veg Fried Rice","Chinese",129,1],[85,"Chicken Fried Rice","Chinese",169,0],[86,"Schezwan Fried Rice","Chinese",149,1],[87,"Schezwan Chicken Rice","Chinese",179,0],[88,"Chilli Garlic Rice","Chinese",149,1],[89,"Triple Schezwan Rice","Chinese",199,1],[90,"Paneer Fried Rice","Chinese",159,1],
-      [91,"Veg Manchurian","Chinese",139,1],[92,"Dry Veg Manchurian","Chinese",149,1],[93,"Chicken Manchurian","Chinese",179,0],[94,"Chilli Paneer","Chinese",169,1],[95,"Chilli Chicken","Chinese",189,0],[96,"Honey Chilli Potato","Chinese",149,1],[97,"Crispy Corn","Chinese",139,1],[98,"Crispy Honey Chilli Potato","Chinese",159,1],[99,"Dragon Paneer","Chinese",179,1],[100,"Dragon Chicken","Chinese",199,0],
-      [101,"Veg Spring Roll","Chinese",99,1],[102,"Chicken Spring Roll","Chinese",139,0],[103,"Veg Chilli Momos","Chinese",129,1],[104,"Chicken Chilli Momos","Chinese",159,0],[105,"Paneer Chilli","Chinese",169,1],[106,"Garlic Paneer","Chinese",179,1],[107,"Garlic Chicken","Chinese",199,0],[108,"Black Pepper Paneer","Chinese",179,1],[109,"Black Pepper Chicken","Chinese",199,0],[110,"Hot Garlic Chicken","Chinese",209,0],
-      [111,"Veg Biryani","Biryani",149,1],[112,"Hyderabadi Veg Biryani","Biryani",169,1],[113,"Paneer Biryani","Biryani",189,1],[114,"Paneer Tikka Biryani","Biryani",219,1],[115,"Veg Dum Biryani","Biryani",179,1],[116,"Mushroom Biryani","Biryani",189,1],[117,"Soya Chaap Biryani","Biryani",199,1],[118,"Kathal Biryani","Biryani",199,1],[119,"Egg Biryani","Biryani",169,0],[120,"Chicken Biryani","Biryani",219,0],[121,"Chicken Dum Biryani","Biryani",239,0],[122,"Hyderabadi Chicken Biryani","Biryani",249,0],[123,"Chicken Tikka Biryani","Biryani",259,0],[124,"Awadhi Chicken Biryani","Biryani",259,0],[125,"Mutton Biryani","Biryani",299,0],[126,"Mutton Dum Biryani","Biryani",319,0],[127,"Hyderabadi Mutton Biryani","Biryani",329,0],[128,"Egg Chicken Biryani","Biryani",249,0],[129,"Fish Biryani","Biryani",299,0],[130,"Prawn Biryani","Biryani",329,0],
-      [131,"Plain Rice","Rice",79,1],[132,"Jeera Rice","Rice",99,1],[133,"Steamed Rice","Rice",89,1],[134,"Veg Pulao","Rice",119,1],[135,"Peas Pulao","Rice",109,1],[136,"Kashmiri Pulao","Rice",149,1],[137,"Paneer Pulao","Rice",149,1],[138,"Mushroom Pulao","Rice",149,1],[139,"Lemon Rice","Rice",99,1],[140,"Curd Rice","Rice",99,1],[141,"Tomato Rice","Rice",109,1],[142,"Coconut Rice","Rice",119,1],[143,"Dal Khichdi","Rice",129,1],[144,"Veg Khichdi","Rice",119,1],[145,"Dal Palak Khichdi","Rice",139,1],
-      [146,"Dal Tadka","North Indian",119,1],[147,"Dal Fry","North Indian",109,1],[148,"Dal Makhani","North Indian",159,1],[149,"Dal Bukhara","North Indian",179,1],[150,"Rajma Masala","North Indian",139,1],[151,"Chole Masala","North Indian",129,1],[152,"Chana Masala","North Indian",129,1],[153,"Aloo Jeera","North Indian",109,1],[154,"Aloo Gobhi","North Indian",129,1],[155,"Aloo Matar","North Indian",129,1],[156,"Mix Veg","North Indian",139,1],[157,"Veg Kolhapuri","North Indian",159,1],[158,"Veg Handi","North Indian",159,1],[159,"Bhindi Masala","North Indian",139,1],[160,"Baingan Bharta","North Indian",139,1],
-      [161,"Shahi Paneer","Paneer",169,1],[162,"Paneer Butter Masala","Paneer",179,1],[163,"Kadhai Paneer","Paneer",179,1],[164,"Paneer Tikka Masala","Paneer",189,1],[165,"Palak Paneer","Paneer",169,1],[166,"Matar Paneer","Paneer",159,1],[167,"Paneer Do Pyaza","Paneer",179,1],[168,"Paneer Lababdar","Paneer",189,1],[169,"Paneer Korma","Paneer",199,1],[170,"Paneer Handi","Paneer",189,1],[171,"Paneer Pasanda","Paneer",199,1],[172,"Achari Paneer","Paneer",179,1],[173,"Malai Paneer","Paneer",189,1],[174,"Dhaba Paneer","Paneer",179,1],[175,"Afghani Paneer","Paneer",199,1],
-      [176,"Malai Kofta","Main Course",179,1],[177,"Veg Kofta Curry","Main Course",159,1],[178,"Navratan Korma","Main Course",179,1],[179,"Mushroom Masala","Main Course",169,1],[180,"Mushroom Do Pyaza","Main Course",179,1],[181,"Soya Chaap Masala","Main Course",169,1],[182,"Afghani Chaap","Main Course",189,1],[183,"Tandoori Chaap","Main Course",189,1],[184,"Chaap Butter Masala","Main Course",199,1],[185,"Chaap Kadhai","Main Course",189,1],
-      [186,"Butter Chicken","Chicken",229,0],[187,"Kadhai Chicken","Chicken",229,0],[188,"Chicken Curry","Chicken",219,0],[189,"Chicken Tikka Masala","Chicken",239,0],[190,"Chicken Handi","Chicken",249,0],[191,"Chicken Do Pyaza","Chicken",239,0],[192,"Chicken Lababdar","Chicken",249,0],[193,"Chicken Korma","Chicken",259,0],[194,"Chicken Saagwala","Chicken",239,0],[195,"Chicken Rara","Chicken",269,0],[196,"Chicken Changezi","Chicken",259,0],[197,"Chicken Afghani","Chicken",269,0],[198,"Chicken Kali Mirch","Chicken",259,0],[199,"Chicken Patiala","Chicken",279,0],[200,"Dhaba Chicken","Chicken",239,0],
-      [201,"Chicken Tikka","Chicken Starters",199,0],[202,"Chicken Malai Tikka","Chicken Starters",219,0],[203,"Chicken Seekh Kebab","Chicken Starters",219,0],[204,"Chicken Reshmi Kebab","Chicken Starters",229,0],[205,"Chicken Tangdi","Chicken Starters",219,0],[206,"Tandoori Chicken Half","Chicken Starters",249,0],[207,"Tandoori Chicken Full","Chicken Starters",449,0],[208,"Chicken Afghani Tikka","Chicken Starters",239,0],[209,"Chicken Haryali Tikka","Chicken Starters",229,0],[210,"Chicken Achari Tikka","Chicken Starters",229,0],
-      [211,"Mutton Curry","Mutton",299,0],[212,"Mutton Rogan Josh","Mutton",319,0],[213,"Mutton Korma","Mutton",329,0],[214,"Mutton Handi","Mutton",319,0],[215,"Mutton Do Pyaza","Mutton",319,0],[216,"Mutton Rara","Mutton",339,0],[217,"Mutton Keema","Mutton",299,0],[218,"Mutton Nihari","Mutton",319,0],[219,"Mutton Masala","Mutton",319,0],[220,"Mutton Kadhai","Mutton",329,0],
-      [221,"Fish Curry","Seafood",249,0],[222,"Fish Fry","Seafood",229,0],[223,"Fish Tikka","Seafood",259,0],[224,"Fish Amritsari","Seafood",269,0],[225,"Chilli Fish","Seafood",269,0],[226,"Garlic Fish","Seafood",279,0],[227,"Fish Masala","Seafood",259,0],[228,"Prawn Curry","Seafood",299,0],[229,"Chilli Prawns","Seafood",319,0],[230,"Prawn Fry","Seafood",309,0],
-      [231,"Tandoori Roti","Indian Bread",25,1],[232,"Butter Roti","Indian Bread",30,1],[233,"Plain Naan","Indian Bread",45,1],[234,"Butter Naan","Indian Bread",55,1],[235,"Garlic Naan","Indian Bread",65,1],[236,"Cheese Naan","Indian Bread",89,1],[237,"Paneer Naan","Indian Bread",89,1],[238,"Amritsari Kulcha","Indian Bread",79,1],[239,"Aloo Kulcha","Indian Bread",69,1],[240,"Paneer Kulcha","Indian Bread",89,1],[241,"Missi Roti","Indian Bread",45,1],[242,"Rumali Roti","Indian Bread",35,1],[243,"Lachha Paratha","Indian Bread",59,1],[244,"Pudina Paratha","Indian Bread",59,1],[245,"Methi Paratha","Indian Bread",59,1],
-      [246,"Aloo Paratha","Paratha",69,1],[247,"Paneer Paratha","Paratha",89,1],[248,"Gobi Paratha","Paratha",69,1],[249,"Mix Paratha","Paratha",79,1],[250,"Onion Paratha","Paratha",69,1],[251,"Mooli Paratha","Paratha",69,1],[252,"Cheese Paratha","Paratha",99,1],[253,"Chicken Keema Paratha","Paratha",149,0],[254,"Egg Paratha","Paratha",109,0],[255,"Stuffed Paratha","Paratha",89,1],
-      [256,"Samosa","Snacks",20,1],[257,"Paneer Samosa","Snacks",35,1],[258,"Aloo Samosa","Snacks",20,1],[259,"Punjabi Samosa","Snacks",25,1],[260,"Kachori","Snacks",25,1],[261,"Pyaz Kachori","Snacks",30,1],[262,"Dal Kachori","Snacks",30,1],[263,"Bread Pakora","Snacks",35,1],[264,"Aloo Pakora","Snacks",40,1],[265,"Onion Pakora","Snacks",40,1],[266,"Paneer Pakora","Snacks",80,1],[267,"Mix Pakora","Snacks",70,1],[268,"Mirchi Pakora","Snacks",50,1],[269,"Sabudana Vada","Snacks",60,1],[270,"Bread Roll","Snacks",50,1],
-      [271,"Pav Bhaji","Street Food",99,1],[272,"Cheese Pav Bhaji","Street Food",129,1],[273,"Masala Pav","Street Food",79,1],[274,"Vada Pav","Street Food",49,1],[275,"Cheese Vada Pav","Street Food",69,1],[276,"Dabeli","Street Food",49,1],[277,"Misal Pav","Street Food",99,1],[278,"Chole Kulche","Street Food",89,1],[279,"Chole Bhature","Street Food",129,1],[280,"Aloo Puri","Street Food",89,1],[281,"Bedmi Puri","Street Food",99,1],[282,"Litti Chokha","Street Food",119,1],[283,"Bun Maska","Street Food",59,1],[284,"Bun Tikki","Street Food",69,1],[285,"Kathi Roll","Street Food",109,1],
-      [286,"Pani Puri","Chaat",49,1],[287,"Dahi Puri","Chaat",69,1],[288,"Bhel Puri","Chaat",59,1],[289,"Sev Puri","Chaat",59,1],[290,"Papdi Chaat","Chaat",69,1],[291,"Aloo Tikki Chaat","Chaat",69,1],[292,"Dahi Bhalla","Chaat",79,1],[293,"Raj Kachori","Chaat",89,1],[294,"Chole Tikki","Chaat",79,1],[295,"Samosa Chaat","Chaat",69,1],[296,"Basket Chaat","Chaat",99,1],[297,"Corn Chaat","Chaat",69,1],[298,"Fruit Chaat","Chaat",79,1],[299,"Paneer Tikka Chaat","Chaat",109,1],[300,"Papdi Dahi Chaat","Chaat",79,1],
-      [301,"Veg Sandwich","Sandwich",69,1],[302,"Cheese Sandwich","Sandwich",89,1],[303,"Grilled Sandwich","Sandwich",99,1],[304,"Bombay Sandwich","Sandwich",89,1],[305,"Club Sandwich","Sandwich",129,1],[306,"Paneer Sandwich","Sandwich",109,1],[307,"Paneer Tikka Sandwich","Sandwich",129,1],[308,"Corn Cheese Sandwich","Sandwich",109,1],[309,"Mushroom Sandwich","Sandwich",109,1],[310,"Veg Mayo Sandwich","Sandwich",79,1],[311,"Chicken Sandwich","Sandwich",119,0],[312,"Chicken Cheese Sandwich","Sandwich",139,0],[313,"Grilled Chicken Sandwich","Sandwich",149,0],[314,"Chicken Club Sandwich","Sandwich",169,0],[315,"BBQ Chicken Sandwich","Sandwich",159,0],
-      [316,"Veg Wrap","Wraps",89,1],[317,"Paneer Wrap","Wraps",109,1],[318,"Paneer Tikka Wrap","Wraps",129,1],[319,"Mexican Wrap","Wraps",119,1],[320,"Cheese Wrap","Wraps",109,1],[321,"Soya Chaap Wrap","Wraps",119,1],[322,"Egg Wrap","Wraps",99,0],[323,"Chicken Wrap","Wraps",129,0],[324,"Chicken Tikka Wrap","Wraps",149,0],[325,"Chicken Seekh Wrap","Wraps",149,0],[326,"BBQ Chicken Wrap","Wraps",159,0],[327,"Peri Peri Chicken Wrap","Wraps",159,0],[328,"Chicken Cheese Wrap","Wraps",169,0],[329,"Shawarma","Shawarma",119,0],[330,"Chicken Shawarma","Shawarma",149,0],
-      [331,"White Sauce Pasta","Pasta",149,1],[332,"Red Sauce Pasta","Pasta",139,1],[333,"Pink Sauce Pasta","Pasta",159,1],[334,"Arrabbiata Pasta","Pasta",149,1],[335,"Alfredo Pasta","Pasta",169,1],[336,"Pesto Pasta","Pasta",179,1],[337,"Cheese Pasta","Pasta",159,1],[338,"Mushroom Pasta","Pasta",169,1],[339,"Paneer Pasta","Pasta",179,1],[340,"Mexican Pasta","Pasta",169,1],[341,"Veg Penne Pasta","Pasta",149,1],[342,"Chicken Pasta","Pasta",189,0],[343,"Chicken Alfredo Pasta","Pasta",199,0],[344,"Chicken Arrabbiata Pasta","Pasta",189,0],[345,"Chicken Pesto Pasta","Pasta",209,0],
-      [346,"Veg Manchow Soup","Soup",89,1],[347,"Veg Hot & Sour Soup","Soup",89,1],[348,"Sweet Corn Soup","Soup",89,1],[349,"Tomato Soup","Soup",79,1],[350,"Mushroom Soup","Soup",99,1],[351,"Lemon Coriander Soup","Soup",89,1],[352,"Clear Vegetable Soup","Soup",79,1],[353,"Chicken Manchow Soup","Soup",119,0],[354,"Chicken Hot & Sour Soup","Soup",119,0],[355,"Chicken Sweet Corn Soup","Soup",119,0],[356,"Chicken Clear Soup","Soup",109,0],[357,"Cream of Chicken Soup","Soup",129,0],
-      [358,"Idli","South Indian",59,1],[359,"Idli Sambar","South Indian",79,1],[360,"Fried Idli","South Indian",89,1],[361,"Masala Dosa","South Indian",99,1],[362,"Plain Dosa","South Indian",79,1],[363,"Butter Dosa","South Indian",99,1],[364,"Cheese Dosa","South Indian",129,1],[365,"Paneer Dosa","South Indian",139,1],[366,"Mysore Masala Dosa","South Indian",119,1],[367,"Rava Dosa","South Indian",109,1],[368,"Onion Rava Dosa","South Indian",119,1],[369,"Paper Dosa","South Indian",109,1],[370,"Uttapam","South Indian",89,1],[371,"Onion Uttapam","South Indian",99,1],[372,"Paneer Uttapam","South Indian",119,1],[373,"Medu Vada","South Indian",69,1],[374,"Vada Sambar","South Indian",79,1],[375,"Pongal","South Indian",89,1],[376,"Lemon Rice","South Indian",89,1],[377,"Curd Rice","South Indian",89,1],[378,"Tomato Rice","South Indian",89,1],[379,"Filter Coffee","South Indian",69,1],[380,"South Indian Combo","South Indian",149,1],
-      [381,"Poha","Breakfast",59,1],[382,"Kanda Poha","Breakfast",69,1],[383,"Vegetable Upma","Breakfast",69,1],[384,"Masala Upma","Breakfast",79,1],[385,"Sabudana Khichdi","Breakfast",89,1],[386,"Aloo Puri","Breakfast",89,1],[387,"Chole Puri","Breakfast",99,1],[388,"Stuffed Paratha Combo","Breakfast",119,1],[389,"Bread Omelette","Breakfast",89,1],[390,"Masala Omelette","Breakfast",79,1],[391,"Cheese Omelette","Breakfast",99,1],[392,"Egg Bhurji","Breakfast",99,0],[393,"Boiled Eggs","Breakfast",59,0],[394,"Scrambled Eggs","Breakfast",99,0],[395,"Pancakes","Breakfast",129,1],[396,"French Toast","Breakfast",119,1],[397,"Cornflakes","Breakfast",89,1],[398,"Oatmeal","Breakfast",99,1],[399,"Granola Bowl","Breakfast",149,1],[400,"Breakfast Combo","Breakfast",159,1],
-      [401,"Gulab Jamun","Dessert",59,1],[402,"Rasgulla","Dessert",59,1],[403,"Rasmalai","Dessert",89,1],[404,"Jalebi","Dessert",69,1],[405,"Imarti","Dessert",79,1],[406,"Rabri","Dessert",89,1],[407,"Kheer","Dessert",79,1],[408,"Gajar Halwa","Dessert",89,1],[409,"Moong Dal Halwa","Dessert",99,1],[410,"Shahi Tukda","Dessert",109,1],[411,"Malpua","Dessert",99,1],[412,"Kulfi","Dessert",79,1],[413,"Kesar Kulfi","Dessert",99,1],[414,"Pista Kulfi","Dessert",99,1],[415,"Falooda","Dessert",129,1],[416,"Brownie","Dessert",99,1],[417,"Chocolate Brownie","Dessert",119,1],[418,"Brownie with Ice Cream","Dessert",159,1],
-      [419,"Chocolate Cake","Cake",119,1],[420,"Black Forest Cake","Cake",149,1],[421,"Red Velvet Cake","Cake",169,1],[422,"Pineapple Cake","Cake",149,1],[423,"Vanilla Cake","Cake",129,1],[424,"Chocolate Truffle Cake","Cake",179,1],[425,"Cheesecake","Cake",199,1],[426,"Donut","Bakery",59,1],[427,"Chocolate Donut","Bakery",69,1],[428,"Glazed Donut","Bakery",59,1],[429,"Muffin","Bakery",59,1],[430,"Chocolate Muffin","Bakery",69,1],
-      [431,"Mango Shake","Shake",109,1],[432,"Banana Shake","Shake",99,1],[433,"Strawberry Shake","Shake",109,1],[434,"Chocolate Shake","Shake",119,1],[435,"Vanilla Shake","Shake",99,1],[436,"Oreo Shake","Shake",129,1],[437,"KitKat Shake","Shake",139,1],[438,"Cold Coffee","Shake",109,1],[439,"Cold Coffee with Ice Cream","Shake",139,1],[440,"Peanut Butter Shake","Shake",129,1],[441,"Dry Fruit Shake","Shake",149,1],[442,"Rose Shake","Shake",109,1],[443,"Butterscotch Shake","Shake",119,1],[444,"Mango Lassi","Lassi",89,1],[445,"Sweet Lassi","Lassi",79,1],[446,"Salted Lassi","Lassi",69,1],[447,"Rose Lassi","Lassi",89,1],[448,"Dry Fruit Lassi","Lassi",119,1],[449,"Masala Chaas","Beverage",59,1],[450,"Sweet Chaas","Beverage",59,1],
-      [451,"Masala Tea","Tea",39,1],[452,"Ginger Tea","Tea",49,1],[453,"Elaichi Tea","Tea",49,1],[454,"Lemon Tea","Tea",49,1],[455,"Green Tea","Tea",59,1],[456,"Black Tea","Tea",39,1],[457,"Hot Coffee","Coffee",59,1],[458,"Black Coffee","Coffee",59,1],[459,"Cappuccino","Coffee",89,1],[460,"Latte","Coffee",99,1],[461,"Americano","Coffee",89,1],[462,"Mocha","Coffee",109,1],[463,"Espresso","Coffee",79,1],[464,"Hot Chocolate","Beverage",109,1],[465,"Fresh Lime Soda","Beverage",69,1],[466,"Sweet Lime Soda","Beverage",69,1],[467,"Mint Mojito","Mocktail",99,1],[468,"Virgin Mojito","Mocktail",99,1],[469,"Blue Lagoon","Mocktail",109,1],[470,"Strawberry Mojito","Mocktail",109,1],
-      [471,"Orange Juice","Juice",89,1],[472,"Apple Juice","Juice",99,1],[473,"Mango Juice","Juice",89,1],[474,"Pineapple Juice","Juice",89,1],[475,"Watermelon Juice","Juice",79,1],[476,"Mosambi Juice","Juice",89,1],[477,"Pomegranate Juice","Juice",119,1],[478,"Carrot Juice","Juice",89,1],[479,"Beetroot Juice","Juice",89,1],[480,"Mixed Fruit Juice","Juice",109,1],[481,"Coconut Water","Juice",69,1],[482,"Sugarcane Juice","Juice",69,1],[483,"Fruit Punch","Juice",119,1],[484,"ABC Juice","Juice",129,1],[485,"Lemonade","Juice",69,1],
-      [486,"Fresh Fruit Salad","Healthy Food",99,1],[487,"Mixed Fruit Bowl","Healthy Food",129,1],[488,"Greek Salad","Healthy Food",149,1],[489,"Caesar Salad","Healthy Food",159,1],[490,"Veg Salad","Healthy Food",99,1],[491,"Sprouts Salad","Healthy Food",109,1],[492,"Paneer Salad","Healthy Food",149,1],[493,"Chicken Salad","Healthy Food",179,0],[494,"Corn Salad","Healthy Food",109,1],[495,"Quinoa Salad","Healthy Food",159,1],[496,"Fruit Yogurt Bowl","Healthy Food",129,1],[497,"Oats Bowl","Healthy Food",119,1],[498,"Granola Fruit Bowl","Healthy Food",149,1],[499,"Protein Bowl","Healthy Food",179,1],[500,"Veg Protein Bowl","Healthy Food",159,1],
-      [501,"Almonds","Dry Fruits",120,1],[502,"Cashews","Dry Fruits",140,1],[503,"Walnuts","Dry Fruits",150,1],[504,"Pistachios","Dry Fruits",160,1],[505,"Raisins","Dry Fruits",90,1],[506,"Dates","Dry Fruits",100,1],[507,"Dried Figs","Dry Fruits",140,1],[508,"Makhana","Dry Snacks",100,1],[509,"Roasted Chana","Dry Snacks",60,1],[510,"Roasted Peanuts","Dry Snacks",60,1],[511,"Banana Chips","Dry Snacks",80,1],[512,"Masala Peanuts","Dry Snacks",70,1],[513,"Bhujia","Dry Snacks",60,1],[514,"Mixture Namkeen","Dry Snacks",70,1],[515,"Murmura","Dry Snacks",50,1],
-      [516,"Mango","Fruits",80,1],[517,"Apple","Fruits",120,1],[518,"Banana","Fruits",60,1],[519,"Orange","Fruits",80,1],[520,"Grapes","Fruits",100,1],[521,"Watermelon","Fruits",60,1],[522,"Papaya","Fruits",70,1],[523,"Guava","Fruits",80,1],[524,"Pomegranate","Fruits",140,1],[525,"Pineapple","Fruits",100,1],[526,"Kiwi","Fruits",150,1],[527,"Dragon Fruit","Fruits",120,1],[528,"Strawberry","Fruits",180,1],[529,"Litchi","Fruits",160,1],[530,"Chikoo","Fruits",90,1],[531,"Pear","Fruits",120,1],[532,"Peach","Fruits",140,1],[533,"Plum","Fruits",130,1],[534,"Coconut","Fruits",60,1],[535,"Muskmelon","Fruits",70,1]
+    // RESTAURANTS EXACTLY AS SHOWN IN VIDEO with 4-5 DISTINCT DISH SLIDES EACH
+    const RESTAURANTS = [
+      {
+        id: 1,
+        name: "KFC",
+        rating: "4.1",
+        time: "15-20 mins",
+        dist: "2.4 km",
+        isVeg: false,
+        cat: "Burger",
+        tag: "50% OFF on select items",
+        kiosk: "Uni-Mall",
+        slides: [
+          { name: "Hot Chicken Wings", price: 199, img: "https://images.unsplash.com/photo-1562967914-608f82629710?w=600" },
+          { name: "Chicken Zinger Burger", price: 179, img: "https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?w=600" },
+          { name: "Chicken Popcorn Bucket", price: 149, img: "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=600" },
+          { name: "Crispy Chicken Strips", price: 169, img: "https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?w=600" }
+        ]
+      },
+      {
+        id: 2,
+        name: "Om Vaishno Dhaba",
+        rating: "3.8",
+        time: "20-25 mins",
+        dist: "1.2 km",
+        isVeg: true,
+        cat: "North Indian",
+        tag: "50% OFF up to ₹100 above ₹99",
+        kiosk: "Block 14",
+        slides: [
+          { name: "Om Special Thai Thali", price: 288, img: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=600" },
+          { name: "Dal Makhani Butter Naan Combo", price: 159, img: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600" },
+          { name: "Paneer Butter Masala", price: 179, img: "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=600" },
+          { name: "Shahi Paneer + 2 Tandoori Roti", price: 169, img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600" }
+        ]
+      },
+      {
+        id: 3,
+        name: "Patwari Vaishno Dhaba",
+        rating: "4.3",
+        time: "25-30 mins",
+        dist: "3.7 km",
+        isVeg: true,
+        cat: "North Indian",
+        tag: "Flat ₹140 OFF above ₹249",
+        kiosk: "Law Block",
+        slides: [
+          { name: "Samosa Per Pc", price: 20, img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600" },
+          { name: "Chole Bhature (2 Pcs)", price: 129, img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600" },
+          { name: "Paneer Bread Pakora", price: 35, img: "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600" },
+          { name: "Aloo Pyaaz Paratha", price: 69, img: "https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=600" }
+        ]
+      },
+      {
+        id: 4,
+        name: "Domino's Pizza",
+        rating: "4.6",
+        time: "20-25 mins",
+        dist: "4.3 km",
+        isVeg: true,
+        cat: "Pizza",
+        tag: "55% OFF on select items",
+        kiosk: "Uni-Mall",
+        slides: [
+          { name: "Chicken Double Cheese", price: 159, img: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600" },
+          { name: "Farmhouse Fresh Veggie", price: 229, img: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600" },
+          { name: "Stuffed Garlic Bread", price: 129, img: "https://images.unsplash.com/photo-1619535860434-ba1d8fa12536?w=600" },
+          { name: "Margherita Classic Pizza", price: 149, img: "https://images.unsplash.com/photo-1604382355076-af4b0eb60143?w=600" }
+        ]
+      },
+      {
+        id: 5,
+        name: "Subway",
+        rating: "3.8",
+        time: "15-20 mins",
+        dist: "2.3 km",
+        isVeg: true,
+        cat: "Fast Food",
+        tag: "Items starting at ₹119",
+        kiosk: "Uni-Mall",
+        slides: [
+          { name: "Double Dark Chunk Cookie", price: 75, img: "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=600" },
+          { name: "Veggie Delite Sub 6-Inch", price: 149, img: "https://images.unsplash.com/photo-1509722747041-616f39b57569?w=600" },
+          { name: "Paneer Tikka Sub", price: 189, img: "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=600" },
+          { name: "Toasted Cheese Submarine", price: 169, img: "https://images.unsplash.com/photo-1554433607-66b5efe9d304?w=600" }
+        ]
+      },
+      {
+        id: 6,
+        name: "The Belgian Waffle Co.",
+        rating: "4.3",
+        time: "25-30 mins",
+        dist: "2.3 km",
+        isVeg: true,
+        cat: "Dessert",
+        tag: "Pure Veg restaurant",
+        kiosk: "Uni-Mall",
+        slides: [
+          { name: "Triple Chocomelt Waffle", price: 195, img: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?w=600" },
+          { name: "Almond Brownie Waffle", price: 205, img: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600" },
+          { name: "Belgian Milk Chocolate Waffle", price: 165, img: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=600" },
+          { name: "Oreo Waffle Sandwich", price: 207, img: "https://images.unsplash.com/photo-1527515862127-a4fc05baf7a5?w=600" }
+        ]
+      },
+      {
+        id: 7,
+        name: "Roll Express",
+        rating: "4.4",
+        time: "10-15 mins",
+        dist: "3.1 km",
+        isVeg: false,
+        cat: "Burger",
+        tag: "Flat ₹140 OFF above ₹249",
+        kiosk: "Robo Park",
+        slides: [
+          { name: "Double Egg Roll", price: 90, img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600" },
+          { name: "Paneer Kathi Roll", price: 109, img: "https://images.unsplash.com/photo-1561651823-34feb02250e4?w=600" },
+          { name: "Chicken Tikka Wrap", price: 149, img: "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=600" },
+          { name: "Peri Peri Chicken Roll", price: 159, img: "https://images.unsplash.com/photo-1509722747041-616f39b57569?w=600" }
+        ]
+      },
+      {
+        id: 8,
+        name: "Tibet Kitchen",
+        rating: "4.1",
+        time: "20-25 mins",
+        dist: "4.3 km",
+        isVeg: false,
+        cat: "Momos",
+        tag: "Flat ₹140 OFF above ₹249",
+        kiosk: "Block 34",
+        slides: [
+          { name: "Veg Chowmein", price: 80, img: "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=600" },
+          { name: "Chicken Fried Rice", price: 180, img: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=600" },
+          { name: "Steamed Veg Momos (6 Pcs)", price: 79, img: "https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=600" },
+          { name: "Chicken Momos in Bamboo Steamer", price: 119, img: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=600" }
+        ]
+      },
+      {
+        id: 9,
+        name: "Behrouz Biryani",
+        rating: "4.3",
+        time: "15-20 mins",
+        dist: "4.1 km",
+        isVeg: false,
+        cat: "Biryani",
+        tag: "Items starting at ₹129",
+        kiosk: "Uni-Mall",
+        slides: [
+          { name: "Hyderabadi Lazeez Dum Biryani", price: 419, img: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600" },
+          { name: "Shahi Paneer Dum Biryani", price: 219, img: "https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=600" },
+          { name: "Murgh Tikka Biryani with Raita", price: 259, img: "https://images.unsplash.com/photo-1633945274405-b6c8069047b0?w=600" },
+          { name: "Gosht Dum Mutton Biryani", price: 329, img: "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=600" }
+        ]
+      },
+      {
+        id: 10,
+        name: "ChaiVyanjan",
+        rating: "4.1",
+        time: "20-25 mins",
+        dist: "2.2 km",
+        isVeg: true,
+        cat: "North Indian",
+        tag: "50% OFF on select items",
+        kiosk: "Law Block",
+        slides: [
+          { name: "Veg Grill Sandwich", price: 149, img: "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=600" },
+          { name: "White Sauce Pasta", price: 149, img: "https://images.unsplash.com/photo-1621996346565-e3d5d6281691?w=600" },
+          { name: "Oreo Monster Shake", price: 139, img: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=600" },
+          { name: "Veggie Steamed Momos", price: 130, img: "https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=600" }
+        ]
+      },
+      {
+        id: 11,
+        name: "Gianis - Ice cream, shakes & more",
+        rating: "3.7",
+        time: "30-35 mins",
+        dist: "2.4 km",
+        isVeg: true,
+        cat: "Dessert",
+        tag: "Flat ₹100 OFF above ₹149",
+        kiosk: "Uni-Mall",
+        slides: [
+          { name: "Mango Faluda Glass", price: 149, img: "https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=600" },
+          { name: "Kesar Kulfi Faluda Bowl", price: 138, img: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=600" },
+          { name: "Black Currant Ice Cream Cup", price: 98, img: "https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?w=600" },
+          { name: "Brownie Sundae Loaded", price: 265, img: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=600" }
+        ]
+      },
+      {
+        id: 12,
+        name: "Fruit Bliss & Bowls",
+        rating: "4.9",
+        time: "10-15 mins",
+        dist: "0.8 km",
+        isVeg: true,
+        cat: "Fruits",
+        tag: "100% Pure Fresh Cuts",
+        kiosk: "Robo Park",
+        slides: [
+          { name: "Royal Mixed Fruit Bowl", price: 129, img: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600" },
+          { name: "Fresh Cut Papaya Platter", price: 70, img: "https://images.unsplash.com/photo-1517282009859-f000ec3b26fe?w=600" },
+          { name: "Fresh Pomegranate Anaar Bowl", price: 140, img: "https://images.unsplash.com/photo-1557800636-894a64c1696f?w=600" },
+          { name: "Pure Watermelon Fresh Slices", price: 60, img: "https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=600" }
+        ]
+      }
     ];
-
-    // High Quality Food Image Libraries by Specific Keyword
-    const SPECIFIC_FOOD_GALLERIES = {
-      "capsicum pizza": [
-        "https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?w=600",
-        "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600",
-        "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=600",
-        "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600"
-      ],
-      "tomato pizza": [
-        "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=600",
-        "https://images.unsplash.com/photo-1594007654729-407eedc4be65?w=600",
-        "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600",
-        "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600"
-      ],
-      "margherita pizza": [
-        "https://images.unsplash.com/photo-1604382355076-af4b0eb60143?w=600",
-        "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=600",
-        "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600",
-        "https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?w=600"
-      ],
-      "cheese pizza": [
-        "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600",
-        "https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?w=600",
-        "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600",
-        "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=600"
-      ],
-      "onion pizza": [
-        "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600",
-        "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600",
-        "https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?w=600",
-        "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=600"
-      ],
-      "corn pizza": [
-        "https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?w=600",
-        "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600",
-        "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600",
-        "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=600"
-      ],
-      "farmhouse pizza": [
-        "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600",
-        "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600",
-        "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=600",
-        "https://images.unsplash.com/photo-1604382355076-af4b0eb60143?w=600"
-      ],
-      "pepperoni pizza": [
-        "https://images.unsplash.com/photo-1628840042765-356cda07504e?w=600",
-        "https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?w=600",
-        "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600",
-        "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600"
-      ],
-      "aloo tikki burger": [
-        "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600",
-        "https://images.unsplash.com/photo-1550547660-d9450f859349?w=600",
-        "https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?w=600",
-        "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=600"
-      ],
-      "cheese burger": [
-        "https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?w=600",
-        "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600",
-        "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=600",
-        "https://images.unsplash.com/photo-1550547660-d9450f859349?w=600"
-      ],
-      "crispy veg burger": [
-        "https://images.unsplash.com/photo-1550547660-d9450f859349?w=600",
-        "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600",
-        "https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?w=600",
-        "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=600"
-      ],
-      "chicken burger": [
-        "https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?w=600",
-        "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600",
-        "https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?w=600",
-        "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=600"
-      ],
-      "french fries": [
-        "https://images.unsplash.com/photo-1576107232684-1279f3908594?w=600",
-        "https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?w=600",
-        "https://images.unsplash.com/photo-1585109649139-366815a0d713?w=600",
-        "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=600"
-      ],
-      "veg momos": [
-        "https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=600",
-        "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=600",
-        "https://images.unsplash.com/photo-1496116218417-1a781b1c416c?w=600",
-        "https://images.unsplash.com/photo-1541696432-82c6da8ce7bf?w=600"
-      ],
-      "chicken momos": [
-        "https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=600",
-        "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=600",
-        "https://images.unsplash.com/photo-1496116218417-1a781b1c416c?w=600",
-        "https://images.unsplash.com/photo-1541696432-82c6da8ce7bf?w=600"
-      ],
-      "veg hakka noodles": [
-        "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=600",
-        "https://images.unsplash.com/photo-1612927601601-6638404737ce?w=600",
-        "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=600",
-        "https://images.unsplash.com/photo-1544025162-d76694265947?w=600"
-      ],
-      "chicken biryani": [
-        "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600",
-        "https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=600",
-        "https://images.unsplash.com/photo-1633945274405-b6c8069047b0?w=600",
-        "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600"
-      ],
-      "samosa": [
-        "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600",
-        "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600",
-        "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600",
-        "https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=600"
-      ],
-      "masala dosa": [
-        "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?w=600",
-        "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600",
-        "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600",
-        "https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=600"
-      ]
-    };
-
-    // Category Wide Unique Rotational Gallery to guarantee zero identical images
-    const CATEGORY_POOLS = {
-      "Burger": [
-        "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600",
-        "https://images.unsplash.com/photo-1550547660-d9450f859349?w=600",
-        "https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?w=600",
-        "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=600",
-        "https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?w=600",
-        "https://images.unsplash.com/photo-1551782450-a2132b4ba21d?w=600",
-        "https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=600",
-        "https://images.unsplash.com/photo-1561758033-d89a9ad46330?w=600"
-      ],
-      "Pizza": [
-        "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600",
-        "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600",
-        "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=600",
-        "https://images.unsplash.com/photo-1604382355076-af4b0eb60143?w=600",
-        "https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?w=600",
-        "https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?w=600",
-        "https://images.unsplash.com/photo-1628840042765-356cda07504e?w=600",
-        "https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?w=600"
-      ],
-      "Fast Food": [
-        "https://images.unsplash.com/photo-1576107232684-1279f3908594?w=600",
-        "https://images.unsplash.com/photo-1619535860434-ba1d8fa12536?w=600",
-        "https://images.unsplash.com/photo-1562967914-608f82629710?w=600",
-        "https://images.unsplash.com/photo-1513456852971-30c0b8199d4d?w=600",
-        "https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?w=600",
-        "https://images.unsplash.com/photo-1585109649139-366815a0d713?w=600",
-        "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=600",
-        "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=600"
-      ],
-      "Momos": [
-        "https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=600",
-        "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=600",
-        "https://images.unsplash.com/photo-1496116218417-1a781b1c416c?w=600",
-        "https://images.unsplash.com/photo-1541696432-82c6da8ce7bf?w=600",
-        "https://images.unsplash.com/photo-1563245372-f21724e3856d?w=600",
-        "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600"
-      ],
-      "Chinese": [
-        "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=600",
-        "https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=600",
-        "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=600",
-        "https://images.unsplash.com/photo-1612927601601-6638404737ce?w=600",
-        "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=600",
-        "https://images.unsplash.com/photo-1544025162-d76694265947?w=600"
-      ],
-      "Biryani": [
-        "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600",
-        "https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=600",
-        "https://images.unsplash.com/photo-1633945274405-b6c8069047b0?w=600",
-        "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600",
-        "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600",
-        "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=600"
-      ],
-      "North Indian": [
-        "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=600",
-        "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600",
-        "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600",
-        "https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=600",
-        "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=600",
-        "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=600"
-      ],
-      "Fruits": [
-        "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
-        "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=600",
-        "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=600",
-        "https://images.unsplash.com/photo-1550258987-190a2d41a8ba?w=600",
-        "https://images.unsplash.com/photo-1553279768-865429fa0078?w=600",
-        "https://images.unsplash.com/photo-1547514701-42782101795e?w=600",
-        "https://images.unsplash.com/photo-1537640538966-79f369143f8f?w=600",
-        "https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=600"
-      ]
-    };
-
-    // Smart 4-image assignment per dish based on ID & Name so Capsicum & Tomato never look the same
-    function getDistinctImagesForItem(item) {
-      const lower = item.name.toLowerCase();
-      
-      // 1. Direct item match
-      for (let key in SPECIFIC_FOOD_GALLERIES) {
-        if (lower.includes(key)) {
-          return SPECIFIC_FOOD_GALLERIES[key];
-        }
-      }
-
-      // 2. Rotational selection from category pool using item ID offset
-      let pool = CATEGORY_POOLS[item.cat];
-      if (!pool) {
-        if (item.cat.includes("Chicken") || item.cat.includes("Mutton") || item.cat.includes("Seafood")) pool = CATEGORY_POOLS["Biryani"];
-        else if (item.cat.includes("Paneer") || item.cat.includes("Bread") || item.cat.includes("Rice")) pool = CATEGORY_POOLS["North Indian"];
-        else if (item.cat.includes("Fruit") || item.cat.includes("Healthy") || item.cat.includes("Juice") || item.cat.includes("Shake")) pool = CATEGORY_POOLS["Fruits"];
-        else pool = CATEGORY_POOLS["Fast Food"];
-      }
-
-      const offset = (item.id * 3) % pool.length;
-      return [
-        pool[offset % pool.length],
-        pool[(offset + 1) % pool.length],
-        pool[(offset + 2) % pool.length],
-        pool[(offset + 3) % pool.length]
-      ];
-    }
-
-    // Hydrate 535 full dataset
-    const ITEMS = RAW_COMPACT.map(([id, name, cat, price, veg]) => ({
-      id,
-      name,
-      cat,
-      price,
-      veg: veg === 1 ? "veg" : "nonVeg",
-      rating: (4.0 + ((id * 7) % 11) / 10).toFixed(1)
-    }));
 
     let cart = {};
     let activeCategory = "All";
+    let activeQuickFilter = "All";
     let isVegOnly = false;
     let user = JSON.parse(localStorage.getItem('lpukart_user')) || {
       name: "Himanshu Yadav",
       phone: "9876543210",
-      location: "BH-1"
+      location: "Block 37 / 38 (Law School)"
     };
 
     function init() {
       updateUserUI();
-      renderCategoryChips();
       renderFeed();
     }
 
     function updateUserUI() {
-      document.getElementById('locHeader').innerText = user.location ? user.location.split('(')[0] : "BH-1";
+      document.getElementById('locHeader').innerText = user.location ? user.location.split('(')[0] : "Block 37 / 38";
       document.getElementById('userNameInput').value = user.name || "";
       document.getElementById('userPhoneInput').value = user.phone || "";
       document.getElementById('userLocationSelect').value = user.location || "";
@@ -653,99 +689,132 @@
       renderFeed();
     }
 
-    function renderCategoryChips() {
-      const cats = ["All", ...new Set(ITEMS.map(i => i.cat))];
-      const wrap = document.getElementById('categoryScroll');
-      wrap.innerHTML = cats.map(c => `
-        <div class="cat-chip ${c === activeCategory ? 'active' : ''}" onclick="filterCategory('${c}')">
-          ${c}
-        </div>
-      `).join('');
-    }
-
-    function filterCategory(cat) {
+    function filterCategory(cat, el) {
       activeCategory = cat;
-      document.querySelectorAll('.cat-chip').forEach(el => {
-        if (el.innerText.trim() === cat) el.classList.add('active');
-        else el.classList.remove('active');
-      });
+      document.querySelectorAll('.cat-circle-item').forEach(c => c.classList.remove('active'));
+      if (el) el.classList.add('active');
       renderFeed();
     }
 
-    function updateSlideIndicator(slider, itemId) {
+    function setQuickFilter(f, el) {
+      activeQuickFilter = f;
+      document.querySelectorAll('.chip-btn').forEach(c => c.classList.remove('active'));
+      if (el) el.classList.add('active');
+      renderFeed();
+    }
+
+    function quickSelect(id) {
+      const res = RESTAURANTS.find(r => r.id === id);
+      if (res && res.slides[0]) {
+        changeQty(res.name, res.slides[0].name, res.slides[0].price, 1);
+      }
+    }
+
+    function updateSlideIndicator(slider, resId) {
       const index = Math.round(slider.scrollLeft / slider.offsetWidth);
-      const dots = document.querySelectorAll(`#dots-${itemId} .dot`);
+      const dots = document.querySelectorAll(`#dots-${resId} .dot`);
       dots.forEach((dot, idx) => {
         if (idx === index) dot.classList.add('active');
         else dot.classList.remove('active');
       });
+
+      // Update the dish tag overlay to match the active slide
+      const res = RESTAURANTS.find(r => r.id === resId);
+      if (res && res.slides[index]) {
+        const tag = document.getElementById(`tag-${resId}`);
+        if (tag) tag.innerText = `₹${res.slides[index].price} • ${res.slides[index].name}`;
+      }
     }
 
     function renderFeed() {
-      const container = document.getElementById('outletContainer');
+      const container = document.getElementById('restaurantContainer');
       const search = document.getElementById('searchInput').value.toLowerCase();
 
-      const filtered = ITEMS.filter(item => {
-        const matchVeg = !isVegOnly || item.veg === "veg";
-        const matchCategory = activeCategory === "All" || item.cat === activeCategory;
-        const matchSearch = item.name.toLowerCase().includes(search) || item.cat.toLowerCase().includes(search);
-        return matchVeg && matchCategory && matchSearch;
+      const filtered = RESTAURANTS.filter(r => {
+        const matchVeg = !isVegOnly || r.isVeg;
+        const matchCategory = activeCategory === "All" || r.cat === activeCategory;
+        const matchQuick = activeQuickFilter === "All" ||
+          (activeQuickFilter === "Near" && parseFloat(r.dist) <= 2.5) ||
+          (activeQuickFilter === "Under150" && r.slides.some(s => s.price <= 150)) ||
+          (r.kiosk.toLowerCase().includes(activeQuickFilter.toLowerCase()));
+        
+        const matchSearch = r.name.toLowerCase().includes(search) ||
+          r.slides.some(s => s.name.toLowerCase().includes(search));
+
+        return matchVeg && matchCategory && matchQuick && matchSearch;
       });
 
-      document.getElementById('feedCountTitle').innerText = `${filtered.length} ITEMS AVAILABLE ON CAMPUS`;
+      document.getElementById('feedCountTitle').innerText = `${filtered.length} RESTAURANTS DELIVERING TO YOU`;
 
       if (filtered.length === 0) {
-        container.innerHTML = `<div style="text-align:center; padding:40px; color:#888;">No matching items found! Try another search or turn off Veg Mode.</div>`;
+        container.innerHTML = `<div style="text-align:center; padding:40px; color:#888;">No matching restaurants or dishes found!</div>`;
         return;
       }
 
-      container.innerHTML = filtered.map(item => {
-        const qty = cart[item.id] ? cart[item.id].qty : 0;
-        const gallery = getDistinctImagesForItem(item);
+      container.innerHTML = filtered.map(res => {
+        const firstSlide = res.slides[0];
+        const itemKey = `${res.name}__${firstSlide.name}`;
+        const qty = cart[itemKey] ? cart[itemKey].qty : 0;
 
-        const slidesHtml = gallery.map(imgUrl => `
-          <div class="slider-slide">
-            <img src="${imgUrl}" alt="${item.name}" loading="lazy">
+        // Exact horizontal slides carousel for this restaurant
+        const slidesHtml = res.slides.map(slide => `
+          <div class="carousel-slide">
+            <img src="${slide.img}" alt="${slide.name}" loading="lazy">
           </div>
         `).join('');
 
-        const dotsHtml = gallery.map((_, i) => `
+        const dotsHtml = res.slides.map((_, i) => `
           <div class="dot ${i === 0 ? 'active' : ''}"></div>
         `).join('');
 
         return `
-          <div class="feed-card">
-            <div class="slider-container">
-              <div class="slider-track" onscroll="updateSlideIndicator(this, ${item.id})">
+          <div class="res-card">
+            <div class="carousel-wrap">
+              <div class="carousel-track" onscroll="updateSlideIndicator(this, ${res.id})">
                 ${slidesHtml}
               </div>
-              <div class="slider-dots" id="dots-${item.id}">
+
+              <!-- Dish tag overlay exactly like the video: Top-Left Black Pill -->
+              <div class="dish-tag-overlay" id="tag-${res.id}">
+                ₹${firstSlide.price} • ${firstSlide.name}
+              </div>
+
+              <!-- Top-Right Bookmark -->
+              <div class="bookmark-icon">🔖</div>
+
+              <!-- Bottom-Left FREE Delivery -->
+              <div class="free-delivery-badge">FREE delivery</div>
+
+              <!-- Bottom-Right Carousel Dots (••••) -->
+              <div class="dots-box" id="dots-${res.id}">
                 ${dotsHtml}
               </div>
-              <div class="feed-price-tag">₹${item.price}</div>
-              <div class="veg-dot-badge ${item.veg}">${item.veg === 'veg' ? '🟢 VEG' : '🔴 NON-VEG'}</div>
             </div>
 
-            <div class="feed-body">
-              <div class="feed-header-line">
-                <div class="feed-name">${item.name}</div>
-                <div class="feed-rating">★ ${item.rating}</div>
+            <div class="res-body">
+              <div class="res-header-row">
+                <div class="res-name">${res.name}</div>
+                <div class="res-rating-badge">★ ${res.rating}</div>
               </div>
-              <div class="feed-meta-line">
-                <span>⏱️ 10-15 mins</span>
+
+              <div class="res-meta-line">
+                <span>⚡ Near & Fast</span>
                 <span>•</span>
-                <span>📍 LPU Campus Express</span>
+                <span>⏱️ ${res.time}</span>
+                <span>•</span>
+                <span>📍 ${res.dist}</span>
               </div>
-              <div class="feed-offer-line">
-                <div class="feed-cat-badge">🏷️ ${item.cat}</div>
+
+              <div class="res-footer-row">
+                <div class="res-offer-text">🏷️ ${res.tag}</div>
                 <div>
                   ${qty === 0 ? `
-                    <button class="feed-btn-add" onclick="changeQty(${item.id}, 1)">ADD +</button>
+                    <button class="btn-add" onclick="changeQty('${res.name}', '${firstSlide.name}',${firstSlide.price}, 1)">ADD +</button>
                   ` : `
-                    <div class="feed-qty-ctrl">
-                      <button class="feed-qty-btn" onclick="changeQty(${item.id}, -1)">-</button>
+                    <div class="qty-box">
+                      <button class="qty-btn" onclick="changeQty('${res.name}', '${firstSlide.name}',${firstSlide.price}, -1)">-</button>
                       <span>${qty}</span>
-                      <button class="feed-qty-btn" onclick="changeQty(${item.id}, 1)">+</button>
+                      <button class="qty-btn" onclick="changeQty('${res.name}', '${firstSlide.name}',${firstSlide.price}, 1)">+</button>
                     </div>
                   `}
                 </div>
@@ -758,14 +827,14 @@
       updateCartBar();
     }
 
-    function changeQty(id, delta) {
-      if (!cart[id]) {
-        const item = ITEMS.find(m => m.id === id);
-        cart[id] = { ...item, qty: 0 };
+    function changeQty(resName, dishName, price, delta) {
+      const key = `${resName}__${dishName}`;
+      if (!cart[key]) {
+        cart[key] = { resName, dishName, price, qty: 0 };
       }
-      cart[id].qty += delta;
-      if (cart[id].qty <= 0) {
-        delete cart[id];
+      cart[key].qty += delta;
+      if (cart[key].qty <= 0) {
+        delete cart[key];
       }
       renderFeed();
     }
@@ -799,7 +868,7 @@
       list.innerHTML = items.map(i => {
         total += i.price * i.qty;
         return `<div style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:13px;">
-          <span>${i.name} x <strong>${i.qty}</strong></span>
+          <span>${i.dishName} (${i.resName}) x <strong>${i.qty}</strong></span>
           <span style="font-weight:800;">₹${i.price * i.qty}</span>
         </div>`;
       }).join('') + `<div style="display:flex; justify-content:space-between; margin-top:8px; font-size:15px; font-weight:900; color:var(--primary-red);">
@@ -835,7 +904,7 @@
       let grand = 0;
       const itemList = items.map(i => {
         grand += i.price * i.qty;
-        return `• ${i.name} x${i.qty} = ₹${i.price * i.qty}`;
+        return `• ${i.resName} - ${i.dishName} x${i.qty} = ₹${i.price * i.qty}`;
       }).join("\n");
 
       const message = 
