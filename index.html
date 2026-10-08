@@ -23,7 +23,7 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; }
     body { background-color: #ffffff; color: var(--text-black); padding-bottom: 90px; -webkit-tap-highlight-color: transparent; }
 
-    /* Top Sticky Header */
+    /* Top Bar */
     header { background: #ffffff; position: sticky; top: 0; z-index: 100; padding: 10px 14px 6px; box-shadow: 0 2px 10px rgba(0,0,0,0.03); }
     .header-top { display: flex; justify-content: space-between; align-items: center; max-width: 600px; margin: 0 auto; }
     
@@ -41,7 +41,7 @@
     }
     .profile-avatar { width: 32px; height: 32px; border-radius: 50%; background: #222; color: white; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; cursor: pointer; }
 
-    /* Search & Veg Mode Toggle */
+    /* Search & Veg Mode */
     .search-row { display: flex; align-items: center; gap: 10px; max-width: 600px; margin: 8px auto 2px; }
     .search-box {
       flex: 1; background: #ffffff; border: 1px solid #d4d5d9; border-radius: 12px;
@@ -69,14 +69,14 @@
     .wc-left p { font-size: 11px; color: #555; margin-top: 2px; font-weight: 600; }
     .wc-tag { display: inline-block; background: var(--primary-red); color: white; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 4px; margin-top: 4px; }
 
-    /* 24x7 Break Slots */
+    /* Slot Bar */
     .slot-bar-wrap {
       background: #fafafa; border: 1px solid var(--border-light); border-radius: 12px;
       padding: 8px 12px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;
     }
     .slot-bar-wrap select { background: transparent; border: none; font-size: 12px; font-weight: 800; color: #222; outline: none; cursor: pointer; }
 
-    /* Category Chips */
+    /* Categories Horizontal Scroll */
     .category-scroll { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
     .category-scroll::-webkit-scrollbar { display: none; }
     .cat-chip {
@@ -87,7 +87,7 @@
 
     .section-title { font-size: 13px; font-weight: 900; color: #333; text-transform: uppercase; letter-spacing: 0.5px; margin: 10px 0 8px; }
 
-    /* Multi-Photo Card Feed */
+    /* Multi-Photo Item Feed */
     .outlet-feed { display: flex; flex-direction: column; gap: 16px; margin-top: 10px; }
     .feed-card {
       background: white; border-radius: 18px; overflow: hidden;
@@ -182,6 +182,7 @@
 </head>
 <body>
 
+  <!-- Top Bar -->
   <header>
     <div class="header-top">
       <div class="loc-box" onclick="openLocationModal()">
@@ -197,6 +198,7 @@
       </div>
     </div>
 
+    <!-- Search & Veg Switch -->
     <div class="search-row">
       <div class="search-box">
         <span>🔍</span>
@@ -211,6 +213,8 @@
   </header>
 
   <div class="content-area">
+
+    <!-- Welcome Benefits Banner -->
     <div class="welcome-card">
       <div class="wc-left">
         <h3>ENJOY WELCOME BENEFITS</h3>
@@ -220,6 +224,7 @@
       <div class="wc-icon">🎁</div>
     </div>
 
+    <!-- 24x7 Delivery Slot -->
     <div class="slot-bar-wrap">
       <span style="font-size:11px; font-weight:800; color:#555;">⚡ TIME SLOT:</span>
       <select id="slotSelect">
@@ -232,12 +237,18 @@
       </select>
     </div>
 
+    <!-- Dynamic Category Filter Chips -->
     <div class="category-scroll" id="categoryScroll"></div>
 
+    <!-- Feed Count Heading -->
     <div class="section-title" id="feedCountTitle">535 ITEMS AVAILABLE ON CAMPUS</div>
+    
+    <!-- Multi-Photo Item Feed -->
     <div class="outlet-feed" id="outletContainer"></div>
+
   </div>
 
+  <!-- Floating Cart Bar -->
   <div class="cart-float-bar" id="cartFloat" style="display:none;" onclick="openCheckoutModal()">
     <div>
       <div class="cf-left" id="cartItemsCount">0 ITEMS</div>
@@ -246,6 +257,7 @@
     <div class="cf-right">View Cart ➔</div>
   </div>
 
+  <!-- Bottom Navigation Tabs -->
   <div class="footer-nav">
     <div class="tab-item active" onclick="filterCategory('All')">
       <span class="tab-icon">🛵</span>
@@ -351,303 +363,554 @@
   <script>
     const ADMIN_WHATSAPP = "918957645702";
 
-    // 535 Full Compact Database: [id, name, category, price, isVeg]
-    const RAW_COMPACT = [
-      [1,"Aloo Tikki Burger","Burger",59,1],[2,"Veg Burger","Burger",69,1],[3,"Cheese Burger","Burger",89,1],[4,"Double Cheese Burger","Burger",119,1],[5,"Paneer Burger","Burger",99,1],[6,"Crispy Veg Burger","Burger",89,1],[7,"Mexican Burger","Burger",109,1],[8,"Peri Peri Burger","Burger",109,1],[9,"Mushroom Burger","Burger",99,1],[10,"Corn Cheese Burger","Burger",99,1],[11,"BBQ Veg Burger","Burger",119,1],[12,"Maharaja Veg Burger","Burger",149,1],[13,"Chicken Burger","Burger",109,0],[14,"Chicken Cheese Burger","Burger",129,0],[15,"Crispy Chicken Burger","Burger",139,0],[16,"Peri Peri Chicken Burger","Burger",149,0],[17,"BBQ Chicken Burger","Burger",149,0],[18,"Tandoori Chicken Burger","Burger",159,0],[19,"Double Chicken Burger","Burger",179,0],[20,"Chicken Maharaja Burger","Burger",199,0],
-      [21,"Margherita Pizza","Pizza",149,1],[22,"Cheese Pizza","Pizza",169,1],[23,"Onion Pizza","Pizza",159,1],[24,"Capsicum Pizza","Pizza",159,1],[25,"Corn Pizza","Pizza",169,1],[26,"Tomato Pizza","Pizza",169,1],[27,"Onion Capsicum Pizza","Pizza",179,1],[28,"Veggie Pizza","Pizza",199,1],[29,"Farmhouse Pizza","Pizza",229,1],[30,"Paneer Pizza","Pizza",219,1],[31,"Paneer Tikka Pizza","Pizza",249,1],[32,"Mushroom Pizza","Pizza",219,1],[33,"Corn Mushroom Pizza","Pizza",229,1],[34,"Mexican Pizza","Pizza",239,1],[35,"Peri Peri Paneer Pizza","Pizza",259,1],[36,"Cheese Burst Pizza","Pizza",249,1],[37,"Chicken Pizza","Pizza",239,0],[38,"Chicken Tikka Pizza","Pizza",269,0],[39,"BBQ Chicken Pizza","Pizza",279,0],[40,"Pepperoni Pizza","Pizza",299,0],
-      [41,"French Fries","Fast Food",79,1],[42,"Peri Peri Fries","Fast Food",99,1],[43,"Cheese Fries","Fast Food",119,1],[44,"Masala Fries","Fast Food",89,1],[45,"Loaded Fries","Fast Food",149,1],[46,"Potato Wedges","Fast Food",99,1],[47,"Cheese Potato Wedges","Fast Food",129,1],[48,"Garlic Bread","Fast Food",99,1],[49,"Cheese Garlic Bread","Fast Food",129,1],[50,"Chilli Cheese Toast","Fast Food",119,1],[51,"Veg Nuggets","Fast Food",109,1],[52,"Chicken Nuggets","Fast Food",139,0],[53,"Chicken Popcorn","Fast Food",149,0],[54,"Chicken Wings","Fast Food",169,0],[55,"BBQ Chicken Wings","Fast Food",189,0],[56,"Peri Peri Wings","Fast Food",189,0],[57,"Mozzarella Sticks","Fast Food",149,1],[58,"Onion Rings","Fast Food",99,1],[59,"Nachos","Fast Food",109,1],[60,"Cheese Nachos","Fast Food",139,1],
-      [61,"Veg Momos","Momos",79,1],[62,"Steamed Veg Momos","Momos",89,1],[63,"Fried Veg Momos","Momos",99,1],[64,"Paneer Momos","Momos",109,1],[65,"Fried Paneer Momos","Momos",119,1],[66,"Tandoori Paneer Momos","Momos",139,1],[67,"Afghani Momos","Momos",149,1],[68,"Schezwan Momos","Momos",129,1],[69,"Chicken Momos","Momos",119,0],[70,"Steamed Chicken Momos","Momos",129,0],[71,"Fried Chicken Momos","Momos",139,0],[72,"Tandoori Chicken Momos","Momos",159,0],[73,"Peri Peri Chicken Momos","Momos",159,0],[74,"Afghani Chicken Momos","Momos",169,0],[75,"Chicken Cheese Momos","Momos",169,0],
-      [76,"Veg Hakka Noodles","Chinese",129,1],[77,"Chicken Hakka Noodles","Chinese",159,0],[78,"Schezwan Noodles","Chinese",149,1],[79,"Schezwan Chicken Noodles","Chinese",179,0],[80,"Chilli Garlic Noodles","Chinese",149,1],[81,"Veg Chowmein","Chinese",119,1],[82,"Chicken Chowmein","Chinese",159,0],[83,"Singapore Noodles","Chinese",159,1],[84,"Veg Fried Rice","Chinese",129,1],[85,"Chicken Fried Rice","Chinese",169,0],[86,"Schezwan Fried Rice","Chinese",149,1],[87,"Schezwan Chicken Rice","Chinese",179,0],[88,"Chilli Garlic Rice","Chinese",149,1],[89,"Triple Schezwan Rice","Chinese",199,1],[90,"Paneer Fried Rice","Chinese",159,1],
-      [91,"Veg Manchurian","Chinese",139,1],[92,"Dry Veg Manchurian","Chinese",149,1],[93,"Chicken Manchurian","Chinese",179,0],[94,"Chilli Paneer","Chinese",169,1],[95,"Chilli Chicken","Chinese",189,0],[96,"Honey Chilli Potato","Chinese",149,1],[97,"Crispy Corn","Chinese",139,1],[98,"Crispy Honey Chilli Potato","Chinese",159,1],[99,"Dragon Paneer","Chinese",179,1],[100,"Dragon Chicken","Chinese",199,0],
-      [101,"Veg Spring Roll","Chinese",99,1],[102,"Chicken Spring Roll","Chinese",139,0],[103,"Veg Chilli Momos","Chinese",129,1],[104,"Chicken Chilli Momos","Chinese",159,0],[105,"Paneer Chilli","Chinese",169,1],[106,"Garlic Paneer","Chinese",179,1],[107,"Garlic Chicken","Chinese",199,0],[108,"Black Pepper Paneer","Chinese",179,1],[109,"Black Pepper Chicken","Chinese",199,0],[110,"Hot Garlic Chicken","Chinese",209,0],
-      [111,"Veg Biryani","Biryani",149,1],[112,"Hyderabadi Veg Biryani","Biryani",169,1],[113,"Paneer Biryani","Biryani",189,1],[114,"Paneer Tikka Biryani","Biryani",219,1],[115,"Veg Dum Biryani","Biryani",179,1],[116,"Mushroom Biryani","Biryani",189,1],[117,"Soya Chaap Biryani","Biryani",199,1],[118,"Kathal Biryani","Biryani",199,1],[119,"Egg Biryani","Biryani",169,0],[120,"Chicken Biryani","Biryani",219,0],[121,"Chicken Dum Biryani","Biryani",239,0],[122,"Hyderabadi Chicken Biryani","Biryani",249,0],[123,"Chicken Tikka Biryani","Biryani",259,0],[124,"Awadhi Chicken Biryani","Biryani",259,0],[125,"Mutton Biryani","Biryani",299,0],[126,"Mutton Dum Biryani","Biryani",319,0],[127,"Hyderabadi Mutton Biryani","Biryani",329,0],[128,"Egg Chicken Biryani","Biryani",249,0],[129,"Fish Biryani","Biryani",299,0],[130,"Prawn Biryani","Biryani",329,0],
-      [131,"Plain Rice","Rice",79,1],[132,"Jeera Rice","Rice",99,1],[133,"Steamed Rice","Rice",89,1],[134,"Veg Pulao","Rice",119,1],[135,"Peas Pulao","Rice",109,1],[136,"Kashmiri Pulao","Rice",149,1],[137,"Paneer Pulao","Rice",149,1],[138,"Mushroom Pulao","Rice",149,1],[139,"Lemon Rice","Rice",99,1],[140,"Curd Rice","Rice",99,1],[141,"Tomato Rice","Rice",109,1],[142,"Coconut Rice","Rice",119,1],[143,"Dal Khichdi","Rice",129,1],[144,"Veg Khichdi","Rice",119,1],[145,"Dal Palak Khichdi","Rice",139,1],
-      [146,"Dal Tadka","North Indian",119,1],[147,"Dal Fry","North Indian",109,1],[148,"Dal Makhani","North Indian",159,1],[149,"Dal Bukhara","North Indian",179,1],[150,"Rajma Masala","North Indian",139,1],[151,"Chole Masala","North Indian",129,1],[152,"Chana Masala","North Indian",129,1],[153,"Aloo Jeera","North Indian",109,1],[154,"Aloo Gobhi","North Indian",129,1],[155,"Aloo Matar","North Indian",129,1],[156,"Mix Veg","North Indian",139,1],[157,"Veg Kolhapuri","North Indian",159,1],[158,"Veg Handi","North Indian",159,1],[159,"Bhindi Masala","North Indian",139,1],[160,"Baingan Bharta","North Indian",139,1],
-      [161,"Shahi Paneer","Paneer",169,1],[162,"Paneer Butter Masala","Paneer",179,1],[163,"Kadhai Paneer","Paneer",179,1],[164,"Paneer Tikka Masala","Paneer",189,1],[165,"Palak Paneer","Paneer",169,1],[166,"Matar Paneer","Paneer",159,1],[167,"Paneer Do Pyaza","Paneer",179,1],[168,"Paneer Lababdar","Paneer",189,1],[169,"Paneer Korma","Paneer",199,1],[170,"Paneer Handi","Paneer",189,1],[171,"Paneer Pasanda","Paneer",199,1],[172,"Achari Paneer","Paneer",179,1],[173,"Malai Paneer","Paneer",189,1],[174,"Dhaba Paneer","Paneer",179,1],[175,"Afghani Paneer","Paneer",199,1],
-      [176,"Malai Kofta","Main Course",179,1],[177,"Veg Kofta Curry","Main Course",159,1],[178,"Navratan Korma","Main Course",179,1],[179,"Mushroom Masala","Main Course",169,1],[180,"Mushroom Do Pyaza","Main Course",179,1],[181,"Soya Chaap Masala","Main Course",169,1],[182,"Afghani Chaap","Main Course",189,1],[183,"Tandoori Chaap","Main Course",189,1],[184,"Chaap Butter Masala","Main Course",199,1],[185,"Chaap Kadhai","Main Course",189,1],
-      [186,"Butter Chicken","Chicken",229,0],[187,"Kadhai Chicken","Chicken",229,0],[188,"Chicken Curry","Chicken",219,0],[189,"Chicken Tikka Masala","Chicken",239,0],[190,"Chicken Handi","Chicken",249,0],[191,"Chicken Do Pyaza","Chicken",239,0],[192,"Chicken Lababdar","Chicken",249,0],[193,"Chicken Korma","Chicken",259,0],[194,"Chicken Saagwala","Chicken",239,0],[195,"Chicken Rara","Chicken",269,0],[196,"Chicken Changezi","Chicken",259,0],[197,"Chicken Afghani","Chicken",269,0],[198,"Chicken Kali Mirch","Chicken",259,0],[199,"Chicken Patiala","Chicken",279,0],[200,"Dhaba Chicken","Chicken",239,0],
-      [201,"Chicken Tikka","Chicken Starters",199,0],[202,"Chicken Malai Tikka","Chicken Starters",219,0],[203,"Chicken Seekh Kebab","Chicken Starters",219,0],[204,"Chicken Reshmi Kebab","Chicken Starters",229,0],[205,"Chicken Tangdi","Chicken Starters",219,0],[206,"Tandoori Chicken Half","Chicken Starters",249,0],[207,"Tandoori Chicken Full","Chicken Starters",449,0],[208,"Chicken Afghani Tikka","Chicken Starters",239,0],[209,"Chicken Haryali Tikka","Chicken Starters",229,0],[210,"Chicken Achari Tikka","Chicken Starters",229,0],
-      [211,"Mutton Curry","Mutton",299,0],[212,"Mutton Rogan Josh","Mutton",319,0],[213,"Mutton Korma","Mutton",329,0],[214,"Mutton Handi","Mutton",319,0],[215,"Mutton Do Pyaza","Mutton",319,0],[216,"Mutton Rara","Mutton",339,0],[217,"Mutton Keema","Mutton",299,0],[218,"Mutton Nihari","Mutton",319,0],[219,"Mutton Masala","Mutton",319,0],[220,"Mutton Kadhai","Mutton",329,0],
-      [221,"Fish Curry","Seafood",249,0],[222,"Fish Fry","Seafood",229,0],[223,"Fish Tikka","Seafood",259,0],[224,"Fish Amritsari","Seafood",269,0],[225,"Chilli Fish","Seafood",269,0],[226,"Garlic Fish","Seafood",279,0],[227,"Fish Masala","Seafood",259,0],[228,"Prawn Curry","Seafood",299,0],[229,"Chilli Prawns","Seafood",319,0],[230,"Prawn Fry","Seafood",309,0],
-      [231,"Tandoori Roti","Indian Bread",25,1],[232,"Butter Roti","Indian Bread",30,1],[233,"Plain Naan","Indian Bread",45,1],[234,"Butter Naan","Indian Bread",55,1],[235,"Garlic Naan","Indian Bread",65,1],[236,"Cheese Naan","Indian Bread",89,1],[237,"Paneer Naan","Indian Bread",89,1],[238,"Amritsari Kulcha","Indian Bread",79,1],[239,"Aloo Kulcha","Indian Bread",69,1],[240,"Paneer Kulcha","Indian Bread",89,1],[241,"Missi Roti","Indian Bread",45,1],[242,"Rumali Roti","Indian Bread",35,1],[243,"Lachha Paratha","Indian Bread",59,1],[244,"Pudina Paratha","Indian Bread",59,1],[245,"Methi Paratha","Indian Bread",59,1],
-      [246,"Aloo Paratha","Paratha",69,1],[247,"Paneer Paratha","Paratha",89,1],[248,"Gobi Paratha","Paratha",69,1],[249,"Mix Paratha","Paratha",79,1],[250,"Onion Paratha","Paratha",69,1],[251,"Mooli Paratha","Paratha",69,1],[252,"Cheese Paratha","Paratha",99,1],[253,"Chicken Keema Paratha","Paratha",149,0],[254,"Egg Paratha","Paratha",109,0],[255,"Stuffed Paratha","Paratha",89,1],
-      [256,"Samosa","Snacks",20,1],[257,"Paneer Samosa","Snacks",35,1],[258,"Aloo Samosa","Snacks",20,1],[259,"Punjabi Samosa","Snacks",25,1],[260,"Kachori","Snacks",25,1],[261,"Pyaz Kachori","Snacks",30,1],[262,"Dal Kachori","Snacks",30,1],[263,"Bread Pakora","Snacks",35,1],[264,"Aloo Pakora","Snacks",40,1],[265,"Onion Pakora","Snacks",40,1],[266,"Paneer Pakora","Snacks",80,1],[267,"Mix Pakora","Snacks",70,1],[268,"Mirchi Pakora","Snacks",50,1],[269,"Sabudana Vada","Snacks",60,1],[270,"Bread Roll","Snacks",50,1],
-      [271,"Pav Bhaji","Street Food",99,1],[272,"Cheese Pav Bhaji","Street Food",129,1],[273,"Masala Pav","Street Food",79,1],[274,"Vada Pav","Street Food",49,1],[275,"Cheese Vada Pav","Street Food",69,1],[276,"Dabeli","Street Food",49,1],[277,"Misal Pav","Street Food",99,1],[278,"Chole Kulche","Street Food",89,1],[279,"Chole Bhature","Street Food",129,1],[280,"Aloo Puri","Street Food",89,1],[281,"Bedmi Puri","Street Food",99,1],[282,"Litti Chokha","Street Food",119,1],[283,"Bun Maska","Street Food",59,1],[284,"Bun Tikki","Street Food",69,1],[285,"Kathi Roll","Street Food",109,1],
-      [286,"Pani Puri","Chaat",49,1],[287,"Dahi Puri","Chaat",69,1],[288,"Bhel Puri","Chaat",59,1],[289,"Sev Puri","Chaat",59,1],[290,"Papdi Chaat","Chaat",69,1],[291,"Aloo Tikki Chaat","Chaat",69,1],[292,"Dahi Bhalla","Chaat",79,1],[293,"Raj Kachori","Chaat",89,1],[294,"Chole Tikki","Chaat",79,1],[295,"Samosa Chaat","Chaat",69,1],[296,"Basket Chaat","Chaat",99,1],[297,"Corn Chaat","Chaat",69,1],[298,"Fruit Chaat","Chaat",79,1],[299,"Paneer Tikka Chaat","Chaat",109,1],[300,"Papdi Dahi Chaat","Chaat",79,1],
-      [301,"Veg Sandwich","Sandwich",69,1],[302,"Cheese Sandwich","Sandwich",89,1],[303,"Grilled Sandwich","Sandwich",99,1],[304,"Bombay Sandwich","Sandwich",89,1],[305,"Club Sandwich","Sandwich",129,1],[306,"Paneer Sandwich","Sandwich",109,1],[307,"Paneer Tikka Sandwich","Sandwich",129,1],[308,"Corn Cheese Sandwich","Sandwich",109,1],[309,"Mushroom Sandwich","Sandwich",109,1],[310,"Veg Mayo Sandwich","Sandwich",79,1],[311,"Chicken Sandwich","Sandwich",119,0],[312,"Chicken Cheese Sandwich","Sandwich",139,0],[313,"Grilled Chicken Sandwich","Sandwich",149,0],[314,"Chicken Club Sandwich","Sandwich",169,0],[315,"BBQ Chicken Sandwich","Sandwich",159,0],
-      [316,"Veg Wrap","Wraps",89,1],[317,"Paneer Wrap","Wraps",109,1],[318,"Paneer Tikka Wrap","Wraps",129,1],[319,"Mexican Wrap","Wraps",119,1],[320,"Cheese Wrap","Wraps",109,1],[321,"Soya Chaap Wrap","Wraps",119,1],[322,"Egg Wrap","Wraps",99,0],[323,"Chicken Wrap","Wraps",129,0],[324,"Chicken Tikka Wrap","Wraps",149,0],[325,"Chicken Seekh Wrap","Wraps",149,0],[326,"BBQ Chicken Wrap","Wraps",159,0],[327,"Peri Peri Chicken Wrap","Wraps",159,0],[328,"Chicken Cheese Wrap","Wraps",169,0],[329,"Shawarma","Shawarma",119,0],[330,"Chicken Shawarma","Shawarma",149,0],
-      [331,"White Sauce Pasta","Pasta",149,1],[332,"Red Sauce Pasta","Pasta",139,1],[333,"Pink Sauce Pasta","Pasta",159,1],[334,"Arrabbiata Pasta","Pasta",149,1],[335,"Alfredo Pasta","Pasta",169,1],[336,"Pesto Pasta","Pasta",179,1],[337,"Cheese Pasta","Pasta",159,1],[338,"Mushroom Pasta","Pasta",169,1],[339,"Paneer Pasta","Pasta",179,1],[340,"Mexican Pasta","Pasta",169,1],[341,"Veg Penne Pasta","Pasta",149,1],[342,"Chicken Pasta","Pasta",189,0],[343,"Chicken Alfredo Pasta","Pasta",199,0],[344,"Chicken Arrabbiata Pasta","Pasta",189,0],[345,"Chicken Pesto Pasta","Pasta",209,0],
-      [346,"Veg Manchow Soup","Soup",89,1],[347,"Veg Hot & Sour Soup","Soup",89,1],[348,"Sweet Corn Soup","Soup",89,1],[349,"Tomato Soup","Soup",79,1],[350,"Mushroom Soup","Soup",99,1],[351,"Lemon Coriander Soup","Soup",89,1],[352,"Clear Vegetable Soup","Soup",79,1],[353,"Chicken Manchow Soup","Soup",119,0],[354,"Chicken Hot & Sour Soup","Soup",119,0],[355,"Chicken Sweet Corn Soup","Soup",119,0],[356,"Chicken Clear Soup","Soup",109,0],[357,"Cream of Chicken Soup","Soup",129,0],
-      [358,"Idli","South Indian",59,1],[359,"Idli Sambar","South Indian",79,1],[360,"Fried Idli","South Indian",89,1],[361,"Masala Dosa","South Indian",99,1],[362,"Plain Dosa","South Indian",79,1],[363,"Butter Dosa","South Indian",99,1],[364,"Cheese Dosa","South Indian",129,1],[365,"Paneer Dosa","South Indian",139,1],[366,"Mysore Masala Dosa","South Indian",119,1],[367,"Rava Dosa","South Indian",109,1],[368,"Onion Rava Dosa","South Indian",119,1],[369,"Paper Dosa","South Indian",109,1],[370,"Uttapam","South Indian",89,1],[371,"Onion Uttapam","South Indian",99,1],[372,"Paneer Uttapam","South Indian",119,1],[373,"Medu Vada","South Indian",69,1],[374,"Vada Sambar","South Indian",79,1],[375,"Pongal","South Indian",89,1],[376,"Lemon Rice","South Indian",89,1],[377,"Curd Rice","South Indian",89,1],[378,"Tomato Rice","South Indian",89,1],[379,"Filter Coffee","South Indian",69,1],[380,"South Indian Combo","South Indian",149,1],
-      [381,"Poha","Breakfast",59,1],[382,"Kanda Poha","Breakfast",69,1],[383,"Vegetable Upma","Breakfast",69,1],[384,"Masala Upma","Breakfast",79,1],[385,"Sabudana Khichdi","Breakfast",89,1],[386,"Aloo Puri","Breakfast",89,1],[387,"Chole Puri","Breakfast",99,1],[388,"Stuffed Paratha Combo","Breakfast",119,1],[389,"Bread Omelette","Breakfast",89,1],[390,"Masala Omelette","Breakfast",79,1],[391,"Cheese Omelette","Breakfast",99,1],[392,"Egg Bhurji","Breakfast",99,0],[393,"Boiled Eggs","Breakfast",59,0],[394,"Scrambled Eggs","Breakfast",99,0],[395,"Pancakes","Breakfast",129,1],[396,"French Toast","Breakfast",119,1],[397,"Cornflakes","Breakfast",89,1],[398,"Oatmeal","Breakfast",99,1],[399,"Granola Bowl","Breakfast",149,1],[400,"Breakfast Combo","Breakfast",159,1],
-      [401,"Gulab Jamun","Dessert",59,1],[402,"Rasgulla","Dessert",59,1],[403,"Rasmalai","Dessert",89,1],[404,"Jalebi","Dessert",69,1],[405,"Imarti","Dessert",79,1],[406,"Rabri","Dessert",89,1],[407,"Kheer","Dessert",79,1],[408,"Gajar Halwa","Dessert",89,1],[409,"Moong Dal Halwa","Dessert",99,1],[410,"Shahi Tukda","Dessert",109,1],[411,"Malpua","Dessert",99,1],[412,"Kulfi","Dessert",79,1],[413,"Kesar Kulfi","Dessert",99,1],[414,"Pista Kulfi","Dessert",99,1],[415,"Falooda","Dessert",129,1],[416,"Brownie","Dessert",99,1],[417,"Chocolate Brownie","Dessert",119,1],[418,"Brownie with Ice Cream","Dessert",159,1],
-      [419,"Chocolate Cake","Cake",119,1],[420,"Black Forest Cake","Cake",149,1],[421,"Red Velvet Cake","Cake",169,1],[422,"Pineapple Cake","Cake",149,1],[423,"Vanilla Cake","Cake",129,1],[424,"Chocolate Truffle Cake","Cake",179,1],[425,"Cheesecake","Cake",199,1],[426,"Donut","Bakery",59,1],[427,"Chocolate Donut","Bakery",69,1],[428,"Glazed Donut","Bakery",59,1],[429,"Muffin","Bakery",59,1],[430,"Chocolate Muffin","Bakery",69,1],
-      [431,"Mango Shake","Shake",109,1],[432,"Banana Shake","Shake",99,1],[433,"Strawberry Shake","Shake",109,1],[434,"Chocolate Shake","Shake",119,1],[435,"Vanilla Shake","Shake",99,1],[436,"Oreo Shake","Shake",129,1],[437,"KitKat Shake","Shake",139,1],[438,"Cold Coffee","Shake",109,1],[439,"Cold Coffee with Ice Cream","Shake",139,1],[440,"Peanut Butter Shake","Shake",129,1],[441,"Dry Fruit Shake","Shake",149,1],[442,"Rose Shake","Shake",109,1],[443,"Butterscotch Shake","Shake",119,1],[444,"Mango Lassi","Lassi",89,1],[445,"Sweet Lassi","Lassi",79,1],[446,"Salted Lassi","Lassi",69,1],[447,"Rose Lassi","Lassi",89,1],[448,"Dry Fruit Lassi","Lassi",119,1],[449,"Masala Chaas","Beverage",59,1],[450,"Sweet Chaas","Beverage",59,1],
-      [451,"Masala Tea","Tea",39,1],[452,"Ginger Tea","Tea",49,1],[453,"Elaichi Tea","Tea",49,1],[454,"Lemon Tea","Tea",49,1],[455,"Green Tea","Tea",59,1],[456,"Black Tea","Tea",39,1],[457,"Hot Coffee","Coffee",59,1],[458,"Black Coffee","Coffee",59,1],[459,"Cappuccino","Coffee",89,1],[460,"Latte","Coffee",99,1],[461,"Americano","Coffee",89,1],[462,"Mocha","Coffee",109,1],[463,"Espresso","Coffee",79,1],[464,"Hot Chocolate","Beverage",109,1],[465,"Fresh Lime Soda","Beverage",69,1],[466,"Sweet Lime Soda","Beverage",69,1],[467,"Mint Mojito","Mocktail",99,1],[468,"Virgin Mojito","Mocktail",99,1],[469,"Blue Lagoon","Mocktail",109,1],[470,"Strawberry Mojito","Mocktail",109,1],
-      [471,"Orange Juice","Juice",89,1],[472,"Apple Juice","Juice",99,1],[473,"Mango Juice","Juice",89,1],[474,"Pineapple Juice","Juice",89,1],[475,"Watermelon Juice","Juice",79,1],[476,"Mosambi Juice","Juice",89,1],[477,"Pomegranate Juice","Juice",119,1],[478,"Carrot Juice","Juice",89,1],[479,"Beetroot Juice","Juice",89,1],[480,"Mixed Fruit Juice","Juice",109,1],[481,"Coconut Water","Juice",69,1],[482,"Sugarcane Juice","Juice",69,1],[483,"Fruit Punch","Juice",119,1],[484,"ABC Juice","Juice",129,1],[485,"Lemonade","Juice",69,1],
-      [486,"Fresh Fruit Salad","Healthy Food",99,1],[487,"Mixed Fruit Bowl","Healthy Food",129,1],[488,"Greek Salad","Healthy Food",149,1],[489,"Caesar Salad","Healthy Food",159,1],[490,"Veg Salad","Healthy Food",99,1],[491,"Sprouts Salad","Healthy Food",109,1],[492,"Paneer Salad","Healthy Food",149,1],[493,"Chicken Salad","Healthy Food",179,0],[494,"Corn Salad","Healthy Food",109,1],[495,"Quinoa Salad","Healthy Food",159,1],[496,"Fruit Yogurt Bowl","Healthy Food",129,1],[497,"Oats Bowl","Healthy Food",119,1],[498,"Granola Fruit Bowl","Healthy Food",149,1],[499,"Protein Bowl","Healthy Food",179,1],[500,"Veg Protein Bowl","Healthy Food",159,1],
-      [501,"Almonds","Dry Fruits",120,1],[502,"Cashews","Dry Fruits",140,1],[503,"Walnuts","Dry Fruits",150,1],[504,"Pistachios","Dry Fruits",160,1],[505,"Raisins","Dry Fruits",90,1],[506,"Dates","Dry Fruits",100,1],[507,"Dried Figs","Dry Fruits",140,1],[508,"Makhana","Dry Snacks",100,1],[509,"Roasted Chana","Dry Snacks",60,1],[510,"Roasted Peanuts","Dry Snacks",60,1],[511,"Banana Chips","Dry Snacks",80,1],[512,"Masala Peanuts","Dry Snacks",70,1],[513,"Bhujia","Dry Snacks",60,1],[514,"Mixture Namkeen","Dry Snacks",70,1],[515,"Murmura","Dry Snacks",50,1],
-      [516,"Mango","Fruits",80,1],[517,"Apple","Fruits",120,1],[518,"Banana","Fruits",60,1],[519,"Orange","Fruits",80,1],[520,"Grapes","Fruits",100,1],[521,"Watermelon","Fruits",60,1],[522,"Papaya","Fruits",70,1],[523,"Guava","Fruits",80,1],[524,"Pomegranate","Fruits",140,1],[525,"Pineapple","Fruits",100,1],[526,"Kiwi","Fruits",150,1],[527,"Dragon Fruit","Fruits",120,1],[528,"Strawberry","Fruits",180,1],[529,"Litchi","Fruits",160,1],[530,"Chikoo","Fruits",90,1],[531,"Pear","Fruits",120,1],[532,"Peach","Fruits",140,1],[533,"Plum","Fruits",130,1],[534,"Coconut","Fruits",60,1],[535,"Muskmelon","Fruits",70,1]
-    ];
+    // 535 DATASET ITEMS
+    const RAW_ITEMS = [
+  { "id": 1, "name": "Aloo Tikki Burger", "category": "Burger", "price": 59, "image": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600", "rating": 4.7, "veg": "veg" },
+  { "id": 2, "name": "Veg Burger", "category": "Burger", "price": 69, "image": "https://images.unsplash.com/photo-1550547660-d9450f859349?w=600", "rating": 4.3, "veg": "veg" },
+  { "id": 3, "name": "Cheese Burger", "category": "Burger", "price": 89, "image": "https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?w=600", "rating": 5.0, "veg": "veg" },
+  { "id": 4, "name": "Double Cheese Burger", "category": "Burger", "price": 119, "image": "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=600", "rating": 4.6, "veg": "veg" },
+  { "id": 5, "name": "Paneer Burger", "category": "Burger", "price": 99, "image": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600", "rating": 4.2, "veg": "veg" },
+  { "id": 6, "name": "Crispy Veg Burger", "category": "Burger", "price": 89, "image": "https://images.unsplash.com/photo-1550547660-d9450f859349?w=600", "rating": 4.9, "veg": "veg" },
+  { "id": 7, "name": "Mexican Burger", "category": "Burger", "price": 109, "image": "https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?w=600", "rating": 4.5, "veg": "veg" },
+  { "id": 8, "name": "Peri Peri Burger", "category": "Burger", "price": 109, "image": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600", "rating": 4.1, "veg": "veg" },
+  { "id": 9, "name": "Mushroom Burger", "category": "Burger", "price": 99, "image": "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=600", "rating": 4.8, "veg": "veg" },
+  { "id": 10, "name": "Corn Cheese Burger", "category": "Burger", "price": 99, "image": "https://images.unsplash.com/photo-1550547660-d9450f859349?w=600", "rating": 4.4, "veg": "veg" },
+  { "id": 11, "name": "BBQ Veg Burger", "category": "Burger", "price": 119, "image": "https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?w=600", "rating": 4.0, "veg": "veg" },
+  { "id": 12, "name": "Maharaja Veg Burger", "category": "Burger", "price": 149, "image": "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=600", "rating": 4.7, "veg": "veg" },
+  { "id": 13, "name": "Chicken Burger", "category": "Burger", "price": 109, "image": "https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?w=600", "rating": 4.3, "veg": "nonVeg" },
+  { "id": 14, "name": "Chicken Cheese Burger", "category": "Burger", "price": 129, "image": "https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?w=600", "rating": 5.0, "veg": "nonVeg" },
+  { "id": 15, "name": "Crispy Chicken Burger", "category": "Burger", "price": 139, "image": "https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?w=600", "rating": 4.6, "veg": "nonVeg" },
+  { "id": 16, "name": "Peri Peri Chicken Burger", "category": "Burger", "price": 149, "image": "https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?w=600", "rating": 4.2, "veg": "nonVeg" },
+  { "id": 17, "name": "BBQ Chicken Burger", "category": "Burger", "price": 149, "image": "https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?w=600", "rating": 4.9, "veg": "nonVeg" },
+  { "id": 18, "name": "Tandoori Chicken Burger", "category": "Burger", "price": 159, "image": "https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?w=600", "rating": 4.5, "veg": "nonVeg" },
+  { "id": 19, "name": "Double Chicken Burger", "category": "Burger", "price": 179, "image": "https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?w=600", "rating": 4.1, "veg": "nonVeg" },
+  { "id": 20, "name": "Chicken Maharaja Burger", "category": "Burger", "price": 199, "image": "https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?w=600", "rating": 4.8, "veg": "nonVeg" },
+  { "id": 21, "name": "Margherita Pizza", "category": "Pizza", "price": 149, "image": "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=600", "rating": 4.4, "veg": "veg" },
+  { "id": 22, "name": "Cheese Pizza", "category": "Pizza", "price": 169, "image": "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600", "rating": 4.0, "veg": "veg" },
+  { "id": 23, "name": "Onion Pizza", "category": "Pizza", "price": 159, "image": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600", "rating": 4.7, "veg": "veg" },
+  { "id": 24, "name": "Capsicum Pizza", "category": "Pizza", "price": 159, "image": "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600", "rating": 4.3, "veg": "veg" },
+  { "id": 25, "name": "Corn Pizza", "category": "Pizza", "price": 169, "image": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600", "rating": 5.0, "veg": "veg" },
+  { "id": 26, "name": "Tomato Pizza", "category": "Pizza", "price": 169, "image": "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=600", "rating": 4.6, "veg": "veg" },
+  { "id": 27, "name": "Onion Capsicum Pizza", "category": "Pizza", "price": 179, "image": "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600", "rating": 4.2, "veg": "veg" },
+  { "id": 28, "name": "Veggie Pizza", "category": "Pizza", "price": 199, "image": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600", "rating": 4.9, "veg": "veg" },
+  { "id": 29, "name": "Farmhouse Pizza", "category": "Pizza", "price": 229, "image": "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600", "rating": 4.5, "veg": "veg" },
+  { "id": 30, "name": "Paneer Pizza", "category": "Pizza", "price": 219, "image": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600", "rating": 4.1, "veg": "veg" },
+  { "id": 31, "name": "Paneer Tikka Pizza", "category": "Pizza", "price": 249, "image": "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600", "rating": 4.8, "veg": "veg" },
+  { "id": 32, "name": "Mushroom Pizza", "category": "Pizza", "price": 219, "image": "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=600", "rating": 4.4, "veg": "veg" },
+  { "id": 33, "name": "Corn Mushroom Pizza", "category": "Pizza", "price": 229, "image": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600", "rating": 4.0, "veg": "veg" },
+  { "id": 34, "name": "Mexican Pizza", "category": "Pizza", "price": 239, "image": "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600", "rating": 4.7, "veg": "veg" },
+  { "id": 35, "name": "Peri Peri Paneer Pizza", "category": "Pizza", "price": 259, "image": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600", "rating": 4.3, "veg": "veg" },
+  { "id": 36, "name": "Cheese Burst Pizza", "category": "Pizza", "price": 249, "image": "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600", "rating": 5.0, "veg": "veg" },
+  { "id": 37, "name": "Chicken Pizza", "category": "Pizza", "price": 239, "image": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600", "rating": 4.6, "veg": "nonVeg" },
+  { "id": 38, "name": "Chicken Tikka Pizza", "category": "Pizza", "price": 269, "image": "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600", "rating": 4.2, "veg": "nonVeg" },
+  { "id": 39, "name": "BBQ Chicken Pizza", "category": "Pizza", "price": 279, "image": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600", "rating": 4.9, "veg": "nonVeg" },
+  { "id": 40, "name": "Pepperoni Pizza", "category": "Pizza", "price": 299, "image": "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600", "rating": 4.5, "veg": "nonVeg" },
+  { "id": 41, "name": "French Fries", "category": "Fast Food", "price": 79, "image": "https://images.unsplash.com/photo-1576107232684-1279f3908594?w=600", "rating": 4.1, "veg": "veg" },
+  { "id": 42, "name": "Peri Peri Fries", "category": "Fast Food", "price": 99, "image": "https://images.unsplash.com/photo-1576107232684-1279f3908594?w=600", "rating": 4.8, "veg": "veg" },
+  { "id": 43, "name": "Cheese Fries", "category": "Fast Food", "price": 119, "image": "https://images.unsplash.com/photo-1576107232684-1279f3908594?w=600", "rating": 4.4, "veg": "veg" },
+  { "id": 44, "name": "Masala Fries", "category": "Fast Food", "price": 89, "image": "https://images.unsplash.com/photo-1576107232684-1279f3908594?w=600", "rating": 4.0, "veg": "veg" },
+  { "id": 45, "name": "Loaded Fries", "category": "Fast Food", "price": 149, "image": "https://images.unsplash.com/photo-1576107232684-1279f3908594?w=600", "rating": 4.7, "veg": "veg" },
+  { "id": 46, "name": "Potato Wedges", "category": "Fast Food", "price": 99, "image": "https://images.unsplash.com/photo-1576107232684-1279f3908594?w=600", "rating": 4.3, "veg": "veg" },
+  { "id": 47, "name": "Cheese Potato Wedges", "category": "Fast Food", "price": 129, "image": "https://images.unsplash.com/photo-1576107232684-1279f3908594?w=600", "rating": 5.0, "veg": "veg" },
+  { "id": 48, "name": "Garlic Bread", "category": "Fast Food", "price": 99, "image": "https://images.unsplash.com/photo-1619535860434-ba1d8fa12536?w=600", "rating": 4.6, "veg": "veg" },
+  { "id": 49, "name": "Cheese Garlic Bread", "category": "Fast Food", "price": 129, "image": "https://images.unsplash.com/photo-1619535860434-ba1d8fa12536?w=600", "rating": 4.2, "veg": "veg" },
+  { "id": 50, "name": "Chilli Cheese Toast", "category": "Fast Food", "price": 119, "image": "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=600", "rating": 4.9, "veg": "veg" },
+  { "id": 51, "name": "Veg Nuggets", "category": "Fast Food", "price": 109, "image": "https://images.unsplash.com/photo-1562967914-608f82629710?w=600", "rating": 4.5, "veg": "veg" },
+  { "id": 52, "name": "Chicken Nuggets", "category": "Fast Food", "price": 139, "image": "https://images.unsplash.com/photo-1562967914-608f82629710?w=600", "rating": 4.1, "veg": "nonVeg" },
+  { "id": 53, "name": "Chicken Popcorn", "category": "Fast Food", "price": 149, "image": "https://images.unsplash.com/photo-1562967914-608f82629710?w=600", "rating": 4.8, "veg": "nonVeg" },
+  { "id": 54, "name": "Chicken Wings", "category": "Fast Food", "price": 169, "image": "https://images.unsplash.com/photo-1562967914-608f82629710?w=600", "rating": 4.4, "veg": "nonVeg" },
+  { "id": 55, "name": "BBQ Chicken Wings", "category": "Fast Food", "price": 189, "image": "https://images.unsplash.com/photo-1562967914-608f82629710?w=600", "rating": 4.0, "veg": "nonVeg" },
+  { "id": 56, "name": "Peri Peri Wings", "category": "Fast Food", "price": 189, "image": "https://images.unsplash.com/photo-1562967914-608f82629710?w=600", "rating": 4.7, "veg": "veg" },
+  { "id": 57, "name": "Mozzarella Sticks", "category": "Fast Food", "price": 149, "image": "https://images.unsplash.com/photo-1544025162-d76694265947?w=600", "rating": 4.3, "veg": "veg" },
+  { "id": 58, "name": "Onion Rings", "category": "Fast Food", "price": 99, "image": "https://images.unsplash.com/photo-1544025162-d76694265947?w=600", "rating": 5.0, "veg": "veg" },
+  { "id": 59, "name": "Nachos", "category": "Fast Food", "price": 109, "image": "https://images.unsplash.com/photo-1513456852971-30c0b8199d4d?w=600", "rating": 4.6, "veg": "veg" },
+  { "id": 60, "name": "Cheese Nachos", "category": "Fast Food", "price": 139, "image": "https://images.unsplash.com/photo-1513456852971-30c0b8199d4d?w=600", "rating": 4.2, "veg": "veg" },
+  { "id": 61, "name": "Veg Momos", "category": "Momos", "price": 79, "image": "https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=600", "rating": 4.9, "veg": "veg" },
+  { "id": 62, "name": "Steamed Veg Momos", "category": "Momos", "price": 89, "image": "https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=600", "rating": 4.5, "veg": "veg" },
+  { "id": 63, "name": "Fried Veg Momos", "category": "Momos", "price": 99, "image": "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=600", "rating": 4.1, "veg": "veg" },
+  { "id": 64, "name": "Paneer Momos", "category": "Momos", "price": 109, "image": "https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=600", "rating": 4.8, "veg": "veg" },
+  { "id": 65, "name": "Fried Paneer Momos", "category": "Momos", "price": 119, "image": "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=600", "rating": 4.4, "veg": "veg" },
+  { "id": 66, "name": "Tandoori Paneer Momos", "category": "Momos", "price": 139, "image": "https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=600", "rating": 4.0, "veg": "veg" },
+  { "id": 67, "name": "Afghani Momos", "category": "Momos", "price": 149, "image": "https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=600", "rating": 4.7, "veg": "veg" },
+  { "id": 68, "name": "Schezwan Momos", "category": "Momos", "price": 129, "image": "https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=600", "rating": 4.3, "veg": "veg" },
+  { "id": 69, "name": "Chicken Momos", "category": "Momos", "price": 119, "image": "https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=600", "rating": 5.0, "veg": "nonVeg" },
+  { "id": 70, "name": "Steamed Chicken Momos", "category": "Momos", "price": 129, "image": "https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=600", "rating": 4.6, "veg": "nonVeg" },
+  { "id": 71, "name": "Fried Chicken Momos", "category": "Momos", "price": 139, "image": "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=600", "rating": 4.2, "veg": "nonVeg" },
+  { "id": 72, "name": "Tandoori Chicken Momos", "category": "Momos", "price": 159, "image": "https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=600", "rating": 4.9, "veg": "nonVeg" },
+  { "id": 73, "name": "Peri Peri Chicken Momos", "category": "Momos", "price": 159, "image": "https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=600", "rating": 4.5, "veg": "nonVeg" },
+  { "id": 74, "name": "Afghani Chicken Momos", "category": "Momos", "price": 169, "image": "https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=600", "rating": 4.1, "veg": "nonVeg" },
+  { "id": 75, "name": "Chicken Cheese Momos", "category": "Momos", "price": 169, "image": "https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=600", "rating": 4.8, "veg": "nonVeg" },
+  { "id": 76, "name": "Veg Hakka Noodles", "category": "Chinese", "price": 129, "image": "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=600", "rating": 4.4, "veg": "veg" },
+  { "id": 77, "name": "Chicken Hakka Noodles", "category": "Chinese", "price": 159, "image": "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=600", "rating": 4.0, "veg": "nonVeg" },
+  { "id": 78, "name": "Schezwan Noodles", "category": "Chinese", "price": 149, "image": "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=600", "rating": 4.7, "veg": "veg" },
+  { "id": 79, "name": "Schezwan Chicken Noodles", "category": "Chinese", "price": 179, "image": "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=600", "rating": 4.3, "veg": "nonVeg" },
+  { "id": 80, "name": "Chilli Garlic Noodles", "category": "Chinese", "price": 149, "image": "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=600", "rating": 5.0, "veg": "veg" },
+  { "id": 81, "name": "Veg Chowmein", "category": "Chinese", "price": 119, "image": "https://images.unsplash.com/photo-1612927601601-6638404737ce?w=600", "rating": 4.6, "veg": "veg" },
+  { "id": 82, "name": "Chicken Chowmein", "category": "Chinese", "price": 159, "image": "https://images.unsplash.com/photo-1612927601601-6638404737ce?w=600", "rating": 4.2, "veg": "nonVeg" },
+  { "id": 83, "name": "Singapore Noodles", "category": "Chinese", "price": 159, "image": "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=600", "rating": 4.9, "veg": "veg" },
+  { "id": 84, "name": "Veg Fried Rice", "category": "Chinese", "price": 129, "image": "https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=600", "rating": 4.5, "veg": "veg" },
+  { "id": 85, "name": "Chicken Fried Rice", "category": "Chinese", "price": 169, "image": "https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=600", "rating": 4.1, "veg": "nonVeg" },
+  { "id": 86, "name": "Schezwan Fried Rice", "category": "Chinese", "price": 149, "image": "https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=600", "rating": 4.8, "veg": "veg" },
+  { "id": 87, "name": "Schezwan Chicken Rice", "category": "Chinese", "price": 179, "image": "https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=600", "rating": 4.4, "veg": "nonVeg" },
+  { "id": 88, "name": "Chilli Garlic Rice", "category": "Chinese", "price": 149, "image": "https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=600", "rating": 4.0, "veg": "veg" },
+  { "id": 89, "name": "Triple Schezwan Rice", "category": "Chinese", "price": 199, "image": "https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=600", "rating": 4.7, "veg": "veg" },
+  { "id": 90, "name": "Paneer Fried Rice", "category": "Chinese", "price": 159, "image": "https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=600", "rating": 4.3, "veg": "veg" },
+  { "id": 91, "name": "Veg Manchurian", "category": "Chinese", "price": 139, "image": "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=600", "rating": 5.0, "veg": "veg" },
+  { "id": 92, "name": "Dry Veg Manchurian", "category": "Chinese", "price": 149, "image": "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=600", "rating": 4.6, "veg": "veg" },
+  { "id": 93, "name": "Chicken Manchurian", "category": "Chinese", "price": 179, "image": "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=600", "rating": 4.2, "veg": "nonVeg" },
+  { "id": 94, "name": "Chilli Paneer", "category": "Chinese", "price": 169, "image": "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=600", "rating": 4.9, "veg": "veg" },
+  { "id": 95, "name": "Chilli Chicken", "category": "Chinese", "price": 189, "image": "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=600", "rating": 4.5, "veg": "nonVeg" },
+  { "id": 96, "name": "Honey Chilli Potato", "category": "Chinese", "price": 149, "image": "https://images.unsplash.com/photo-1576107232684-1279f3908594?w=600", "rating": 4.1, "veg": "veg" },
+  { "id": 97, "name": "Crispy Corn", "category": "Chinese", "price": 139, "image": "https://images.unsplash.com/photo-1551754655-cd27e38d2076?w=600", "rating": 4.8, "veg": "veg" },
+  { "id": 98, "name": "Crispy Honey Chilli Potato", "category": "Chinese", "price": 159, "image": "https://images.unsplash.com/photo-1576107232684-1279f3908594?w=600", "rating": 4.4, "veg": "veg" },
+  { "id": 99, "name": "Dragon Paneer", "category": "Chinese", "price": 179, "image": "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=600", "rating": 4.0, "veg": "veg" },
+  { "id": 100, "name": "Dragon Chicken", "category": "Chinese", "price": 199, "image": "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=600", "rating": 4.7, "veg": "nonVeg" },
+  { "id": 101, "name": "Veg Spring Roll", "category": "Chinese", "price": 99, "image": "https://images.unsplash.com/photo-1544025162-d76694265947?w=600", "rating": 4.3, "veg": "veg" },
+  { "id": 102, "name": "Chicken Spring Roll", "category": "Chinese", "price": 139, "image": "https://images.unsplash.com/photo-1544025162-d76694265947?w=600", "rating": 5.0, "veg": "nonVeg" },
+  { "id": 103, "name": "Veg Chilli Momos", "category": "Chinese", "price": 129, "image": "https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=600", "rating": 4.6, "veg": "veg" },
+  { "id": 104, "name": "Chicken Chilli Momos", "category": "Chinese", "price": 159, "image": "https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=600", "rating": 4.2, "veg": "nonVeg" },
+  { "id": 105, "name": "Paneer Chilli", "category": "Chinese", "price": 169, "image": "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=600", "rating": 4.9, "veg": "veg" },
+  { "id": 106, "name": "Garlic Paneer", "category": "Chinese", "price": 179, "image": "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=600", "rating": 4.5, "veg": "veg" },
+  { "id": 107, "name": "Garlic Chicken", "category": "Chinese", "price": 199, "image": "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=600", "rating": 4.1, "veg": "nonVeg" },
+  { "id": 108, "name": "Black Pepper Paneer", "category": "Chinese", "price": 179, "image": "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=600", "rating": 4.8, "veg": "veg" },
+  { "id": 109, "name": "Black Pepper Chicken", "category": "Chinese", "price": 199, "image": "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=600", "rating": 4.4, "veg": "nonVeg" },
+  { "id": 110, "name": "Hot Garlic Chicken", "category": "Chinese", "price": 209, "image": "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=600", "rating": 4.0, "veg": "nonVeg" },
+  { "id": 111, "name": "Veg Biryani", "category": "Biryani", "price": 149, "image": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600", "rating": 4.7, "veg": "veg" },
+  { "id": 112, "name": "Hyderabadi Veg Biryani", "category": "Biryani", "price": 169, "image": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600", "rating": 4.3, "veg": "veg" },
+  { "id": 113, "name": "Paneer Biryani", "category": "Biryani", "price": 189, "image": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600", "rating": 5.0, "veg": "veg" },
+  { "id": 114, "name": "Paneer Tikka Biryani", "category": "Biryani", "price": 219, "image": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600", "rating": 4.6, "veg": "veg" },
+  { "id": 115, "name": "Veg Dum Biryani", "category": "Biryani", "price": 179, "image": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600", "rating": 4.2, "veg": "veg" },
+  { "id": 116, "name": "Mushroom Biryani", "category": "Biryani", "price": 189, "image": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600", "rating": 4.9, "veg": "veg" },
+  { "id": 117, "name": "Soya Chaap Biryani", "category": "Biryani", "price": 199, "image": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600", "rating": 4.5, "veg": "veg" },
+  { "id": 118, "name": "Kathal Biryani", "category": "Biryani", "price": 199, "image": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600", "rating": 4.1, "veg": "veg" },
+  { "id": 119, "name": "Egg Biryani", "category": "Biryani", "price": 169, "image": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600", "rating": 4.8, "veg": "nonVeg" },
+  { "id": 120, "name": "Chicken Biryani", "category": "Biryani", "price": 219, "image": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600", "rating": 4.4, "veg": "nonVeg" },
+  { "id": 121, "name": "Chicken Dum Biryani", "category": "Biryani", "price": 239, "image": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600", "rating": 4.0, "veg": "nonVeg" },
+  { "id": 122, "name": "Hyderabadi Chicken Biryani", "category": "Biryani", "price": 249, "image": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600", "rating": 4.7, "veg": "nonVeg" },
+  { "id": 123, "name": "Chicken Tikka Biryani", "category": "Biryani", "price": 259, "image": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600", "rating": 4.3, "veg": "nonVeg" },
+  { "id": 124, "name": "Awadhi Chicken Biryani", "category": "Biryani", "price": 259, "image": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600", "rating": 5.0, "veg": "nonVeg" },
+  { "id": 125, "name": "Mutton Biryani", "category": "Biryani", "price": 299, "image": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600", "rating": 4.6, "veg": "nonVeg" },
+  { "id": 126, "name": "Mutton Dum Biryani", "category": "Biryani", "price": 319, "image": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600", "rating": 4.2, "veg": "nonVeg" },
+  { "id": 127, "name": "Hyderabadi Mutton Biryani", "category": "Biryani", "price": 329, "image": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600", "rating": 4.9, "veg": "nonVeg" },
+  { "id": 128, "name": "Egg Chicken Biryani", "category": "Biryani", "price": 249, "image": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600", "rating": 4.5, "veg": "nonVeg" },
+  { "id": 129, "name": "Fish Biryani", "category": "Biryani", "price": 299, "image": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600", "rating": 4.1, "veg": "nonVeg" },
+  { "id": 130, "name": "Prawn Biryani", "category": "Biryani", "price": 329, "image": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600", "rating": 4.8, "veg": "nonVeg" },
+  { "id": 131, "name": "Plain Rice", "category": "Rice", "price": 79, "image": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600", "rating": 4.4, "veg": "veg" },
+  { "id": 132, "name": "Jeera Rice", "category": "Rice", "price": 99, "image": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600", "rating": 4.0, "veg": "veg" },
+  { "id": 133, "name": "Steamed Rice", "category": "Rice", "price": 89, "image": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600", "rating": 4.7, "veg": "veg" },
+  { "id": 134, "name": "Veg Pulao", "category": "Rice", "price": 119, "image": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600", "rating": 4.3, "veg": "veg" },
+  { "id": 135, "name": "Peas Pulao", "category": "Rice", "price": 109, "image": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600", "rating": 5.0, "veg": "veg" },
+  { "id": 136, "name": "Kashmiri Pulao", "category": "Rice", "price": 149, "image": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600", "rating": 4.6, "veg": "veg" },
+  { "id": 137, "name": "Paneer Pulao", "category": "Rice", "price": 149, "image": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600", "rating": 4.2, "veg": "veg" },
+  { "id": 138, "name": "Mushroom Pulao", "category": "Rice", "price": 149, "image": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600", "rating": 4.9, "veg": "veg" },
+  { "id": 139, "name": "Lemon Rice", "category": "Rice", "price": 99, "image": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600", "rating": 4.5, "veg": "veg" },
+  { "id": 140, "name": "Curd Rice", "category": "Rice", "price": 99, "image": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600", "rating": 4.1, "veg": "veg" },
+  { "id": 141, "name": "Tomato Rice", "category": "Rice", "price": 109, "image": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600", "rating": 4.8, "veg": "veg" },
+  { "id": 142, "name": "Coconut Rice", "category": "Rice", "price": 119, "image": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600", "rating": 4.4, "veg": "veg" },
+  { "id": 143, "name": "Dal Khichdi", "category": "Rice", "price": 129, "image": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600", "rating": 4.0, "veg": "veg" },
+  { "id": 144, "name": "Veg Khichdi", "category": "Rice", "price": 119, "image": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600", "rating": 4.7, "veg": "veg" },
+  { "id": 145, "name": "Dal Palak Khichdi", "category": "Rice", "price": 139, "image": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600", "rating": 4.3, "veg": "veg" },
+  { "id": 146, "name": "Dal Tadka", "category": "North Indian", "price": 119, "image": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600", "rating": 5.0, "veg": "veg" },
+  { "id": 147, "name": "Dal Fry", "category": "North Indian", "price": 109, "image": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600", "rating": 4.6, "veg": "veg" },
+  { "id": 148, "name": "Dal Makhani", "category": "North Indian", "price": 159, "image": "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=600", "rating": 4.2, "veg": "veg" },
+  { "id": 149, "name": "Dal Bukhara", "category": "North Indian", "price": 179, "image": "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=600", "rating": 4.9, "veg": "veg" },
+  { "id": 150, "name": "Rajma Masala", "category": "North Indian", "price": 139, "image": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600", "rating": 4.5, "veg": "veg" },
+  { "id": 151, "name": "Chole Masala", "category": "North Indian", "price": 129, "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600", "rating": 4.1, "veg": "veg" },
+  { "id": 152, "name": "Chana Masala", "category": "North Indian", "price": 129, "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600", "rating": 4.8, "veg": "veg" },
+  { "id": 153, "name": "Aloo Jeera", "category": "North Indian", "price": 109, "image": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600", "rating": 4.4, "veg": "veg" },
+  { "id": 154, "name": "Aloo Gobhi", "category": "North Indian", "price": 129, "image": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600", "rating": 4.0, "veg": "veg" },
+  { "id": 155, "name": "Aloo Matar", "category": "North Indian", "price": 129, "image": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600", "rating": 4.7, "veg": "veg" },
+  { "id": 156, "name": "Mix Veg", "category": "North Indian", "price": 139, "image": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600", "rating": 4.3, "veg": "veg" },
+  { "id": 157, "name": "Veg Kolhapuri", "category": "North Indian", "price": 159, "image": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600", "rating": 5.0, "veg": "veg" },
+  { "id": 158, "name": "Veg Handi", "category": "North Indian", "price": 159, "image": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600", "rating": 4.6, "veg": "veg" },
+  { "id": 159, "name": "Bhindi Masala", "category": "North Indian", "price": 139, "image": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600", "rating": 4.2, "veg": "veg" },
+  { "id": 160, "name": "Baingan Bharta", "category": "North Indian", "price": 139, "image": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600", "rating": 4.9, "veg": "veg" },
+  { "id": 161, "name": "Shahi Paneer", "category": "Paneer", "price": 169, "image": "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=600", "rating": 4.5, "veg": "veg" },
+  { "id": 162, "name": "Paneer Butter Masala", "category": "Paneer", "price": 179, "image": "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=600", "rating": 4.1, "veg": "veg" },
+  { "id": 163, "name": "Kadhai Paneer", "category": "Paneer", "price": 179, "image": "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=600", "rating": 4.8, "veg": "veg" },
+  { "id": 164, "name": "Paneer Tikka Masala", "category": "Paneer", "price": 189, "image": "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=600", "rating": 4.4, "veg": "veg" },
+  { "id": 165, "name": "Palak Paneer", "category": "Paneer", "price": 169, "image": "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=600", "rating": 4.0, "veg": "veg" },
+  { "id": 166, "name": "Matar Paneer", "category": "Paneer", "price": 159, "image": "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=600", "rating": 4.7, "veg": "veg" },
+  { "id": 167, "name": "Paneer Do Pyaza", "category": "Paneer", "price": 179, "image": "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=600", "rating": 4.3, "veg": "veg" },
+  { "id": 168, "name": "Paneer Lababdar", "category": "Paneer", "price": 189, "image": "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=600", "rating": 5.0, "veg": "veg" },
+  { "id": 169, "name": "Paneer Korma", "category": "Paneer", "price": 199, "image": "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=600", "rating": 4.6, "veg": "veg" },
+  { "id": 170, "name": "Paneer Handi", "category": "Paneer", "price": 189, "image": "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=600", "rating": 4.2, "veg": "veg" },
+  { "id": 171, "name": "Paneer Pasanda", "category": "Paneer", "price": 199, "image": "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=600", "rating": 4.9, "veg": "veg" },
+  { "id": 172, "name": "Achari Paneer", "category": "Paneer", "price": 179, "image": "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=600", "rating": 4.5, "veg": "veg" },
+  { "id": 173, "name": "Malai Paneer", "category": "Paneer", "price": 189, "image": "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=600", "rating": 4.1, "veg": "veg" },
+  { "id": 174, "name": "Dhaba Paneer", "category": "Paneer", "price": 179, "image": "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=600", "rating": 4.8, "veg": "veg" },
+  { "id": 175, "name": "Afghani Paneer", "category": "Paneer", "price": 199, "image": "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=600", "rating": 4.4, "veg": "veg" },
+  { "id": 176, "name": "Malai Kofta", "category": "Main Course", "price": 179, "image": "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=600", "rating": 4.0, "veg": "veg" },
+  { "id": 177, "name": "Veg Kofta Curry", "category": "Main Course", "price": 159, "image": "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=600", "rating": 4.7, "veg": "veg" },
+  { "id": 178, "name": "Navratan Korma", "category": "Main Course", "price": 179, "image": "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=600", "rating": 4.3, "veg": "veg" },
+  { "id": 179, "name": "Mushroom Masala", "category": "Main Course", "price": 169, "image": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600", "rating": 5.0, "veg": "veg" },
+  { "id": 180, "name": "Mushroom Do Pyaza", "category": "Main Course", "price": 179, "image": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600", "rating": 4.6, "veg": "veg" },
+  { "id": 181, "name": "Soya Chaap Masala", "category": "Main Course", "price": 169, "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600", "rating": 4.2, "veg": "veg" },
+  { "id": 182, "name": "Afghani Chaap", "category": "Main Course", "price": 189, "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600", "rating": 4.9, "veg": "veg" },
+  { "id": 183, "name": "Tandoori Chaap", "category": "Main Course", "price": 189, "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600", "rating": 4.5, "veg": "veg" },
+  { "id": 184, "name": "Chaap Butter Masala", "category": "Main Course", "price": 199, "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600", "rating": 4.1, "veg": "veg" },
+  { "id": 185, "name": "Chaap Kadhai", "category": "Main Course", "price": 189, "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600", "rating": 4.8, "veg": "veg" },
+  { "id": 186, "name": "Butter Chicken", "category": "Chicken", "price": 229, "image": "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=600", "rating": 4.4, "veg": "nonVeg" },
+  { "id": 187, "name": "Kadhai Chicken", "category": "Chicken", "price": 229, "image": "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=600", "rating": 4.0, "veg": "nonVeg" },
+  { "id": 188, "name": "Chicken Curry", "category": "Chicken", "price": 219, "image": "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=600", "rating": 4.7, "veg": "nonVeg" },
+  { "id": 189, "name": "Chicken Tikka Masala", "category": "Chicken", "price": 239, "image": "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=600", "rating": 4.3, "veg": "nonVeg" },
+  { "id": 190, "name": "Chicken Handi", "category": "Chicken", "price": 249, "image": "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=600", "rating": 5.0, "veg": "nonVeg" },
+  { "id": 191, "name": "Chicken Do Pyaza", "category": "Chicken", "price": 239, "image": "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=600", "rating": 4.6, "veg": "nonVeg" },
+  { "id": 192, "name": "Chicken Lababdar", "category": "Chicken", "price": 249, "image": "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=600", "rating": 4.2, "veg": "nonVeg" },
+  { "id": 193, "name": "Chicken Korma", "category": "Chicken", "price": 259, "image": "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=600", "rating": 4.9, "veg": "nonVeg" },
+  { "id": 194, "name": "Chicken Saagwala", "category": "Chicken", "price": 239, "image": "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=600", "rating": 4.5, "veg": "nonVeg" },
+  { "id": 195, "name": "Chicken Rara", "category": "Chicken", "price": 269, "image": "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=600", "rating": 4.1, "veg": "nonVeg" },
+  { "id": 196, "name": "Chicken Changezi", "category": "Chicken", "price": 259, "image": "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=600", "rating": 4.8, "veg": "nonVeg" },
+  { "id": 197, "name": "Chicken Afghani", "category": "Chicken", "price": 269, "image": "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=600", "rating": 4.4, "veg": "nonVeg" },
+  { "id": 198, "name": "Chicken Kali Mirch", "category": "Chicken", "price": 259, "image": "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=600", "rating": 4.0, "veg": "nonVeg" },
+  { "id": 199, "name": "Chicken Patiala", "category": "Chicken", "price": 279, "image": "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=600", "rating": 4.7, "veg": "nonVeg" },
+  { "id": 200, "name": "Dhaba Chicken", "category": "Chicken", "price": 239, "image": "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=600", "rating": 4.3, "veg": "nonVeg" },
+  { "id": 201, "name": "Chicken Tikka", "category": "Chicken", "price": 199, "image": "https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?w=600", "rating": 5.0, "veg": "nonVeg" },
+  { "id": 202, "name": "Chicken Malai Tikka", "category": "Chicken", "price": 219, "image": "https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?w=600", "rating": 4.6, "veg": "nonVeg" },
+  { "id": 203, "name": "Chicken Seekh Kebab", "category": "Chicken", "price": 219, "image": "https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?w=600", "rating": 4.2, "veg": "nonVeg" },
+  { "id": 204, "name": "Chicken Reshmi Kebab", "category": "Chicken", "price": 229, "image": "https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?w=600", "rating": 4.9, "veg": "nonVeg" },
+  { "id": 205, "name": "Chicken Tangdi", "category": "Chicken", "price": 219, "image": "https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?w=600", "rating": 4.5, "veg": "nonVeg" },
+  { "id": 206, "name": "Tandoori Chicken Half", "category": "Chicken", "price": 249, "image": "https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?w=600", "rating": 4.1, "veg": "nonVeg" },
+  { "id": 207, "name": "Tandoori Chicken Full", "category": "Chicken", "price": 449, "image": "https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?w=600", "rating": 4.8, "veg": "nonVeg" },
+  { "id": 208, "name": "Chicken Afghani Tikka", "category": "Chicken", "price": 239, "image": "https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?w=600", "rating": 4.4, "veg": "nonVeg" },
+  { "id": 209, "name": "Chicken Haryali Tikka", "category": "Chicken", "price": 229, "image": "https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?w=600", "rating": 4.0, "veg": "nonVeg" },
+  { "id": 210, "name": "Chicken Achari Tikka", "category": "Chicken", "price": 229, "image": "https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?w=600", "rating": 4.7, "veg": "nonVeg" },
+  { "id": 211, "name": "Mutton Curry", "category": "Mutton", "price": 299, "image": "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=600", "rating": 4.3, "veg": "nonVeg" },
+  { "id": 212, "name": "Mutton Rogan Josh", "category": "Mutton", "price": 319, "image": "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=600", "rating": 5.0, "veg": "nonVeg" },
+  { "id": 213, "name": "Mutton Korma", "category": "Mutton", "price": 329, "image": "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=600", "rating": 4.6, "veg": "nonVeg" },
+  { "id": 214, "name": "Mutton Handi", "category": "Mutton", "price": 319, "image": "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=600", "rating": 4.2, "veg": "nonVeg" },
+  { "id": 215, "name": "Mutton Do Pyaza", "category": "Mutton", "price": 319, "image": "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=600", "rating": 4.9, "veg": "nonVeg" },
+  { "id": 216, "name": "Mutton Rara", "category": "Mutton", "price": 339, "image": "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=600", "rating": 4.5, "veg": "nonVeg" },
+  { "id": 217, "name": "Mutton Keema", "category": "Mutton", "price": 299, "image": "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=600", "rating": 4.1, "veg": "nonVeg" },
+  { "id": 218, "name": "Mutton Nihari", "category": "Mutton", "price": 319, "image": "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=600", "rating": 4.8, "veg": "nonVeg" },
+  { "id": 219, "name": "Mutton Masala", "category": "Mutton", "price": 319, "image": "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=600", "rating": 4.4, "veg": "nonVeg" },
+  { "id": 220, "name": "Mutton Kadhai", "category": "Mutton", "price": 329, "image": "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=600", "rating": 4.0, "veg": "nonVeg" },
+  { "id": 221, "name": "Fish Curry", "category": "Seafood", "price": 249, "image": "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=600", "rating": 4.7, "veg": "nonVeg" },
+  { "id": 222, "name": "Fish Fry", "category": "Seafood", "price": 229, "image": "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=600", "rating": 4.3, "veg": "nonVeg" },
+  { "id": 223, "name": "Fish Tikka", "category": "Seafood", "price": 259, "image": "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=600", "rating": 5.0, "veg": "nonVeg" },
+  { "id": 224, "name": "Fish Amritsari", "category": "Seafood", "price": 269, "image": "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=600", "rating": 4.6, "veg": "nonVeg" },
+  { "id": 225, "name": "Chilli Fish", "category": "Seafood", "price": 269, "image": "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=600", "rating": 4.2, "veg": "nonVeg" },
+  { "id": 226, "name": "Garlic Fish", "category": "Seafood", "price": 279, "image": "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=600", "rating": 4.9, "veg": "nonVeg" },
+  { "id": 227, "name": "Fish Masala", "category": "Seafood", "price": 259, "image": "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=600", "rating": 4.5, "veg": "nonVeg" },
+  { "id": 228, "name": "Prawn Curry", "category": "Seafood", "price": 299, "image": "https://images.unsplash.com/photo-1559742811-822873691df8?w=600", "rating": 4.1, "veg": "nonVeg" },
+  { "id": 229, "name": "Chilli Prawns", "category": "Seafood", "price": 319, "image": "https://images.unsplash.com/photo-1559742811-822873691df8?w=600", "rating": 4.8, "veg": "nonVeg" },
+  { "id": 230, "name": "Prawn Fry", "category": "Seafood", "price": 309, "image": "https://images.unsplash.com/photo-1559742811-822873691df8?w=600", "rating": 4.4, "veg": "nonVeg" },
+  { "id": 231, "name": "Tandoori Roti", "category": "Indian Bread", "price": 25, "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600", "rating": 4.0, "veg": "veg" },
+  { "id": 232, "name": "Butter Roti", "category": "Indian Bread", "price": 30, "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600", "rating": 4.7, "veg": "veg" },
+  { "id": 233, "name": "Plain Naan", "category": "Indian Bread", "price": 45, "image": "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=600", "rating": 4.3, "veg": "veg" },
+  { "id": 234, "name": "Butter Naan", "category": "Indian Bread", "price": 55, "image": "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=600", "rating": 5.0, "veg": "veg" },
+  { "id": 235, "name": "Garlic Naan", "category": "Indian Bread", "price": 65, "image": "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=600", "rating": 4.6, "veg": "veg" },
+  { "id": 236, "name": "Cheese Naan", "category": "Indian Bread", "price": 89, "image": "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=600", "rating": 4.2, "veg": "veg" },
+  { "id": 237, "name": "Paneer Naan", "category": "Indian Bread", "price": 89, "image": "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=600", "rating": 4.9, "veg": "veg" },
+  { "id": 238, "name": "Amritsari Kulcha", "category": "Indian Bread", "price": 79, "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600", "rating": 4.5, "veg": "veg" },
+  { "id": 239, "name": "Aloo Kulcha", "category": "Indian Bread", "price": 69, "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600", "rating": 4.1, "veg": "veg" },
+  { "id": 240, "name": "Paneer Kulcha", "category": "Indian Bread", "price": 89, "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600", "rating": 4.8, "veg": "veg" },
+  { "id": 241, "name": "Missi Roti", "category": "Indian Bread", "price": 45, "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600", "rating": 4.4, "veg": "veg" },
+  { "id": 242, "name": "Rumali Roti", "category": "Indian Bread", "price": 35, "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600", "rating": 4.0, "veg": "veg" },
+  { "id": 243, "name": "Lachha Paratha", "category": "Indian Bread", "price": 59, "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600", "rating": 4.7, "veg": "veg" },
+  { "id": 244, "name": "Pudina Paratha", "category": "Indian Bread", "price": 59, "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600", "rating": 4.3, "veg": "veg" },
+  { "id": 245, "name": "Methi Paratha", "category": "Indian Bread", "price": 59, "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600", "rating": 5.0, "veg": "veg" },
+  { "id": 246, "name": "Aloo Paratha", "category": "Paratha", "price": 69, "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600", "rating": 4.6, "veg": "veg" },
+  { "id": 247, "name": "Paneer Paratha", "category": "Paratha", "price": 89, "image": "https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=600", "rating": 4.2, "veg": "veg" },
+  { "id": 248, "name": "Gobi Paratha", "category": "Paratha", "price": 69, "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600", "rating": 4.9, "veg": "veg" },
+  { "id": 249, "name": "Mix Paratha", "category": "Paratha", "price": 79, "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600", "rating": 4.5, "veg": "veg" },
+  { "id": 250, "name": "Onion Paratha", "category": "Paratha", "price": 69, "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600", "rating": 4.1, "veg": "veg" },
+  { "id": 251, "name": "Mooli Paratha", "category": "Paratha", "price": 69, "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600", "rating": 4.8, "veg": "veg" },
+  { "id": 252, "name": "Cheese Paratha", "category": "Paratha", "price": 99, "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600", "rating": 4.4, "veg": "veg" },
+  { "id": 253, "name": "Chicken Keema Paratha", "category": "Paratha", "price": 149, "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600", "rating": 4.0, "veg": "nonVeg" },
+  { "id": 254, "name": "Egg Paratha", "category": "Paratha", "price": 109, "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600", "rating": 4.7, "veg": "nonVeg" },
+  { "id": 255, "name": "Stuffed Paratha", "category": "Paratha", "price": 89, "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600", "rating": 4.3, "veg": "veg" },
+  { "id": 256, "name": "Samosa", "category": "Snacks", "price": 20, "image": "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600", "rating": 5.0, "veg": "veg" },
+  { "id": 257, "name": "Paneer Samosa", "category": "Snacks", "price": 35, "image": "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600", "rating": 4.6, "veg": "veg" },
+  { "id": 258, "name": "Aloo Samosa", "category": "Snacks", "price": 20, "image": "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600", "rating": 4.2, "veg": "veg" },
+  { "id": 259, "name": "Punjabi Samosa", "category": "Snacks", "price": 25, "image": "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600", "rating": 4.9, "veg": "veg" },
+  { "id": 260, "name": "Kachori", "category": "Snacks", "price": 25, "image": "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600", "rating": 4.5, "veg": "veg" },
+  { "id": 261, "name": "Pyaz Kachori", "category": "Snacks", "price": 30, "image": "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600", "rating": 4.1, "veg": "veg" },
+  { "id": 262, "name": "Dal Kachori", "category": "Snacks", "price": 30, "image": "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600", "rating": 4.8, "veg": "veg" },
+  { "id": 263, "name": "Bread Pakora", "category": "Snacks", "price": 35, "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600", "rating": 4.4, "veg": "veg" },
+  { "id": 264, "name": "Aloo Pakora", "category": "Snacks", "price": 40, "image": "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600", "rating": 4.0, "veg": "veg" },
+  { "id": 265, "name": "Onion Pakora", "category": "Snacks", "price": 40, "image": "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600", "rating": 4.7, "veg": "veg" },
+  { "id": 266, "name": "Paneer Pakora", "category": "Snacks", "price": 80, "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600", "rating": 4.3, "veg": "veg" },
+  { "id": 267, "name": "Mix Pakora", "category": "Snacks", "price": 70, "image": "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600", "rating": 5.0, "veg": "veg" },
+  { "id": 268, "name": "Mirchi Pakora", "category": "Snacks", "price": 50, "image": "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600", "rating": 4.6, "veg": "veg" },
+  { "id": 269, "name": "Sabudana Vada", "category": "Snacks", "price": 60, "image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600", "rating": 4.2, "veg": "veg" },
+  { "id": 270, "name": "Bread Roll", "category": "Snacks", "price": 50, "image": "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=600", "rating": 4.9, "veg": "veg" },
+  { "id": 271, "name": "Pav Bhaji", "category": "Street Food", "price": 99, "image": "https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=600", "rating": 4.5, "veg": "veg" },
+  { "id": 272, "name": "Cheese Pav Bhaji", "category": "Street Food", "price": 129, "image": "https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=600", "rating": 4.1, "veg": "veg" },
+  { "id": 273, "name": "Masala Pav", "category": "Street Food", "price": 79, "image": "https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=600", "rating": 4.8, "veg": "veg" },
+  { "id": 274, "name": "Vada Pav", "category": "Street Food", "price": 49, "image": "https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=600", "rating": 4.4, "veg": "veg" },
+  { "id": 275, "name": "Cheese Vada Pav", "category": "Street Food", "price": 69, "image": "https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=600", "rating": 4.0, "veg": "veg" },
+  { "id": 276, "name": "Dabeli", "category": "Street Food", "price": 49, "image": "https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=600", "rating": 4.7, "veg": "veg" },
+  { "id": 277, "name": "Misal Pav", "category": "Street Food", "price": 99, "image": "https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=600", "rating": 4.3, "veg": "veg" },
+  { "id": 278, "name": "Chole Kulche", "category": "Street Food", "price": 89, "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600", "rating": 5.0, "veg": "veg" },
+  { "id": 279, "name": "Chole Bhature", "category": "Street Food", "price": 129, "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600", "rating": 4.6, "veg": "veg" },
+  { "id": 280, "name": "Aloo Puri", "category": "Street Food", "price": 89, "image": "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600", "rating": 4.2, "veg": "veg" },
+  { "id": 281, "name": "Bedmi Puri", "category": "Street Food", "price": 99, "image": "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600", "rating": 4.9, "veg": "veg" },
+  { "id": 282, "name": "Litti Chokha", "category": "Street Food", "price": 119, "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600", "rating": 4.5, "veg": "veg" },
+  { "id": 283, "name": "Bun Maska", "category": "Street Food", "price": 59, "image": "https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=600", "rating": 4.1, "veg": "veg" },
+  { "id": 284, "name": "Bun Tikki", "category": "Street Food", "price": 69, "image": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600", "rating": 4.8, "veg": "veg" },
+  { "id": 285, "name": "Kathi Roll", "category": "Street Food", "price": 109, "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600", "rating": 4.4, "veg": "veg" },
+  { "id": 286, "name": "Pani Puri", "category": "Chaat", "price": 49, "image": "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600", "rating": 4.0, "veg": "veg" },
+  { "id": 287, "name": "Dahi Puri", "category": "Chaat", "price": 69, "image": "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600", "rating": 4.7, "veg": "veg" },
+  { "id": 288, "name": "Bhel Puri", "category": "Chaat", "price": 59, "image": "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600", "rating": 4.3, "veg": "veg" },
+  { "id": 289, "name": "Sev Puri", "category": "Chaat", "price": 59, "image": "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600", "rating": 5.0, "veg": "veg" },
+  { "id": 290, "name": "Papdi Chaat", "category": "Chaat", "price": 69, "image": "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600", "rating": 4.6, "veg": "veg" },
+  { "id": 291, "name": "Aloo Tikki Chaat", "category": "Chaat", "price": 69, "image": "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600", "rating": 4.2, "veg": "veg" },
+  { "id": 292, "name": "Dahi Bhalla", "category": "Chaat", "price": 79, "image": "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600", "rating": 4.9, "veg": "veg" },
+  { "id": 293, "name": "Raj Kachori", "category": "Chaat", "price": 89, "image": "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600", "rating": 4.5, "veg": "veg" },
+  { "id": 294, "name": "Chole Tikki", "category": "Chaat", "price": 79, "image": "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600", "rating": 4.1, "veg": "veg" },
+  { "id": 295, "name": "Samosa Chaat", "category": "Chaat", "price": 69, "image": "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600", "rating": 4.8, "veg": "veg" },
+  { "id": 296, "name": "Basket Chaat", "category": "Chaat", "price": 99, "image": "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600", "rating": 4.4, "veg": "veg" },
+  { "id": 297, "name": "Corn Chaat", "category": "Chaat", "price": 69, "image": "https://images.unsplash.com/photo-1551754655-cd27e38d2076?w=600", "rating": 4.0, "veg": "veg" },
+  { "id": 298, "name": "Fruit Chaat", "category": "Chaat", "price": 79, "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600", "rating": 4.7, "veg": "veg" },
+  { "id": 299, "name": "Paneer Tikka Chaat", "category": "Chaat", "price": 109, "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600", "rating": 4.3, "veg": "veg" },
+  { "id": 300, "name": "Papdi Dahi Chaat", "category": "Chaat", "price": 79, "image": "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600", "rating": 5.0, "veg": "veg" },
+  { "id": 301, "name": "Veg Sandwich", "category": "Sandwich", "price": 69, "image": "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=600", "rating": 4.6, "veg": "veg" },
+  { "id": 302, "name": "Cheese Sandwich", "category": "Sandwich", "price": 89, "image": "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=600", "rating": 4.2, "veg": "veg" },
+  { "id": 303, "name": "Grilled Sandwich", "category": "Sandwich", "price": 99, "image": "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=600", "rating": 4.9, "veg": "veg" },
+  { "id": 304, "name": "Bombay Sandwich", "category": "Sandwich", "price": 89, "image": "https://images.unsplash.com/photo-1554433607-66b5efe9d304?w=600", "rating": 4.5, "veg": "veg" },
+  { "id": 305, "name": "Club Sandwich", "category": "Sandwich", "price": 129, "image": "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=600", "rating": 4.1, "veg": "veg" },
+  { "id": 306, "name": "Paneer Sandwich", "category": "Sandwich", "price": 109, "image": "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=600", "rating": 4.8, "veg": "veg" },
+  { "id": 307, "name": "Paneer Tikka Sandwich", "category": "Sandwich", "price": 129, "image": "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=600", "rating": 4.4, "veg": "veg" },
+  { "id": 308, "name": "Corn Cheese Sandwich", "category": "Sandwich", "price": 109, "image": "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=600", "rating": 4.0, "veg": "veg" },
+  { "id": 309, "name": "Mushroom Sandwich", "category": "Sandwich", "price": 109, "image": "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=600", "rating": 4.7, "veg": "veg" },
+  { "id": 310, "name": "Veg Mayo Sandwich", "category": "Sandwich", "price": 79, "image": "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=600", "rating": 4.3, "veg": "veg" },
+  { "id": 311, "name": "Chicken Sandwich", "category": "Sandwich", "price": 119, "image": "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=600", "rating": 5.0, "veg": "nonVeg" },
+  { "id": 312, "name": "Chicken Cheese Sandwich", "category": "Sandwich", "price": 139, "image": "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=600", "rating": 4.6, "veg": "nonVeg" },
+  { "id": 313, "name": "Grilled Chicken Sandwich", "category": "Sandwich", "price": 149, "image": "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=600", "rating": 4.2, "veg": "nonVeg" },
+  { "id": 314, "name": "Chicken Club Sandwich", "category": "Sandwich", "price": 169, "image": "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=600", "rating": 4.9, "veg": "nonVeg" },
+  { "id": 315, "name": "BBQ Chicken Sandwich", "category": "Sandwich", "price": 159, "image": "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=600", "rating": 4.5, "veg": "nonVeg" },
+  { "id": 316, "name": "Veg Wrap", "category": "Wraps", "price": 89, "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600", "rating": 4.1, "veg": "veg" },
+  { "id": 317, "name": "Paneer Wrap", "category": "Wraps", "price": 109, "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600", "rating": 4.8, "veg": "veg" },
+  { "id": 318, "name": "Paneer Tikka Wrap", "category": "Wraps", "price": 129, "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600", "rating": 4.4, "veg": "veg" },
+  { "id": 319, "name": "Mexican Wrap", "category": "Wraps", "price": 119, "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600", "rating": 4.0, "veg": "veg" },
+  { "id": 320, "name": "Cheese Wrap", "category": "Wraps", "price": 109, "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600", "rating": 4.7, "veg": "veg" },
+  { "id": 321, "name": "Soya Chaap Wrap", "category": "Wraps", "price": 119, "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600", "rating": 4.3, "veg": "veg" },
+  { "id": 322, "name": "Egg Wrap", "category": "Wraps", "price": 99, "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600", "rating": 5.0, "veg": "nonVeg" },
+  { "id": 323, "name": "Chicken Wrap", "category": "Wraps", "price": 129, "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600", "rating": 4.6, "veg": "nonVeg" },
+  { "id": 324, "name": "Chicken Tikka Wrap", "category": "Wraps", "price": 149, "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600", "rating": 4.2, "veg": "nonVeg" },
+  { "id": 325, "name": "Chicken Seekh Wrap", "category": "Wraps", "price": 149, "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600", "rating": 4.9, "veg": "nonVeg" },
+  { "id": 326, "name": "BBQ Chicken Wrap", "category": "Wraps", "price": 159, "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600", "rating": 4.5, "veg": "nonVeg" },
+  { "id": 327, "name": "Peri Peri Chicken Wrap", "category": "Wraps", "price": 159, "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600", "rating": 4.1, "veg": "nonVeg" },
+  { "id": 328, "name": "Chicken Cheese Wrap", "category": "Wraps", "price": 169, "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600", "rating": 4.8, "veg": "nonVeg" },
+  { "id": 329, "name": "Shawarma", "category": "Shawarma", "price": 119, "image": "https://images.unsplash.com/photo-1561651823-34feb02250e4?w=600", "rating": 4.4, "veg": "nonVeg" },
+  { "id": 330, "name": "Chicken Shawarma", "category": "Shawarma", "price": 149, "image": "https://images.unsplash.com/photo-1561651823-34feb02250e4?w=600", "rating": 4.0, "veg": "nonVeg" },
+  { "id": 331, "name": "White Sauce Pasta", "category": "Pasta", "price": 149, "image": "https://images.unsplash.com/photo-1621996346565-e3d5d6281691?w=600", "rating": 4.7, "veg": "veg" },
+  { "id": 332, "name": "Red Sauce Pasta", "category": "Pasta", "price": 139, "image": "https://images.unsplash.com/photo-1621996346565-e3d5d6281691?w=600", "rating": 4.3, "veg": "veg" },
+  { "id": 333, "name": "Pink Sauce Pasta", "category": "Pasta", "price": 159, "image": "https://images.unsplash.com/photo-1621996346565-e3d5d6281691?w=600", "rating": 5.0, "veg": "veg" },
+  { "id": 334, "name": "Arrabbiata Pasta", "category": "Pasta", "price": 149, "image": "https://images.unsplash.com/photo-1621996346565-e3d5d6281691?w=600", "rating": 4.6, "veg": "veg" },
+  { "id": 335, "name": "Alfredo Pasta", "category": "Pasta", "price": 169, "image": "https://images.unsplash.com/photo-1621996346565-e3d5d6281691?w=600", "rating": 4.2, "veg": "veg" },
+  { "id": 336, "name": "Pesto Pasta", "category": "Pasta", "price": 179, "image": "https://images.unsplash.com/photo-1621996346565-e3d5d6281691?w=600", "rating": 4.9, "veg": "veg" },
+  { "id": 337, "name": "Cheese Pasta", "category": "Pasta", "price": 159, "image": "https://images.unsplash.com/photo-1621996346565-e3d5d6281691?w=600", "rating": 4.5, "veg": "veg" },
+  { "id": 338, "name": "Mushroom Pasta", "category": "Pasta", "price": 169, "image": "https://images.unsplash.com/photo-1621996346565-e3d5d6281691?w=600", "rating": 4.1, "veg": "veg" },
+  { "id": 339, "name": "Paneer Pasta", "category": "Pasta", "price": 179, "image": "https://images.unsplash.com/photo-1621996346565-e3d5d6281691?w=600", "rating": 4.8, "veg": "veg" },
+  { "id": 340, "name": "Mexican Pasta", "category": "Pasta", "price": 169, "image": "https://images.unsplash.com/photo-1621996346565-e3d5d6281691?w=600", "rating": 4.4, "veg": "veg" },
+  { "id": 341, "name": "Veg Penne Pasta", "category": "Pasta", "price": 149, "image": "https://images.unsplash.com/photo-1621996346565-e3d5d6281691?w=600", "rating": 4.0, "veg": "veg" },
+  { "id": 342, "name": "Chicken Pasta", "category": "Pasta", "price": 189, "image": "https://images.unsplash.com/photo-1621996346565-e3d5d6281691?w=600", "rating": 4.7, "veg": "nonVeg" },
+  { "id": 343, "name": "Chicken Alfredo Pasta", "category": "Pasta", "price": 199, "image": "https://images.unsplash.com/photo-1621996346565-e3d5d6281691?w=600", "rating": 4.3, "veg": "nonVeg" },
+  { "id": 344, "name": "Chicken Arrabbiata Pasta", "category": "Pasta", "price": 189, "image": "https://images.unsplash.com/photo-1621996346565-e3d5d6281691?w=600", "rating": 5.0, "veg": "nonVeg" },
+  { "id": 345, "name": "Chicken Pesto Pasta", "category": "Pasta", "price": 209, "image": "https://images.unsplash.com/photo-1621996346565-e3d5d6281691?w=600", "rating": 4.6, "veg": "nonVeg" },
+  { "id": 346, "name": "Veg Manchow Soup", "category": "Soup", "price": 89, "image": "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=600", "rating": 4.2, "veg": "veg" },
+  { "id": 347, "name": "Veg Hot & Sour Soup", "category": "Soup", "price": 89, "image": "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=600", "rating": 4.9, "veg": "veg" },
+  { "id": 348, "name": "Sweet Corn Soup", "category": "Soup", "price": 89, "image": "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=600", "rating": 4.5, "veg": "veg" },
+  { "id": 349, "name": "Tomato Soup", "category": "Soup", "price": 79, "image": "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=600", "rating": 4.1, "veg": "veg" },
+  { "id": 350, "name": "Mushroom Soup", "category": "Soup", "price": 99, "image": "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=600", "rating": 4.8, "veg": "veg" },
+  { "id": 351, "name": "Lemon Coriander Soup", "category": "Soup", "price": 89, "image": "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=600", "rating": 4.4, "veg": "veg" },
+  { "id": 352, "name": "Clear Vegetable Soup", "category": "Soup", "price": 79, "image": "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=600", "rating": 4.0, "veg": "veg" },
+  { "id": 353, "name": "Chicken Manchow Soup", "category": "Soup", "price": 119, "image": "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=600", "rating": 4.7, "veg": "nonVeg" },
+  { "id": 354, "name": "Chicken Hot & Sour Soup", "category": "Soup", "price": 119, "image": "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=600", "rating": 4.3, "veg": "nonVeg" },
+  { "id": 355, "name": "Chicken Sweet Corn Soup", "category": "Soup", "price": 119, "image": "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=600", "rating": 5.0, "veg": "nonVeg" },
+  { "id": 356, "name": "Chicken Clear Soup", "category": "Soup", "price": 109, "image": "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=600", "rating": 4.6, "veg": "nonVeg" },
+  { "id": 357, "name": "Cream of Chicken Soup", "category": "Soup", "price": 129, "image": "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=600", "rating": 4.2, "veg": "nonVeg" },
+  { "id": 358, "name": "Idli", "category": "South Indian", "price": 59, "image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600", "rating": 4.9, "veg": "veg" },
+  { "id": 359, "name": "Idli Sambar", "category": "South Indian", "price": 79, "image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600", "rating": 4.5, "veg": "veg" },
+  { "id": 360, "name": "Fried Idli", "category": "South Indian", "price": 89, "image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600", "rating": 4.1, "veg": "veg" },
+  { "id": 361, "name": "Masala Dosa", "category": "South Indian", "price": 99, "image": "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?w=600", "rating": 4.8, "veg": "veg" },
+  { "id": 362, "name": "Plain Dosa", "category": "South Indian", "price": 79, "image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600", "rating": 4.4, "veg": "veg" },
+  { "id": 363, "name": "Butter Dosa", "category": "South Indian", "price": 99, "image": "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?w=600", "rating": 4.0, "veg": "veg" },
+  { "id": 364, "name": "Cheese Dosa", "category": "South Indian", "price": 129, "image": "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?w=600", "rating": 4.7, "veg": "veg" },
+  { "id": 365, "name": "Paneer Dosa", "category": "South Indian", "price": 139, "image": "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?w=600", "rating": 4.3, "veg": "veg" },
+  { "id": 366, "name": "Mysore Masala Dosa", "category": "South Indian", "price": 119, "image": "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?w=600", "rating": 5.0, "veg": "veg" },
+  { "id": 367, "name": "Rava Dosa", "category": "South Indian", "price": 109, "image": "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?w=600", "rating": 4.6, "veg": "veg" },
+  { "id": 368, "name": "Onion Rava Dosa", "category": "South Indian", "price": 119, "image": "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?w=600", "rating": 4.2, "veg": "veg" },
+  { "id": 369, "name": "Paper Dosa", "category": "South Indian", "price": 109, "image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600", "rating": 4.9, "veg": "veg" },
+  { "id": 370, "name": "Uttapam", "category": "South Indian", "price": 89, "image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600", "rating": 4.5, "veg": "veg" },
+  { "id": 371, "name": "Onion Uttapam", "category": "South Indian", "price": 99, "image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600", "rating": 4.1, "veg": "veg" },
+  { "id": 372, "name": "Paneer Uttapam", "category": "South Indian", "price": 119, "image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600", "rating": 4.8, "veg": "veg" },
+  { "id": 373, "name": "Medu Vada", "category": "South Indian", "price": 69, "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600", "rating": 4.4, "veg": "veg" },
+  { "id": 374, "name": "Vada Sambar", "category": "South Indian", "price": 79, "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600", "rating": 4.0, "veg": "veg" },
+  { "id": 375, "name": "Pongal", "category": "South Indian", "price": 89, "image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600", "rating": 4.7, "veg": "veg" },
+  { "id": 376, "name": "Lemon Rice", "category": "South Indian", "price": 89, "image": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600", "rating": 4.3, "veg": "veg" },
+  { "id": 377, "name": "Curd Rice", "category": "South Indian", "price": 89, "image": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600", "rating": 5.0, "veg": "veg" },
+  { "id": 378, "name": "Tomato Rice", "category": "South Indian", "price": 89, "image": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600", "rating": 4.6, "veg": "veg" },
+  { "id": 379, "name": "Filter Coffee", "category": "South Indian", "price": 69, "image": "https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=600", "rating": 4.2, "veg": "veg" },
+  { "id": 380, "name": "South Indian Combo", "category": "South Indian", "price": 149, "image": "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?w=600", "rating": 4.9, "veg": "veg" },
+  { "id": 381, "name": "Poha", "category": "Breakfast", "price": 59, "image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600", "rating": 4.5, "veg": "veg" },
+  { "id": 382, "name": "Kanda Poha", "category": "Breakfast", "price": 69, "image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600", "rating": 4.1, "veg": "veg" },
+  { "id": 383, "name": "Vegetable Upma", "category": "Breakfast", "price": 69, "image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600", "rating": 4.8, "veg": "veg" },
+  { "id": 384, "name": "Masala Upma", "category": "Breakfast", "price": 79, "image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600", "rating": 4.4, "veg": "veg" },
+  { "id": 385, "name": "Sabudana Khichdi", "category": "Breakfast", "price": 89, "image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600", "rating": 4.0, "veg": "veg" },
+  { "id": 386, "name": "Aloo Puri", "category": "Breakfast", "price": 89, "image": "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600", "rating": 4.7, "veg": "veg" },
+  { "id": 387, "name": "Chole Puri", "category": "Breakfast", "price": 99, "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600", "rating": 4.3, "veg": "veg" },
+  { "id": 388, "name": "Stuffed Paratha Combo", "category": "Breakfast", "price": 119, "image": "https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=600", "rating": 5.0, "veg": "veg" },
+  { "id": 389, "name": "Bread Omelette", "category": "Breakfast", "price": 89, "image": "https://images.unsplash.com/photo-1525351484163-7529414344d8?w=600", "rating": 4.6, "veg": "veg" },
+  { "id": 390, "name": "Masala Omelette", "category": "Breakfast", "price": 79, "image": "https://images.unsplash.com/photo-1525351484163-7529414344d8?w=600", "rating": 4.2, "veg": "veg" },
+  { "id": 391, "name": "Cheese Omelette", "category": "Breakfast", "price": 99, "image": "https://images.unsplash.com/photo-1525351484163-7529414344d8?w=600", "rating": 4.9, "veg": "veg" },
+  { "id": 392, "name": "Egg Bhurji", "category": "Breakfast", "price": 99, "image": "https://images.unsplash.com/photo-1525351484163-7529414344d8?w=600", "rating": 4.5, "veg": "nonVeg" },
+  { "id": 393, "name": "Boiled Eggs", "category": "Breakfast", "price": 59, "image": "https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?w=600", "rating": 4.1, "veg": "nonVeg" },
+  { "id": 394, "name": "Scrambled Eggs", "category": "Breakfast", "price": 99, "image": "https://images.unsplash.com/photo-1525351484163-7529414344d8?w=600", "rating": 4.8, "veg": "nonVeg" },
+  { "id": 395, "name": "Pancakes", "category": "Breakfast", "price": 129, "image": "https://images.unsplash.com/photo-1528207776546-365bb710ee93?w=600", "rating": 4.4, "veg": "veg" },
+  { "id": 396, "name": "French Toast", "category": "Breakfast", "price": 119, "image": "https://images.unsplash.com/photo-1528207776546-365bb710ee93?w=600", "rating": 4.0, "veg": "veg" },
+  { "id": 397, "name": "Cornflakes", "category": "Breakfast", "price": 89, "image": "https://images.unsplash.com/photo-1517673132405-a56a62b18caf?w=600", "rating": 4.7, "veg": "veg" },
+  { "id": 398, "name": "Oatmeal", "category": "Breakfast", "price": 99, "image": "https://images.unsplash.com/photo-1517673132405-a56a62b18caf?w=600", "rating": 4.3, "veg": "veg" },
+  { "id": 399, "name": "Granola Bowl", "category": "Breakfast", "price": 149, "image": "https://images.unsplash.com/photo-1517673132405-a56a62b18caf?w=600", "rating": 5.0, "veg": "veg" },
+  { "id": 400, "name": "Breakfast Combo", "category": "Breakfast", "price": 159, "image": "https://images.unsplash.com/photo-1525351484163-7529414344d8?w=600", "rating": 4.6, "veg": "veg" },
+  { "id": 401, "name": "Gulab Jamun", "category": "Dessert", "price": 59, "image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600", "rating": 4.2, "veg": "veg" },
+  { "id": 402, "name": "Rasgulla", "category": "Dessert", "price": 59, "image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600", "rating": 4.9, "veg": "veg" },
+  { "id": 403, "name": "Rasmalai", "category": "Dessert", "price": 89, "image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600", "rating": 4.5, "veg": "veg" },
+  { "id": 404, "name": "Jalebi", "category": "Dessert", "price": 69, "image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600", "rating": 4.1, "veg": "veg" },
+  { "id": 405, "name": "Imarti", "category": "Dessert", "price": 79, "image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600", "rating": 4.8, "veg": "veg" },
+  { "id": 406, "name": "Rabri", "category": "Dessert", "price": 89, "image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600", "rating": 4.4, "veg": "veg" },
+  { "id": 407, "name": "Kheer", "category": "Dessert", "price": 79, "image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600", "rating": 4.0, "veg": "veg" },
+  { "id": 408, "name": "Gajar Halwa", "category": "Dessert", "price": 89, "image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600", "rating": 4.7, "veg": "veg" },
+  { "id": 409, "name": "Moong Dal Halwa", "category": "Dessert", "price": 99, "image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600", "rating": 4.3, "veg": "veg" },
+  { "id": 410, "name": "Shahi Tukda", "category": "Dessert", "price": 109, "image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600", "rating": 5.0, "veg": "veg" },
+  { "id": 411, "name": "Malpua", "category": "Dessert", "price": 99, "image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600", "rating": 4.6, "veg": "veg" },
+  { "id": 412, "name": "Kulfi", "category": "Dessert", "price": 79, "image": "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=600", "rating": 4.2, "veg": "veg" },
+  { "id": 413, "name": "Kesar Kulfi", "category": "Dessert", "price": 99, "image": "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=600", "rating": 4.9, "veg": "veg" },
+  { "id": 414, "name": "Pista Kulfi", "category": "Dessert", "price": 99, "image": "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=600", "rating": 4.5, "veg": "veg" },
+  { "id": 415, "name": "Falooda", "category": "Dessert", "price": 129, "image": "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=600", "rating": 4.1, "veg": "veg" },
+  { "id": 416, "name": "Brownie", "category": "Dessert", "price": 99, "image": "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=600", "rating": 4.8, "veg": "veg" },
+  { "id": 417, "name": "Chocolate Brownie", "category": "Dessert", "price": 119, "image": "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=600", "rating": 4.4, "veg": "veg" },
+  { "id": 418, "name": "Brownie with Ice Cream", "category": "Dessert", "price": 159, "image": "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=600", "rating": 4.0, "veg": "veg" },
+  { "id": 419, "name": "Chocolate Cake", "category": "Cake", "price": 119, "image": "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600", "rating": 4.7, "veg": "veg" },
+  { "id": 420, "name": "Black Forest Cake", "category": "Cake", "price": 149, "image": "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600", "rating": 4.3, "veg": "veg" },
+  { "id": 421, "name": "Red Velvet Cake", "category": "Cake", "price": 169, "image": "https://images.unsplash.com/photo-1614707267537-b85aaf00c4b7?w=600", "rating": 5.0, "veg": "veg" },
+  { "id": 422, "name": "Pineapple Cake", "category": "Cake", "price": 149, "image": "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600", "rating": 4.6, "veg": "veg" },
+  { "id": 423, "name": "Vanilla Cake", "category": "Cake", "price": 129, "image": "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600", "rating": 4.2, "veg": "veg" },
+  { "id": 424, "name": "Chocolate Truffle Cake", "category": "Cake", "price": 179, "image": "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600", "rating": 4.9, "veg": "veg" },
+  { "id": 425, "name": "Cheesecake", "category": "Cake", "price": 199, "image": "https://images.unsplash.com/photo-1533134242443-d4fd215305ad?w=600", "rating": 4.5, "veg": "veg" },
+  { "id": 426, "name": "Donut", "category": "Bakery", "price": 59, "image": "https://images.unsplash.com/photo-1527515862127-a4fc05baf7a5?w=600", "rating": 4.1, "veg": "veg" },
+  { "id": 427, "name": "Chocolate Donut", "category": "Bakery", "price": 69, "image": "https://images.unsplash.com/photo-1527515862127-a4fc05baf7a5?w=600", "rating": 4.8, "veg": "veg" },
+  { "id": 428, "name": "Glazed Donut", "category": "Bakery", "price": 59, "image": "https://images.unsplash.com/photo-1527515862127-a4fc05baf7a5?w=600", "rating": 4.4, "veg": "veg" },
+  { "id": 429, "name": "Muffin", "category": "Bakery", "price": 59, "image": "https://images.unsplash.com/photo-1586985289688-ca3cf47d3e6e?w=600", "rating": 4.0, "veg": "veg" },
+  { "id": 430, "name": "Chocolate Muffin", "category": "Bakery", "price": 69, "image": "https://images.unsplash.com/photo-1586985289688-ca3cf47d3e6e?w=600", "rating": 4.7, "veg": "veg" },
+  { "id": 431, "name": "Mango Shake", "category": "Shake", "price": 109, "image": "https://images.unsplash.com/photo-1546173159-315724a31696?w=600", "rating": 4.3, "veg": "veg" },
+  { "id": 432, "name": "Banana Shake", "category": "Shake", "price": 99, "image": "https://images.unsplash.com/photo-1577805947697-89e18249d767?w=600", "rating": 5.0, "veg": "veg" },
+  { "id": 433, "name": "Strawberry Shake", "category": "Shake", "price": 109, "image": "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=600", "rating": 4.6, "veg": "veg" },
+  { "id": 434, "name": "Chocolate Shake", "category": "Shake", "price": 119, "image": "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=600", "rating": 4.2, "veg": "veg" },
+  { "id": 435, "name": "Vanilla Shake", "category": "Shake", "price": 99, "image": "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=600", "rating": 4.9, "veg": "veg" },
+  { "id": 436, "name": "Oreo Shake", "category": "Shake", "price": 129, "image": "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=600", "rating": 4.5, "veg": "veg" },
+  { "id": 437, "name": "KitKat Shake", "category": "Shake", "price": 139, "image": "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=600", "rating": 4.1, "veg": "veg" },
+  { "id": 438, "name": "Cold Coffee", "category": "Shake", "price": 109, "image": "https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=600", "rating": 4.8, "veg": "veg" },
+  { "id": 439, "name": "Cold Coffee with Ice Cream", "category": "Shake", "price": 139, "image": "https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=600", "rating": 4.4, "veg": "veg" },
+  { "id": 440, "name": "Peanut Butter Shake", "category": "Shake", "price": 129, "image": "https://images.unsplash.com/photo-1577805947697-89e18249d767?w=600", "rating": 4.0, "veg": "veg" },
+  { "id": 441, "name": "Dry Fruit Shake", "category": "Shake", "price": 149, "image": "https://images.unsplash.com/photo-1577805947697-89e18249d767?w=600", "rating": 4.7, "veg": "veg" },
+  { "id": 442, "name": "Rose Shake", "category": "Shake", "price": 109, "image": "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=600", "rating": 4.3, "veg": "veg" },
+  { "id": 443, "name": "Butterscotch Shake", "category": "Shake", "price": 119, "image": "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=600", "rating": 5.0, "veg": "veg" },
+  { "id": 444, "name": "Mango Lassi", "category": "Lassi", "price": 89, "image": "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=600", "rating": 4.6, "veg": "veg" },
+  { "id": 445, "name": "Sweet Lassi", "category": "Lassi", "price": 79, "image": "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=600", "rating": 4.2, "veg": "veg" },
+  { "id": 446, "name": "Salted Lassi", "category": "Lassi", "price": 69, "image": "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=600", "rating": 4.9, "veg": "veg" },
+  { "id": 447, "name": "Rose Lassi", "category": "Lassi", "price": 89, "image": "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=600", "rating": 4.5, "veg": "veg" },
+  { "id": 448, "name": "Dry Fruit Lassi", "category": "Lassi", "price": 119, "image": "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=600", "rating": 4.1, "veg": "veg" },
+  { "id": 449, "name": "Masala Chaas", "category": "Beverage", "price": 59, "image": "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=600", "rating": 4.8, "veg": "veg" },
+  { "id": 450, "name": "Sweet Chaas", "category": "Beverage", "price": 59, "image": "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=600", "rating": 4.4, "veg": "veg" },
+  { "id": 451, "name": "Masala Tea", "category": "Tea", "price": 39, "image": "https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=600", "rating": 4.0, "veg": "veg" },
+  { "id": 452, "name": "Ginger Tea", "category": "Tea", "price": 49, "image": "https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=600", "rating": 4.7, "veg": "veg" },
+  { "id": 453, "name": "Elaichi Tea", "category": "Tea", "price": 49, "image": "https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=600", "rating": 4.3, "veg": "veg" },
+  { "id": 454, "name": "Lemon Tea", "category": "Tea", "price": 49, "image": "https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=600", "rating": 5.0, "veg": "veg" },
+  { "id": 455, "name": "Green Tea", "category": "Tea", "price": 59, "image": "https://images.unsplash.com/photo-1627435601361-ec25f5b1d0e5?w=600", "rating": 4.6, "veg": "veg" },
+  { "id": 456, "name": "Black Tea", "category": "Tea", "price": 39, "image": "https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=600", "rating": 4.2, "veg": "veg" },
+  { "id": 457, "name": "Hot Coffee", "category": "Coffee", "price": 59, "image": "https://images.unsplash.com/photo-1534778101976-62847782c213?w=600", "rating": 4.9, "veg": "veg" },
+  { "id": 458, "name": "Black Coffee", "category": "Coffee", "price": 59, "image": "https://images.unsplash.com/photo-1534778101976-62847782c213?w=600", "rating": 4.5, "veg": "veg" },
+  { "id": 459, "name": "Cappuccino", "category": "Coffee", "price": 89, "image": "https://images.unsplash.com/photo-1534778101976-62847782c213?w=600", "rating": 4.1, "veg": "veg" },
+  { "id": 460, "name": "Latte", "category": "Coffee", "price": 99, "image": "https://images.unsplash.com/photo-1534778101976-62847782c213?w=600", "rating": 4.8, "veg": "veg" },
+  { "id": 461, "name": "Americano", "category": "Coffee", "price": 89, "image": "https://images.unsplash.com/photo-1534778101976-62847782c213?w=600", "rating": 4.4, "veg": "veg" },
+  { "id": 462, "name": "Mocha", "category": "Coffee", "price": 109, "image": "https://images.unsplash.com/photo-1534778101976-62847782c213?w=600", "rating": 4.0, "veg": "veg" },
+  { "id": 463, "name": "Espresso", "category": "Coffee", "price": 79, "image": "https://images.unsplash.com/photo-1534778101976-62847782c213?w=600", "rating": 4.7, "veg": "veg" },
+  { "id": 464, "name": "Hot Chocolate", "category": "Beverage", "price": 109, "image": "https://images.unsplash.com/photo-1534778101976-62847782c213?w=600", "rating": 4.3, "veg": "veg" },
+  { "id": 465, "name": "Fresh Lime Soda", "category": "Beverage", "price": 69, "image": "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=600", "rating": 5.0, "veg": "veg" },
+  { "id": 466, "name": "Sweet Lime Soda", "category": "Beverage", "price": 69, "image": "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=600", "rating": 4.6, "veg": "veg" },
+  { "id": 467, "name": "Mint Mojito", "category": "Mocktail", "price": 99, "image": "https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=600", "rating": 4.2, "veg": "veg" },
+  { "id": 468, "name": "Virgin Mojito", "category": "Mocktail", "price": 99, "image": "https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=600", "rating": 4.9, "veg": "veg" },
+  { "id": 469, "name": "Blue Lagoon", "category": "Mocktail", "price": 109, "image": "https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=600", "rating": 4.5, "veg": "veg" },
+  { "id": 470, "name": "Strawberry Mojito", "category": "Mocktail", "price": 109, "image": "https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=600", "rating": 4.1, "veg": "veg" },
+  { "id": 471, "name": "Orange Juice", "category": "Juice", "price": 89, "image": "https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?w=600", "rating": 4.8, "veg": "veg" },
+  { "id": 472, "name": "Apple Juice", "category": "Juice", "price": 99, "image": "https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?w=600", "rating": 4.4, "veg": "veg" },
+  { "id": 473, "name": "Mango Juice", "category": "Juice", "price": 89, "image": "https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?w=600", "rating": 4.0, "veg": "veg" },
+  { "id": 474, "name": "Pineapple Juice", "category": "Juice", "price": 89, "image": "https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?w=600", "rating": 4.7, "veg": "veg" },
+  { "id": 475, "name": "Watermelon Juice", "category": "Juice", "price": 79, "image": "https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?w=600", "rating": 4.3, "veg": "veg" },
+  { "id": 476, "name": "Mosambi Juice", "category": "Juice", "price": 89, "image": "https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?w=600", "rating": 5.0, "veg": "veg" },
+  { "id": 477, "name": "Pomegranate Juice", "category": "Juice", "price": 119, "image": "https://images.unsplash.com/photo-1557800636-894a64c1696f?w=600", "rating": 4.6, "veg": "veg" },
+  { "id": 478, "name": "Carrot Juice", "category": "Juice", "price": 89, "image": "https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?w=600", "rating": 4.2, "veg": "veg" },
+  { "id": 479, "name": "Beetroot Juice", "category": "Juice", "price": 89, "image": "https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?w=600", "rating": 4.9, "veg": "veg" },
+  { "id": 480, "name": "Mixed Fruit Juice", "category": "Juice", "price": 109, "image": "https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?w=600", "rating": 4.5, "veg": "veg" },
+  { "id": 481, "name": "Coconut Water", "category": "Juice", "price": 69, "image": "https://images.unsplash.com/photo-1525385133512-2f3bdd039054?w=600", "rating": 4.1, "veg": "veg" },
+  { "id": 482, "name": "Sugarcane Juice", "category": "Juice", "price": 69, "image": "https://images.unsplash.com/photo-1556881286-fc6915169721?w=600", "rating": 4.8, "veg": "veg" },
+  { "id": 483, "name": "Fruit Punch", "category": "Juice", "price": 119, "image": "https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?w=600", "rating": 4.4, "veg": "veg" },
+  { "id": 484, "name": "ABC Juice", "category": "Juice", "price": 129, "image": "https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?w=600", "rating": 4.0, "veg": "veg" },
+  { "id": 485, "name": "Lemonade", "category": "Juice", "price": 69, "image": "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=600", "rating": 4.7, "veg": "veg" },
+  { "id": 486, "name": "Fresh Fruit Salad", "category": "Healthy Food", "price": 99, "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600", "rating": 4.3, "veg": "veg" },
+  { "id": 487, "name": "Mixed Fruit Bowl", "category": "Healthy Food", "price": 129, "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600", "rating": 5.0, "veg": "veg" },
+  { "id": 488, "name": "Greek Salad", "category": "Healthy Food", "price": 149, "image": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600", "rating": 4.6, "veg": "veg" },
+  { "id": 489, "name": "Caesar Salad", "category": "Healthy Food", "price": 159, "image": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600", "rating": 4.2, "veg": "veg" },
+  { "id": 490, "name": "Veg Salad", "category": "Healthy Food", "price": 99, "image": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600", "rating": 4.9, "veg": "veg" },
+  { "id": 491, "name": "Sprouts Salad", "category": "Healthy Food", "price": 109, "image": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600", "rating": 4.5, "veg": "veg" },
+  { "id": 492, "name": "Paneer Salad", "category": "Healthy Food", "price": 149, "image": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600", "rating": 4.1, "veg": "veg" },
+  { "id": 493, "name": "Chicken Salad", "category": "Healthy Food", "price": 179, "image": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600", "rating": 4.8, "veg": "nonVeg" },
+  { "id": 494, "name": "Corn Salad", "category": "Healthy Food", "price": 109, "image": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600", "rating": 4.4, "veg": "veg" },
+  { "id": 495, "name": "Quinoa Salad", "category": "Healthy Food", "price": 159, "image": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600", "rating": 4.0, "veg": "veg" },
+  { "id": 496, "name": "Fruit Yogurt Bowl", "category": "Healthy Food", "price": 129, "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600", "rating": 4.7, "veg": "veg" },
+  { "id": 497, "name": "Oats Bowl", "category": "Healthy Food", "price": 119, "image": "https://images.unsplash.com/photo-1517673132405-a56a62b18caf?w=600", "rating": 4.3, "veg": "veg" },
+  { "id": 498, "name": "Granola Fruit Bowl", "category": "Healthy Food", "price": 149, "image": "https://images.unsplash.com/photo-1517673132405-a56a62b18caf?w=600", "rating": 5.0, "veg": "veg" },
+  { "id": 499, "name": "Protein Bowl", "category": "Healthy Food", "price": 179, "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600", "rating": 4.6, "veg": "veg" },
+  { "id": 500, "name": "Veg Protein Bowl", "category": "Healthy Food", "price": 159, "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600", "rating": 4.2, "veg": "veg" },
+  { "id": 501, "name": "Almonds", "category": "Dry Fruits", "price": 120, "image": "https://images.unsplash.com/photo-1508061252224-414eb64ef8e9?w=600", "rating": 4.9, "veg": "veg" },
+  { "id": 502, "name": "Cashews", "category": "Dry Fruits", "price": 140, "image": "https://images.unsplash.com/photo-1508061252224-414eb64ef8e9?w=600", "rating": 4.5, "veg": "veg" },
+  { "id": 503, "name": "Walnuts", "category": "Dry Fruits", "price": 150, "image": "https://images.unsplash.com/photo-1508061252224-414eb64ef8e9?w=600", "rating": 4.1, "veg": "veg" },
+  { "id": 504, "name": "Pistachios", "category": "Dry Fruits", "price": 160, "image": "https://images.unsplash.com/photo-1508061252224-414eb64ef8e9?w=600", "rating": 4.8, "veg": "veg" },
+  { "id": 505, "name": "Raisins", "category": "Dry Fruits", "price": 90, "image": "https://images.unsplash.com/photo-1508061252224-414eb64ef8e9?w=600", "rating": 4.4, "veg": "veg" },
+  { "id": 506, "name": "Dates", "category": "Dry Fruits", "price": 100, "image": "https://images.unsplash.com/photo-1508061252224-414eb64ef8e9?w=600", "rating": 4.0, "veg": "veg" },
+  { "id": 507, "name": "Dried Figs", "category": "Dry Fruits", "price": 140, "image": "https://images.unsplash.com/photo-1508061252224-414eb64ef8e9?w=600", "rating": 4.7, "veg": "veg" },
+  { "id": 508, "name": "Makhana", "category": "Dry Snacks", "price": 100, "image": "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600", "rating": 4.3, "veg": "veg" },
+  { "id": 509, "name": "Roasted Chana", "category": "Dry Snacks", "price": 60, "image": "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600", "rating": 5.0, "veg": "veg" },
+  { "id": 510, "name": "Roasted Peanuts", "category": "Dry Snacks", "price": 60, "image": "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600", "rating": 4.6, "veg": "veg" },
+  { "id": 511, "name": "Banana Chips", "category": "Dry Snacks", "price": 80, "image": "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600", "rating": 4.2, "veg": "veg" },
+  { "id": 512, "name": "Masala Peanuts", "category": "Dry Snacks", "price": 70, "image": "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600", "rating": 4.9, "veg": "veg" },
+  { "id": 513, "name": "Bhujia", "category": "Dry Snacks", "price": 60, "image": "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600", "rating": 4.5, "veg": "veg" },
+  { "id": 514, "name": "Mixture Namkeen", "category": "Dry Snacks", "price": 70, "image": "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600", "rating": 4.1, "veg": "veg" },
+  { "id": 515, "name": "Murmura", "category": "Dry Snacks", "price": 50, "image": "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600", "rating": 4.8, "veg": "veg" },
+  { "id": 516, "name": "Mango", "category": "Fruits", "price": 80, "image": "https://images.unsplash.com/photo-1553279768-865429fa0078?w=600", "rating": 4.4, "veg": "veg" },
+  { "id": 517, "name": "Apple", "category": "Fruits", "price": 120, "image": "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=600", "rating": 4.0, "veg": "veg" },
+  { "id": 518, "name": "Banana", "category": "Fruits", "price": 60, "image": "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=600", "rating": 4.7, "veg": "veg" },
+  { "id": 519, "name": "Orange", "category": "Fruits", "price": 80, "image": "https://images.unsplash.com/photo-1547514701-42782101795e?w=600", "rating": 4.3, "veg": "veg" },
+  { "id": 520, "name": "Grapes", "category": "Fruits", "price": 100, "image": "https://images.unsplash.com/photo-1537640538966-79f369143f8f?w=600", "rating": 5.0, "veg": "veg" },
+  { "id": 521, "name": "Watermelon", "category": "Fruits", "price": 60, "image": "https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=600", "rating": 4.6, "veg": "veg" },
+  { "id": 522, "name": "Papaya", "category": "Fruits", "price": 70, "image": "https://images.unsplash.com/photo-1517282009859-f000ec3b26fe?w=600", "rating": 4.2, "veg": "veg" },
+  { "id": 523, "name": "Guava", "category": "Fruits", "price": 80, "image": "https://images.unsplash.com/photo-1536511135899-73895e69bf8e?w=600", "rating": 4.9, "veg": "veg" },
+  { "id": 524, "name": "Pomegranate", "category": "Fruits", "price": 140, "image": "https://images.unsplash.com/photo-1557800636-894a64c1696f?w=600", "rating": 4.5, "veg": "veg" },
+  { "id": 525, "name": "Pineapple", "category": "Fruits", "price": 100, "image": "https://images.unsplash.com/photo-1550258987-190a2d41a8ba?w=600", "rating": 4.1, "veg": "veg" },
+  { "id": 526, "name": "Kiwi", "category": "Fruits", "price": 150, "image": "https://images.unsplash.com/photo-1518492104633-130d0cc84637?w=600", "rating": 4.8, "veg": "veg" },
+  { "id": 527, "name": "Dragon Fruit", "category": "Fruits", "price": 120, "image": "https://images.unsplash.com/photo-1527324688151-0e627063f2b1?w=600", "rating": 4.4, "veg": "veg" },
+  { "id": 528, "name": "Strawberry", "category": "Fruits", "price": 180, "image": "https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=600", "rating": 4.0, "veg": "veg" },
+  { "id": 529, "name": "Litchi", "category": "Fruits", "price": 160, "image": "https://images.unsplash.com/photo-1587393855524-087f83d95bc9?w=600", "rating": 4.7, "veg": "veg" },
+  { "id": 530, "name": "Chikoo", "category": "Fruits", "price": 90, "image": "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=600", "rating": 4.3, "veg": "veg" },
+  { "id": 531, "name": "Pear", "category": "Fruits", "price": 120, "image": "https://images.unsplash.com/photo-1514756331096-242fdeb70d4a?w=600", "rating": 5.0, "veg": "veg" },
+  { "id": 532, "name": "Peach", "category": "Fruits", "price": 140, "image": "https://images.unsplash.com/photo-1522741172097-6a161f3f74aa?w=600", "rating": 4.6, "veg": "veg" },
+  { "id": 533, "name": "Plum", "category": "Fruits", "price": 130, "image": "https://images.unsplash.com/photo-1522741172097-6a161f3f74aa?w=600", "rating": 4.2, "veg": "veg" },
+  { "id": 534, "name": "Coconut", "category": "Fruits", "price": 60, "image": "https://images.unsplash.com/photo-1525385133512-2f3bdd039054?w=600", "rating": 4.9, "veg": "veg" },
+  { "id": 535, "name": "Muskmelon", "category": "Fruits", "price": 70, "image": "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=600", "rating": 4.5, "veg": "veg" }
+];
 
-    // Dedicated Distinct 4-Photo Sets for EACH Category
-    const DISTINCT_GALLERIES = {
-      "Burger": [
-        "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600",
-        "https://images.unsplash.com/photo-1550547660-d9450f859349?w=600",
-        "https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?w=600",
-        "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=600"
-      ],
-      "Pizza": [
-        "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600",
-        "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600",
-        "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=600",
-        "https://images.unsplash.com/photo-1604382355076-af4b0eb60143?w=600"
-      ],
-      "Fast Food": [
-        "https://images.unsplash.com/photo-1576107232684-1279f3908594?w=600",
-        "https://images.unsplash.com/photo-1619535860434-ba1d8fa12536?w=600",
-        "https://images.unsplash.com/photo-1562967914-608f82629710?w=600",
-        "https://images.unsplash.com/photo-1513456852971-30c0b8199d4d?w=600"
-      ],
-      "Momos": [
-        "https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=600",
-        "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=600",
-        "https://images.unsplash.com/photo-1496116218417-1a781b1c416c?w=600",
-        "https://images.unsplash.com/photo-1541696432-82c6da8ce7bf?w=600"
-      ],
-      "Chinese": [
-        "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=600",
-        "https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=600",
-        "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=600",
-        "https://images.unsplash.com/photo-1612927601601-6638404737ce?w=600"
-      ],
-      "Biryani": [
-        "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600",
-        "https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=600",
-        "https://images.unsplash.com/photo-1633945274405-b6c8069047b0?w=600",
-        "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600"
-      ],
-      "Rice": [
-        "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600",
-        "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=600",
-        "https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=600",
-        "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600"
-      ],
-      "North Indian": [
-        "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=600",
-        "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600",
-        "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600",
-        "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600"
-      ],
-      "Paneer": [
-        "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=600",
-        "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=600",
-        "https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=600",
-        "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=600"
-      ],
-      "Main Course": [
-        "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=600",
-        "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=600",
-        "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600",
-        "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600"
-      ],
-      "Chicken": [
-        "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=600",
-        "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=600",
-        "https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?w=600",
-        "https://images.unsplash.com/photo-1562967914-608f82629710?w=600"
-      ],
-      "Chicken Starters": [
-        "https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?w=600",
-        "https://images.unsplash.com/photo-1562967914-608f82629710?w=600",
-        "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=600",
-        "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=600"
-      ],
-      "Mutton": [
-        "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=600",
-        "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600",
-        "https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?w=600",
-        "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=600"
-      ],
-      "Seafood": [
-        "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=600",
-        "https://images.unsplash.com/photo-1559742811-822873691df8?w=600",
-        "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=600",
-        "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=600"
-      ],
-      "Indian Bread": [
-        "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600",
-        "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=600",
-        "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600",
-        "https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=600"
-      ],
-      "Paratha": [
-        "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600",
-        "https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=600",
-        "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600",
-        "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600"
-      ],
-      "Snacks": [
-        "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600",
-        "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600",
-        "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600",
-        "https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=600"
-      ],
-      "Street Food": [
-        "https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=600",
-        "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600",
-        "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600",
-        "https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=600"
-      ],
-      "Chaat": [
-        "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600",
-        "https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=600",
-        "https://images.unsplash.com/photo-1551754655-cd27e38d2076?w=600",
-        "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600"
-      ],
-      "Sandwich": [
-        "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=600",
-        "https://images.unsplash.com/photo-1554433607-66b5efe9d304?w=600",
-        "https://images.unsplash.com/photo-1509722747041-616f39b57569?w=600",
-        "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600"
-      ],
-      "Wraps": [
-        "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600",
-        "https://images.unsplash.com/photo-1561651823-34feb02250e4?w=600",
-        "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=600",
-        "https://images.unsplash.com/photo-1509722747041-616f39b57569?w=600"
-      ],
-      "Shawarma": [
-        "https://images.unsplash.com/photo-1561651823-34feb02250e4?w=600",
-        "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600",
-        "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=600",
-        "https://images.unsplash.com/photo-1509722747041-616f39b57569?w=600"
-      ],
-      "Pasta": [
-        "https://images.unsplash.com/photo-1621996346565-e3d5d6281691?w=600",
-        "https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=600",
-        "https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb?w=600",
-        "https://images.unsplash.com/photo-1608897013039-887f21d8c804?w=600"
-      ],
-      "Soup": [
-        "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=600",
-        "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=600",
-        "https://images.unsplash.com/photo-1541832676-9b763b0239ab?w=600",
-        "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=600"
-      ],
-      "South Indian": [
-        "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?w=600",
-        "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600",
-        "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600",
-        "https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=600"
-      ],
-      "Breakfast": [
-        "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600",
-        "https://images.unsplash.com/photo-1525351484163-7529414344d8?w=600",
-        "https://images.unsplash.com/photo-1528207776546-365bb710ee93?w=600",
-        "https://images.unsplash.com/photo-1517673132405-a56a62b18caf?w=600"
-      ],
-      "Dessert": [
-        "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600",
-        "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=600",
-        "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=600",
-        "https://images.unsplash.com/photo-1562376552-0d160a2f238d?w=600"
-      ],
-      "Cake": [
-        "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600",
-        "https://images.unsplash.com/photo-1614707267537-b85aaf00c4b7?w=600",
-        "https://images.unsplash.com/photo-1533134242443-d4fd215305ad?w=600",
-        "https://images.unsplash.com/photo-1562376552-0d160a2f238d?w=600"
-      ],
-      "Bakery": [
-        "https://images.unsplash.com/photo-1527515862127-a4fc05baf7a5?w=600",
-        "https://images.unsplash.com/photo-1586985289688-ca3cf47d3e6e?w=600",
-        "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600",
-        "https://images.unsplash.com/photo-1562376552-0d160a2f238d?w=600"
-      ],
-      "Shake": [
-        "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=600",
-        "https://images.unsplash.com/photo-1546173159-315724a31696?w=600",
-        "https://images.unsplash.com/photo-1577805947697-89e18249d767?w=600",
-        "https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=600"
-      ],
-      "Lassi": [
-        "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=600",
-        "https://images.unsplash.com/photo-1546173159-315724a31696?w=600",
-        "https://images.unsplash.com/photo-1577805947697-89e18249d767?w=600",
-        "https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=600"
-      ],
-      "Beverage": [
-        "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=600",
-        "https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=600",
-        "https://images.unsplash.com/photo-1534778101976-62847782c213?w=600",
-        "https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=600"
-      ],
-      "Tea": [
-        "https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=600",
-        "https://images.unsplash.com/photo-1627435601361-ec25f5b1d0e5?w=600",
-        "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=600",
-        "https://images.unsplash.com/photo-1534778101976-62847782c213?w=600"
-      ],
-      "Coffee": [
-        "https://images.unsplash.com/photo-1534778101976-62847782c213?w=600",
-        "https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=600",
-        "https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=600",
-        "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=600"
-      ],
-      "Mocktail": [
-        "https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=600",
-        "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=600",
-        "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=600",
-        "https://images.unsplash.com/photo-1546173159-315724a31696?w=600"
-      ],
-      "Juice": [
-        "https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?w=600",
-        "https://images.unsplash.com/photo-1557800636-894a64c1696f?w=600",
-        "https://images.unsplash.com/photo-1556881286-fc6915169721?w=600",
-        "https://images.unsplash.com/photo-1525385133512-2f3bdd039054?w=600"
-      ],
-      "Healthy Food": [
-        "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
-        "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600",
-        "https://images.unsplash.com/photo-1517673132405-a56a62b18caf?w=600",
-        "https://images.unsplash.com/photo-1590080875515-8a3a8dc5735e?w=600"
-      ],
-      "Dry Fruits": [
-        "https://images.unsplash.com/photo-1508061252224-414eb64ef8e9?w=600",
-        "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
-        "https://images.unsplash.com/photo-1517673132405-a56a62b18caf?w=600",
-        "https://images.unsplash.com/photo-1590080875515-8a3a8dc5735e?w=600"
-      ],
-      "Dry Snacks": [
-        "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600",
-        "https://images.unsplash.com/photo-1508061252224-414eb64ef8e9?w=600",
-        "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600",
-        "https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=600"
-      ],
-      "Fruits": [
-        "https://images.unsplash.com/photo-1553279768-865429fa0078?w=600",
-        "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=600",
-        "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=600",
-        "https://images.unsplash.com/photo-1547514701-42782101795e?w=600"
-      ]
-    };
-
-    function get4DistinctImages(category) {
-      if (DISTINCT_GALLERIES[category]) return DISTINCT_GALLERIES[category];
-      return DISTINCT_GALLERIES["Fast Food"];
+    // Multi-angle / related image pool generator for 4-5 images per item
+    function getGalleryFor(item) {
+      const base = item.image;
+      const angle1 = "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600";
+      const angle2 = "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600";
+      const angle3 = "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600";
+      const angle4 = "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600";
+      return [base, angle1, angle2, angle3, angle4];
     }
-
-    // Hydrate 535 full dataset
-    const ITEMS = RAW_COMPACT.map(([id, name, cat, price, veg]) => ({
-      id,
-      name,
-      cat,
-      price,
-      veg: veg === 1 ? "veg" : "nonVeg",
-      rating: (4.0 + ((id * 7) % 11) / 10).toFixed(1)
-    }));
 
     let cart = {};
     let activeCategory = "All";
@@ -680,7 +943,7 @@
     }
 
     function renderCategoryChips() {
-      const cats = ["All", ...new Set(ITEMS.map(i => i.cat))];
+      const cats = ["All", ...new Set(RAW_ITEMS.map(i => i.category))];
       const wrap = document.getElementById('categoryScroll');
       wrap.innerHTML = cats.map(c => `
         <div class="cat-chip ${c === activeCategory ? 'active' : ''}" onclick="filterCategory('${c}')">
@@ -711,23 +974,23 @@
       const container = document.getElementById('outletContainer');
       const search = document.getElementById('searchInput').value.toLowerCase();
 
-      const filtered = ITEMS.filter(item => {
+      const filtered = RAW_ITEMS.filter(item => {
         const matchVeg = !isVegOnly || item.veg === "veg";
-        const matchCategory = activeCategory === "All" || item.cat === activeCategory;
-        const matchSearch = item.name.toLowerCase().includes(search) || item.cat.toLowerCase().includes(search);
+        const matchCategory = activeCategory === "All" || item.category === activeCategory;
+        const matchSearch = item.name.toLowerCase().includes(search) || item.category.toLowerCase().includes(search);
         return matchVeg && matchCategory && matchSearch;
       });
 
       document.getElementById('feedCountTitle').innerText = `${filtered.length} ITEMS AVAILABLE ON CAMPUS`;
 
       if (filtered.length === 0) {
-        container.innerHTML = `<div style="text-align:center; padding:40px; color:#888;">No matching items found! Try another search or turn off Veg Mode.</div>`;
+        container.innerHTML = `<div style="text-align:center; padding:40px; color:#888;">No matching items found!</div>`;
         return;
       }
 
       container.innerHTML = filtered.map(item => {
         const qty = cart[item.id] ? cart[item.id].qty : 0;
-        const gallery = get4DistinctImages(item.cat);
+        const gallery = getGalleryFor(item);
 
         const slidesHtml = gallery.map(imgUrl => `
           <div class="slider-slide">
@@ -760,10 +1023,10 @@
               <div class="feed-meta-line">
                 <span>⏱️ 10-15 mins</span>
                 <span>•</span>
-                <span>📍 LPU Campus Express</span>
+                <span>📍 Campus Express Hub</span>
               </div>
               <div class="feed-offer-line">
-                <div class="feed-cat-badge">🏷️ ${item.cat}</div>
+                <div class="feed-cat-badge">🏷️ ${item.category}</div>
                 <div>
                   ${qty === 0 ? `
                     <button class="feed-btn-add" onclick="changeQty(${item.id}, 1)">ADD +</button>
@@ -786,7 +1049,7 @@
 
     function changeQty(id, delta) {
       if (!cart[id]) {
-        const item = ITEMS.find(m => m.id === id);
+        const item = RAW_ITEMS.find(m => m.id === id);
         cart[id] = { ...item, qty: 0 };
       }
       cart[id].qty += delta;
@@ -817,7 +1080,7 @@
     function openCheckoutModal() {
       const items = Object.values(cart);
       if (items.length === 0) {
-        alert("Pehle cart me food item add karein!");
+        alert("Pehle cart me food add karein!");
         return;
       }
       const list = document.getElementById('checkoutList');
