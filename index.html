@@ -3,408 +3,436 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>LPUKART - 24x7 Campus Food & Express Delivery</title>
-  <meta name="theme-color" content="#E23744">
+  <title>LPUKART - Campus Food Delivery</title>
+  <meta name="theme-color" content="#ffffff">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --lpukart-red: #E23744;
-      --lpukart-dark: #b81b27;
-      --lpukart-bg: #f4f5f7;
-      --lpukart-green: #24963f;
-      --text-main: #1c1c1c;
-      --text-muted: #696969;
-      --border-color: #e8e8e8;
+      --primary-red: #E23744;
+      --gold: #dfa83d;
+      --veg-green: #0f8a3c;
+      --text-black: #1c1c1c;
+      --text-gray: #686b78;
+      --bg-gray: #f4f5f7;
+      --border-light: #e8e8e8;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; }
-    body { background-color: var(--lpukart-bg); color: var(--text-main); padding-bottom: 115px; -webkit-tap-highlight-color: transparent; }
+    body { background-color: #ffffff; color: var(--text-black); padding-bottom: 80px; -webkit-tap-highlight-color: transparent; }
 
-    /* Top Sticky Header */
-    header { background: white; padding: 12px 16px 8px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+    /* Top Sticky Bar */
+    header { background: #ffffff; position: sticky; top: 0; z-index: 100; padding: 10px 14px 6px; box-shadow: 0 2px 10px rgba(0,0,0,0.03); }
     .header-top { display: flex; justify-content: space-between; align-items: center; max-width: 600px; margin: 0 auto; }
     
-    .location-wrap { display: flex; align-items: center; gap: 8px; cursor: pointer; }
-    .loc-pin { color: var(--lpukart-red); font-size: 20px; }
-    .loc-text { display: flex; flex-direction: column; }
-    .loc-title { font-size: 15px; font-weight: 900; color: var(--text-main); display: flex; align-items: center; gap: 4px; }
-    .loc-sub { font-size: 11px; color: var(--text-muted); font-weight: 500; max-width: 220px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .loc-box { display: flex; align-items: center; gap: 8px; cursor: pointer; flex: 1; }
+    .loc-icon { font-size: 18px; color: var(--text-black); }
+    .loc-info { display: flex; flex-direction: column; }
+    .loc-main { font-size: 14.5px; font-weight: 800; color: var(--text-black); display: flex; align-items: center; gap: 3px; }
+    .loc-sub { font-size: 11px; color: var(--text-gray); max-width: 190px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 500; }
 
-    .brand-pill { font-size: 22px; font-weight: 900; font-style: italic; color: var(--lpukart-red); letter-spacing: -0.5px; }
+    .header-right { display: flex; align-items: center; gap: 8px; }
+    .gold-badge {
+      background: linear-gradient(135deg, #f7d58a 0%, #e2ab4b 100%);
+      color: #3b2800; font-size: 10.5px; font-weight: 900; padding: 4px 8px; border-radius: 8px;
+      display: flex; align-items: center; gap: 3px; border: 1px solid #d89f36;
+    }
+    .profile-avatar { width: 32px; height: 32px; border-radius: 50%; background: #222; color: white; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; cursor: pointer; }
 
-    /* Search Bar */
-    .search-wrap { max-width: 600px; margin: 10px auto 4px; position: relative; }
-    .search-box { background: white; border: 1px solid var(--border-color); border-radius: 12px; display: flex; align-items: center; padding: 10px 14px; gap: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
-    .search-box input { border: none; outline: none; width: 100%; font-size: 13.5px; font-weight: 500; color: #333; }
+    /* Search Bar with Mic & Veg Mode */
+    .search-row { display: flex; align-items: center; gap: 10px; max-width: 600px; margin: 8px auto 2px; }
+    .search-box {
+      flex: 1; background: #ffffff; border: 1px solid #d4d5d9; border-radius: 12px;
+      display: flex; align-items: center; padding: 8px 12px; gap: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    }
+    .search-box input { border: none; outline: none; width: 100%; font-size: 13px; font-weight: 500; color: #222; }
+    .mic-icon { font-size: 14px; color: var(--primary-red); }
 
-    .main-wrap { max-width: 600px; margin: 0 auto; padding: 10px 12px; }
+    .veg-mode-toggle { display: flex; flex-direction: column; align-items: center; gap: 2px; cursor: pointer; min-width: 44px; }
+    .veg-label { font-size: 8px; font-weight: 900; color: #444; letter-spacing: 0.5px; }
+    .toggle-switch { width: 34px; height: 18px; background: #ccc; border-radius: 20px; position: relative; transition: 0.2s; }
+    .toggle-switch::after { content: ''; position: absolute; width: 14px; height: 14px; background: white; border-radius: 50%; top: 2px; left: 2px; transition: 0.2s; }
+    .veg-mode-toggle.active .toggle-switch { background: var(--veg-green); }
+    .veg-mode-toggle.active .toggle-switch::after { left: 18px; }
 
-    /* 24x7 Express Rush Banner */
-    .rush-pass-card {
-      background: linear-gradient(135deg, #1c1c1c 0%, #303030 100%);
-      color: white; border-radius: 18px; padding: 14px; margin-bottom: 14px;
-      position: relative; overflow: hidden; box-shadow: 0 4px 14px rgba(0,0,0,0.15);
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-    .pass-badge {
-      display: inline-flex; align-items: center; gap: 4px;
-      background: rgba(36,150,63,0.3); color: #51ff9a; font-size: 10px; font-weight: 800;
-      padding: 3px 8px; border-radius: 20px; border: 1px solid rgba(36,150,63,0.5); text-transform: uppercase;
-    }
-    .pass-title { font-size: 16px; font-weight: 800; margin: 6px 0 2px; }
-    .pass-desc { font-size: 11px; color: #bbb; line-height: 1.4; }
-    
-    .slot-bar {
-      margin-top: 10px; background: rgba(255,255,255,0.08); border-radius: 10px;
-      padding: 8px 12px; display: flex; justify-content: space-between; align-items: center;
-    }
-    .slot-bar select {
-      background: transparent; border: none; color: white; font-weight: 700;
-      font-size: 12px; outline: none; cursor: pointer;
-    }
-    .slot-bar select option { color: black; }
+    .content-area { max-width: 600px; margin: 0 auto; padding: 10px 14px; }
 
-    /* Category Circles */
-    .section-heading { font-size: 13px; font-weight: 800; color: #4f4f4f; text-transform: uppercase; letter-spacing: 0.5px; margin: 12px 4px 8px; }
-    .circle-cats { display: flex; gap: 14px; overflow-x: auto; padding: 4px 4px 10px; scrollbar-width: none; }
-    .circle-cats::-webkit-scrollbar { display: none; }
-    .circle-item { display: flex; flex-direction: column; align-items: center; cursor: pointer; flex-shrink: 0; width: 72px; }
-    .circle-img-wrap {
-      width: 58px; height: 58px; border-radius: 50%; background: white;
-      display: flex; align-items: center; justify-content: center; font-size: 26px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.08); border: 2px solid transparent; transition: 0.2s;
+    /* Welcome Banner */
+    .welcome-card {
+      background: linear-gradient(135deg, #fff2f0 0%, #ffeae8 100%);
+      border: 1px solid #fed2ce; border-radius: 16px; padding: 12px 14px; margin-bottom: 12px;
+      display: flex; justify-content: space-between; align-items: center; position: relative;
     }
-    .circle-item.active .circle-img-wrap { border-color: var(--lpukart-red); transform: scale(1.05); }
-    .circle-name { font-size: 10.5px; font-weight: 700; color: #333; margin-top: 5px; text-align: center; }
+    .wc-left h3 { font-size: 13px; font-weight: 900; color: #1c1c1c; text-transform: uppercase; letter-spacing: 0.5px; }
+    .wc-left p { font-size: 11px; color: #555; margin-top: 2px; font-weight: 600; }
+    .wc-tag { display: inline-block; background: var(--primary-red); color: white; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 4px; margin-top: 4px; }
+    .wc-icon { font-size: 34px; }
 
-    /* Filter Pills */
-    .filter-row { display: flex; gap: 8px; overflow-x: auto; padding: 4px 2px 10px; scrollbar-width: none; }
-    .filter-pill {
-      background: white; border: 1px solid var(--border-color); padding: 6px 12px;
-      border-radius: 20px; font-size: 12px; font-weight: 600; color: #444; white-space: nowrap; cursor: pointer;
+    /* 24x7 Slot Selector Bar */
+    .slot-bar-wrap {
+      background: #fafafa; border: 1px solid var(--border-light); border-radius: 12px;
+      padding: 8px 12px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;
     }
-    .filter-pill.active { background: #fff2f3; border-color: var(--lpukart-red); color: var(--lpukart-red); font-weight: 700; }
-
-    /* Food Cards */
-    .food-card-list { display: flex; flex-direction: column; gap: 12px; }
-    .lpukart-card {
-      background: white; border-radius: 16px; overflow: hidden;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.04); border: 1px solid var(--border-color);
-      display: flex; flex-direction: column;
-    }
-    .card-top { position: relative; height: 130px; background: #eee; }
-    .card-top img { width: 100%; height: 100%; object-fit: cover; }
-    .card-offer-badge {
-      position: absolute; bottom: 8px; left: 8px;
-      background: linear-gradient(90deg, #1c1c1c 0%, #303030 100%);
-      color: white; font-size: 10px; font-weight: 800; padding: 3px 6px; border-radius: 5px;
-    }
-    .card-time-pill {
-      position: absolute; bottom: 8px; right: 8px;
-      background: white; font-size: 10px; font-weight: 800; padding: 2px 7px; border-radius: 10px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.15); display: flex; align-items: center; gap: 2px;
+    .slot-bar-wrap select {
+      background: transparent; border: none; font-size: 12px; font-weight: 800; color: #222; outline: none; cursor: pointer;
     }
 
-    .card-body { padding: 12px; display: flex; justify-content: space-between; align-items: center; }
-    .card-info { flex: 1; padding-right: 10px; }
-    .dish-title { font-size: 14.5px; font-weight: 800; color: var(--text-main); line-height: 1.25; }
-    .outlet-sub { font-size: 11.5px; color: var(--text-muted); margin-top: 2px; }
-    .rating-row { display: flex; align-items: center; gap: 5px; margin-top: 4px; }
-    .star-badge { background: var(--lpukart-green); color: white; font-size: 9.5px; font-weight: 800; padding: 2px 5px; border-radius: 4px; }
-    .dish-price { font-size: 14.5px; font-weight: 900; color: #111; margin-top: 4px; }
+    /* Category Round Cards Row */
+    .explore-row { display: flex; gap: 14px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
+    .explore-row::-webkit-scrollbar { display: none; }
+    .explore-item { display: flex; flex-direction: column; align-items: center; width: 62px; flex-shrink: 0; cursor: pointer; }
+    .explore-img-wrap { width: 56px; height: 56px; border-radius: 50%; overflow: hidden; background: #f0f0f0; border: 2px solid transparent; box-shadow: 0 2px 5px rgba(0,0,0,0.06); }
+    .explore-item.active .explore-img-wrap { border-color: var(--primary-red); transform: scale(1.05); }
+    .explore-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+    .explore-name { font-size: 11px; font-weight: 700; color: #333; margin-top: 4px; text-align: center; }
 
-    .card-action { width: 84px; text-align: center; }
-    .btn-lpukart-add {
-      background: #fff2f3; color: var(--lpukart-red); border: 1px solid var(--lpukart-red);
-      font-weight: 900; font-size: 12.5px; padding: 7px 16px; border-radius: 10px; cursor: pointer;
-      box-shadow: 0 2px 5px rgba(226,55,68,0.12); width: 100%;
+    /* Filter Chips Bar */
+    .filter-scroll { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
+    .filter-scroll::-webkit-scrollbar { display: none; }
+    .chip-btn {
+      background: white; border: 1px solid #d4d5d9; padding: 6px 12px; border-radius: 20px;
+      font-size: 11.5px; font-weight: 700; color: #333; white-space: nowrap; cursor: pointer; display: flex; align-items: center; gap: 4px;
     }
-    .btn-lpukart-add:active { transform: scale(0.96); }
-    .qty-box {
+    .chip-btn.active { background: #fff2f3; border-color: var(--primary-red); color: var(--primary-red); }
+
+    /* Recommended For You Section */
+    .section-title { font-size: 13px; font-weight: 900; color: #333; text-transform: uppercase; letter-spacing: 0.5px; margin: 10px 0 8px; }
+    .rec-scroll { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 12px; scrollbar-width: none; }
+    .rec-scroll::-webkit-scrollbar { display: none; }
+    .rec-card {
+      width: 145px; flex-shrink: 0; background: white; border-radius: 14px; overflow: hidden;
+      border: 1px solid var(--border-light); box-shadow: 0 2px 6px rgba(0,0,0,0.04); cursor: pointer;
+    }
+    .rec-img-box { position: relative; height: 95px; background: #eee; }
+    .rec-img-box img { width: 100%; height: 100%; object-fit: cover; }
+    .rec-tag { position: absolute; top: 6px; left: 6px; background: rgba(0,0,0,0.7); color: white; font-size: 8.5px; font-weight: 800; padding: 2px 4px; border-radius: 4px; }
+    .rec-body { padding: 8px; }
+    .rec-title { font-size: 12px; font-weight: 800; color: #222; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .rec-meta { font-size: 10px; color: var(--text-gray); margin-top: 2px; }
+
+    /* Vertical Full Outlet Cards Feed */
+    .outlet-feed { display: flex; flex-direction: column; gap: 16px; margin-top: 10px; }
+    .feed-card {
+      background: white; border-radius: 18px; overflow: hidden;
+      border: 1px solid var(--border-light); box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+      cursor: pointer; position: relative;
+    }
+    .feed-img-wrap { position: relative; height: 160px; background: #f0f0f0; }
+    .feed-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+    .feed-price-tag {
+      position: absolute; top: 12px; left: 12px; background: rgba(15,15,15,0.85);
+      color: white; font-size: 11px; font-weight: 800; padding: 4px 8px; border-radius: 6px;
+    }
+    .bookmark-btn {
+      position: absolute; top: 12px; right: 12px; width: 30px; height: 30px;
+      background: rgba(255,255,255,0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px;
+    }
+    .free-del-pill {
+      position: absolute; bottom: 10px; left: 12px; background: #1976d2;
+      color: white; font-size: 9px; font-weight: 900; padding: 3px 6px; border-radius: 4px; text-transform: uppercase;
+    }
+
+    .feed-body { padding: 12px 14px; }
+    .feed-header-line { display: flex; justify-content: space-between; align-items: flex-start; }
+    .feed-name { font-size: 16px; font-weight: 900; color: var(--text-black); }
+    .feed-rating {
+      background: var(--veg-green); color: white; font-size: 11px; font-weight: 900;
+      padding: 3px 6px; border-radius: 6px; display: flex; align-items: center; gap: 2px;
+    }
+
+    .feed-meta-line { font-size: 12px; font-weight: 600; color: var(--text-gray); margin-top: 4px; display: flex; align-items: center; gap: 8px; }
+    .feed-offer-line {
+      margin-top: 8px; padding-top: 8px; border-top: 1px dashed #eee;
       display: flex; align-items: center; justify-content: space-between;
-      background: var(--lpukart-red); color: white; border-radius: 10px; padding: 5px 8px;
     }
-    .qty-btn { background: none; border: none; color: white; font-size: 15px; font-weight: 900; cursor: pointer; }
+    .feed-offer-text { font-size: 11.5px; font-weight: 800; color: #1976d2; display: flex; align-items: center; gap: 4px; }
 
-    /* Floating Cart */
-    .floating-cart {
-      position: fixed; bottom: 68px; left: 14px; right: 14px; max-width: 572px; margin: 0 auto;
-      background: var(--lpukart-red); color: white; border-radius: 14px; padding: 12px 16px;
-      display: flex; justify-content: space-between; align-items: center; box-shadow: 0 6px 18px rgba(226,55,68,0.45);
-      cursor: pointer; z-index: 90;
+    .feed-btn-add {
+      background: #fff2f3; color: var(--primary-red); border: 1px solid var(--primary-red);
+      font-weight: 900; font-size: 12px; padding: 6px 14px; border-radius: 8px; cursor: pointer;
     }
-    .cart-left { display: flex; flex-direction: column; }
-    .cart-items-count { font-size: 11px; text-transform: uppercase; font-weight: 800; opacity: 0.9; }
-    .cart-total-price { font-size: 17px; font-weight: 900; }
-    .cart-right-btn {
-      background: white; color: var(--lpukart-red); padding: 8px 14px; border-radius: 10px;
-      font-size: 13px; font-weight: 900; display: flex; align-items: center; gap: 4px;
+    .feed-qty-ctrl {
+      display: flex; align-items: center; gap: 8px; background: var(--primary-red); color: white;
+      padding: 4px 8px; border-radius: 8px; font-size: 12px; font-weight: 800;
     }
+    .feed-qty-btn { background: none; border: none; color: white; font-size: 14px; font-weight: 900; cursor: pointer; }
 
-    /* Bottom Bar */
-    .bottom-nav {
+    /* Floating Cart Pill */
+    .cart-float-bar {
+      position: fixed; bottom: 62px; left: 12px; right: 12px; max-width: 576px; margin: 0 auto;
+      background: var(--primary-red); color: white; border-radius: 12px; padding: 10px 16px;
+      display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 16px rgba(226,55,68,0.4);
+      z-index: 95; cursor: pointer;
+    }
+    .cf-left { font-size: 12px; font-weight: 700; }
+    .cf-total { font-size: 16px; font-weight: 900; }
+    .cf-right { background: white; color: var(--primary-red); font-size: 12px; font-weight: 900; padding: 6px 12px; border-radius: 8px; }
+
+    /* Bottom Tab Bar */
+    .footer-nav {
       position: fixed; bottom: 0; left: 0; right: 0; background: white;
-      border-top: 1px solid var(--border-color); display: flex; justify-content: space-around;
-      padding: 8px 0 6px; z-index: 80; max-width: 600px; margin: 0 auto;
+      border-top: 1px solid #ebebeb; display: flex; justify-content: space-around;
+      padding: 6px 0 4px; z-index: 90; max-width: 600px; margin: 0 auto;
     }
-    .nav-tab { display: flex; flex-direction: column; align-items: center; color: #888; font-size: 10px; font-weight: 700; cursor: pointer; }
-    .nav-tab.active { color: var(--lpukart-red); }
-    .nav-icon { font-size: 18px; margin-bottom: 2px; }
+    .tab-item { display: flex; flex-direction: column; align-items: center; color: #888; font-size: 10px; font-weight: 700; cursor: pointer; }
+    .tab-item.active { color: var(--primary-red); }
+    .tab-icon { font-size: 18px; }
+    .district-tab {
+      background: #48286a; color: #f2e9fb; padding: 3px 10px; border-radius: 8px;
+      font-size: 10.5px; font-weight: 900; display: flex; align-items: center; gap: 3px;
+    }
 
-    /* Modals */
+    /* Modal Sheet */
     .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; align-items: flex-end; justify-content: center; z-index: 200; }
-    .modal-sheet { background: white; width: 100%; max-width: 600px; border-radius: 24px 24px 0 0; padding: 22px; max-height: 85vh; overflow-y: auto; }
-    .modal-title { font-size: 18px; font-weight: 900; margin-bottom: 12px; display: flex; justify-content: space-between; }
+    .modal-sheet { background: white; width: 100%; max-width: 600px; border-radius: 20px 20px 0 0; padding: 20px; max-height: 85vh; overflow-y: auto; }
+    .modal-title { font-size: 17px; font-weight: 900; margin-bottom: 12px; display: flex; justify-content: space-between; }
     .form-group { margin-bottom: 12px; }
-    .form-group label { display: block; font-size: 11px; font-weight: 800; color: #666; margin-bottom: 5px; text-transform: uppercase; }
-    .form-group input, .form-group select { width: 100%; padding: 12px; border: 1.5px solid var(--border-color); border-radius: 10px; font-size: 13px; outline: none; background: #fff; font-weight: 600; }
-    .form-group input:focus, .form-group select:focus { border-color: var(--lpukart-red); }
-
-    .btn-red-full { width: 100%; background: var(--lpukart-red); color: white; border: none; padding: 14px; border-radius: 12px; font-size: 15px; font-weight: 800; cursor: pointer; margin-top: 8px; }
-    .btn-green-whatsapp { width: 100%; background: #25D366; color: white; border: none; padding: 14px; border-radius: 12px; font-size: 15px; font-weight: 800; cursor: pointer; margin-top: 10px; }
+    .form-group label { display: block; font-size: 11px; font-weight: 800; color: #666; margin-bottom: 4px; text-transform: uppercase; }
+    .form-group input, .form-group select { width: 100%; padding: 11px; border: 1.5px solid #ddd; border-radius: 10px; font-size: 13px; outline: none; font-weight: 600; }
+    .btn-red { width: 100%; background: var(--primary-red); color: white; border: none; padding: 13px; border-radius: 10px; font-size: 14.5px; font-weight: 800; cursor: pointer; margin-top: 6px; }
+    .btn-whatsapp { width: 100%; background: #25D366; color: white; border: none; padding: 13px; border-radius: 10px; font-size: 14.5px; font-weight: 800; cursor: pointer; margin-top: 8px; }
   </style>
 </head>
 <body>
 
-  <!-- LPUKART Header -->
+  <!-- Top Bar -->
   <header>
     <div class="header-top">
-      <div class="location-wrap" onclick="openLocationModal()">
-        <span class="loc-pin">📍</span>
-        <div class="loc-text">
-          <div class="loc-title"><span id="headerLocTitle">BH-1</span> ▾</div>
-          <div class="loc-sub" id="headerLocSub">Lovely Professional University, Phagwara</div>
+      <div class="loc-box" onclick="openLocationModal()">
+        <span class="loc-icon">📍</span>
+        <div class="loc-info">
+          <div class="loc-main"><span id="locHeader">BH-1</span> ▾</div>
+          <div class="loc-sub" id="locSubHeader">Lovely Professional University, Phagwara</div>
         </div>
       </div>
-      <div class="brand-pill">LPUKART</div>
+      <div class="header-right">
+        <div class="gold-badge">GOLD ⚡1</div>
+        <div class="profile-avatar" onclick="openLocationModal()">H</div>
+      </div>
     </div>
 
-    <!-- Search Box -->
-    <div class="search-wrap">
+    <!-- Search & Veg Switch -->
+    <div class="search-row">
       <div class="search-box">
         <span>🔍</span>
-        <input type="text" id="searchInput" placeholder="Search any dish, fruit, non-veg, dessert, shake..." onkeyup="renderFood()">
+        <input type="text" id="searchInput" placeholder="Search 'chatpata', 'roll', 'dosa'..." onkeyup="renderFeed()">
+        <span class="mic-icon">🎙️</span>
+      </div>
+      <div class="veg-mode-toggle" id="vegToggle" onclick="toggleVegMode()">
+        <span class="veg-label">VEG MODE</span>
+        <div class="toggle-switch"></div>
       </div>
     </div>
   </header>
 
-  <div class="main-wrap">
+  <div class="content-area">
 
-    <!-- 24x7 Express Delivery Card -->
-    <div class="rush-pass-card">
-      <div class="pass-badge">🟢 24 Hours Open (24x7 Express)</div>
-      <div class="pass-title">LPUKART 24x7 Express Delivery</div>
-      <div class="pass-desc">Day break ho ya Late Night Hostel study sessions — 150+ menu items delivered across all Hostels & Blocks!</div>
-      
-      <div class="slot-bar">
-        <span>Order Time:</span>
-        <select id="slotSelect">
-          <option value="24x7 Anytime Instant Delivery (10-15 Mins)" selected>⚡ Instant Now (Next 10-15 Mins)</option>
-          <option value="Late Night Express (11:00 PM - 04:00 AM)">🌙 Late Night Express (Hostel Study)</option>
-          <option value="08:00 AM - 09:30 AM Morning Breakfast">🌅 08:00 AM - 09:30 AM Breakfast</option>
-          <option value="10:45 AM - 11:00 AM Class Break">⏰ 10:45 AM - 11:00 AM Break</option>
-          <option value="12:45 PM - 01:15 PM Lunch Break">🍔 12:45 PM - 01:15 PM Lunch Break</option>
-          <option value="04:45 PM Evening Snacks">☕ 04:45 PM Evening Snacks</option>
-          <option value="08:00 PM - 10:30 PM Dinner">🍛 08:00 PM - 10:30 PM Dinner</option>
-        </select>
+    <!-- Welcome Benefits Banner -->
+    <div class="welcome-card">
+      <div class="wc-left">
+        <h3>ENJOY WELCOME BENEFITS</h3>
+        <p>on first 3 campus orders</p>
+        <span class="wc-tag">₹100 OFF + FREE Express Delivery</span>
+      </div>
+      <div class="wc-icon">🎁</div>
+    </div>
+
+    <!-- 24x7 Delivery Slot -->
+    <div class="slot-bar-wrap">
+      <span style="font-size:11px; font-weight:800; color:#555;">⚡ TIME SLOT:</span>
+      <select id="slotSelect">
+        <option value="24x7 Anytime Instant (10-15 Mins)">24x7 Instant Delivery (10-15 Mins)</option>
+        <option value="Late Night Express (11:00 PM - 04:00 AM)">Late Night Hostel Express</option>
+        <option value="08:00 AM - 09:30 AM Breakfast">08:00 AM - 09:30 AM Breakfast</option>
+        <option value="10:45 AM - 11:00 AM Class Break">10:45 AM - 11:00 AM Class Break</option>
+        <option value="12:45 PM - 01:15 PM Lunch Break">12:45 PM - 01:15 PM Lunch Break</option>
+        <option value="04:45 PM Evening Snacks">04:45 PM Evening Snacks</option>
+      </select>
+    </div>
+
+    <!-- Round Category Circles -->
+    <div class="explore-row">
+      <div class="explore-item active" onclick="filterCategory('All', this)">
+        <div class="explore-img-wrap"><img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=120" alt="All"></div>
+        <div class="explore-name">All</div>
+      </div>
+      <div class="explore-item" onclick="filterCategory('Pizza', this)">
+        <div class="explore-img-wrap"><img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=120" alt="Pizza"></div>
+        <div class="explore-name">Pizza</div>
+      </div>
+      <div class="explore-item" onclick="filterCategory('Biryani', this)">
+        <div class="explore-img-wrap"><img src="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=120" alt="Biryani"></div>
+        <div class="explore-name">Biryani</div>
+      </div>
+      <div class="explore-item" onclick="filterCategory('North Indian', this)">
+        <div class="explore-img-wrap"><img src="https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=120" alt="North Indian"></div>
+        <div class="explore-name">North Indian</div>
+      </div>
+      <div class="explore-item" onclick="filterCategory('Rolls', this)">
+        <div class="explore-img-wrap"><img src="https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=120" alt="Rolls"></div>
+        <div class="explore-name">Rolls</div>
+      </div>
+      <div class="explore-item" onclick="filterCategory('Fruits', this)">
+        <div class="explore-img-wrap"><img src="https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=120" alt="Fruits"></div>
+        <div class="explore-name">Fruits</div>
+      </div>
+      <div class="explore-item" onclick="filterCategory('Momos', this)">
+        <div class="explore-img-wrap"><img src="https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=120" alt="Momos"></div>
+        <div class="explore-name">Momos</div>
+      </div>
+      <div class="explore-item" onclick="filterCategory('Desserts', this)">
+        <div class="explore-img-wrap"><img src="https://images.unsplash.com/photo-1562376552-0d160a2f238d?w=120" alt="Waffles"></div>
+        <div class="explore-name">Desserts</div>
       </div>
     </div>
 
-    <!-- Category Circles -->
-    <div class="section-heading">EXPLORE CATEGORIES</div>
-    <div class="circle-cats">
-      <div class="circle-item active" onclick="selectCircle('All', this)">
-        <div class="circle-img-wrap">🍽️</div>
-        <div class="circle-name">All (150+)</div>
+    <!-- Filter Pills Row -->
+    <div class="filter-scroll">
+      <div class="chip-btn active" onclick="setQuickFilter('All', this)">⚡ Filters</div>
+      <div class="chip-btn" onclick="setQuickFilter('Near', this)">Near & Fast</div>
+      <div class="chip-btn" onclick="setQuickFilter('Under150', this)">Under ₹150</div>
+      <div class="chip-btn" onclick="setQuickFilter('Uni-Mall', this)">Uni-Mall Food Court</div>
+      <div class="chip-btn" onclick="setQuickFilter('Robo Park', this)">Robo Park</div>
+    </div>
+
+    <!-- Recommended For You Row -->
+    <div class="section-title">RECOMMENDED FOR YOU</div>
+    <div class="rec-scroll">
+      <div class="rec-card" onclick="quickAddItem(1)">
+        <div class="rec-img-box">
+          <img src="https://images.unsplash.com/photo-1562967914-608f82629710?w=250" alt="KFC">
+          <span class="rec-tag">50% OFF</span>
+        </div>
+        <div class="rec-body">
+          <div class="rec-title">KFC Express</div>
+          <div class="rec-meta">★ 4.1 • 15-20 mins</div>
+        </div>
       </div>
-      <div class="circle-item" onclick="selectCircle('Fruits', this)">
-        <div class="circle-img-wrap">🍎</div>
-        <div class="circle-name">Fruits & Bowls</div>
+      <div class="rec-card" onclick="quickAddItem(2)">
+        <div class="rec-img-box">
+          <img src="https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=250" alt="Om Vaishno">
+          <span class="rec-tag">50% OFF UPTO ₹100</span>
+        </div>
+        <div class="rec-body">
+          <div class="rec-title">Om Vaishno Dhaba</div>
+          <div class="rec-meta">★ 3.8 • 20-25 mins</div>
+        </div>
       </div>
-      <div class="circle-item" onclick="selectCircle('Fast Food', this)">
-        <div class="circle-img-wrap">🍕</div>
-        <div class="circle-name">Fast Food</div>
+      <div class="rec-card" onclick="quickAddItem(3)">
+        <div class="rec-img-box">
+          <img src="https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=250" alt="Patwari">
+          <span class="rec-tag">₹140 OFF</span>
+        </div>
+        <div class="rec-body">
+          <div class="rec-title">Patwari Vaishno Dhaba</div>
+          <div class="rec-meta">★ 4.3 • 25-30 mins</div>
+        </div>
       </div>
-      <div class="circle-item" onclick="selectCircle('Non-Veg', this)">
-        <div class="circle-img-wrap">🍗</div>
-        <div class="circle-name">Non-Veg</div>
-      </div>
-      <div class="circle-item" onclick="selectCircle('Main Course', this)">
-        <div class="circle-img-wrap">🍚</div>
-        <div class="circle-name">Main Course</div>
-      </div>
-      <div class="circle-item" onclick="selectCircle('Breads', this)">
-        <div class="circle-img-wrap">🫓</div>
-        <div class="circle-name">Breads</div>
-      </div>
-      <div class="circle-item" onclick="selectCircle('South Indian', this)">
-        <div class="circle-img-wrap">🥘</div>
-        <div class="circle-name">South Indian</div>
-      </div>
-      <div class="circle-item" onclick="selectCircle('Chinese', this)">
-        <div class="circle-img-wrap">🍜</div>
-        <div class="circle-name">Chinese</div>
-      </div>
-      <div class="circle-item" onclick="selectCircle('Momos', this)">
-        <div class="circle-img-wrap">🥟</div>
-        <div class="circle-name">Momos</div>
-      </div>
-      <div class="circle-item" onclick="selectCircle('Rolls', this)">
-        <div class="circle-img-wrap">🌯</div>
-        <div class="circle-name">Rolls</div>
-      </div>
-      <div class="circle-item" onclick="selectCircle('Breakfast', this)">
-        <div class="circle-img-wrap">🍳</div>
-        <div class="circle-name">Breakfast</div>
-      </div>
-      <div class="circle-item" onclick="selectCircle('Bakery', this)">
-        <div class="circle-img-wrap">🍰</div>
-        <div class="circle-name">Desserts</div>
-      </div>
-      <div class="circle-item" onclick="selectCircle('Snacks', this)">
-        <div class="circle-img-wrap">🍿</div>
-        <div class="circle-name">Snacks</div>
-      </div>
-      <div class="circle-item" onclick="selectCircle('Healthy', this)">
-        <div class="circle-img-wrap">🥗</div>
-        <div class="circle-name">Healthy</div>
-      </div>
-      <div class="circle-item" onclick="selectCircle('Drinks', this)">
-        <div class="circle-img-wrap">🥤</div>
-        <div class="circle-name">Drinks</div>
-      </div>
-      <div class="circle-item" onclick="selectCircle('Combos', this)">
-        <div class="circle-img-wrap">🍱</div>
-        <div class="circle-name">Combos</div>
-      </div>
-      <div class="circle-item" onclick="selectCircle('International', this)">
-        <div class="circle-img-wrap">🌍</div>
-        <div class="circle-name">Global Cuisine</div>
+      <div class="rec-card" onclick="quickAddItem(4)">
+        <div class="rec-img-box">
+          <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=250" alt="Dominos">
+          <span class="rec-tag">55% OFF</span>
+        </div>
+        <div class="rec-body">
+          <div class="rec-title">Domino's Pizza</div>
+          <div class="rec-meta">★ 4.6 • 20-25 mins</div>
+        </div>
       </div>
     </div>
 
-    <!-- Filter Pills -->
-    <div class="filter-row">
-      <div class="filter-pill active" onclick="setKioskFilter('All', this)">All Campus Outlets</div>
-      <div class="filter-pill" onclick="setKioskFilter('Fruit Hub', this)">🍎 Fruit Hub</div>
-      <div class="filter-pill" onclick="setKioskFilter('Uni-Mall', this)">Uni-Mall Food Court</div>
-      <div class="filter-pill" onclick="setKioskFilter('Robo Park', this)">🤖 Robo Park Kiosks</div>
-      <div class="filter-pill" onclick="setKioskFilter('Law Block', this)">⚖️ Law School Canteen</div>
-      <div class="filter-pill" onclick="setKioskFilter('Block 34', this)">Block 34 (CSE)</div>
-      <div class="filter-pill" onclick="setKioskFilter('Block 14', this)">Block 14 Food Court</div>
-    </div>
+    <!-- Main Full Outlets Feed -->
+    <div class="section-title" id="feedCountTitle">309 RESTAURANTS DELIVERING TO YOU</div>
+    <div class="outlet-feed" id="outletContainer"></div>
 
-    <!-- Food Cards -->
-    <div class="section-heading" id="menuCountHeading">ALL DISHES & ITEMS</div>
-    <div class="food-card-list" id="foodContainer"></div>
   </div>
 
-  <!-- Floating Cart -->
-  <div class="floating-cart" id="floatingCart" style="display:none;" onclick="openCheckoutModal()">
-    <div class="cart-left">
-      <span class="cart-items-count" id="cartCount">0 ITEMS</span>
-      <span class="cart-total-price" id="cartTotal">₹0</span>
+  <!-- Floating Cart Bar -->
+  <div class="cart-float-bar" id="cartFloat" style="display:none;" onclick="openCheckoutModal()">
+    <div>
+      <div class="cf-left" id="cartItemsCount">0 ITEMS</div>
+      <div class="cf-total" id="cartTotalSum">₹0</div>
     </div>
-    <div class="cart-right-btn">View Cart & Fast-Pass ➔</div>
+    <div class="cf-right">View Cart ➔</div>
   </div>
 
-  <!-- Bottom Bar -->
-  <div class="bottom-nav">
-    <div class="nav-tab active">
-      <div class="nav-icon">🛵</div>
+  <!-- Bottom Navigation Tabs -->
+  <div class="footer-nav">
+    <div class="tab-item active">
+      <span class="tab-icon">🛵</span>
       <span>Delivery</span>
     </div>
-    <div class="nav-tab" onclick="openLocationModal()">
-      <div class="nav-icon">📍</div>
-      <span>Hostels/Spots</span>
+    <div class="tab-item" onclick="setQuickFilter('Under150', null)">
+      <span class="tab-icon">🏷️</span>
+      <span>Under ₹250</span>
     </div>
-    <div class="nav-tab" onclick="openCheckoutModal()">
-      <div class="nav-icon">🛒</div>
-      <span>Cart</span>
+    <div class="tab-item" onclick="openLocationModal()">
+      <span class="tab-icon">🍽️</span>
+      <span>Dining</span>
     </div>
-    <div class="nav-tab" onclick="openLocationModal()">
-      <div class="nav-icon">👤</div>
-      <span>Profile</span>
+    <div class="district-tab" onclick="openLocationModal()">
+      <span>district</span>
+      <span>✨</span>
     </div>
   </div>
 
-  <!-- LOCATION & HOSTELS MODAL -->
+  <!-- LOCATION & PROFILE MODAL -->
   <div class="modal-overlay" id="locationModal">
     <div class="modal-sheet">
       <div class="modal-title">
-        <span>Select Your Hostel / Campus Spot</span>
+        <span>Campus Delivery Address</span>
         <span style="cursor:pointer;" onclick="closeModal('locationModal')">✕</span>
       </div>
 
       <form onsubmit="saveUserProfile(event)">
         <div class="form-group">
-          <label>Your Name</label>
+          <label>Student Name</label>
           <input type="text" id="userNameInput" placeholder="e.g. Himanshu Yadav" required>
         </div>
         <div class="form-group">
-          <label>WhatsApp Phone Number</label>
-          <input type="tel" id="userPhoneInput" placeholder="10-digit Mobile number" required>
+          <label>WhatsApp Phone</label>
+          <input type="tel" id="userPhoneInput" placeholder="10-digit Phone" required>
         </div>
         <div class="form-group">
-          <label>Campus Hostels & Academic Hubs</label>
+          <label>Select Hostel / Spot</label>
           <select id="userLocationSelect" required>
-            <option value="">-- Choose Exact Location --</option>
-            
-            <optgroup label="Hostels & Hubs">
+            <option value="">-- Choose Hostel or Block --</option>
+            <optgroup label="Hostels (BH & GH)">
+              <option value="BH-1" selected>Boys Hostel (BH-1)</option>
+              <option value="BH-2">Boys Hostel (BH-2)</option>
+              <option value="BH-3">Boys Hostel (BH-3)</option>
+              <option value="BH-4">Boys Hostel (BH-4)</option>
+              <option value="BH-5">Boys Hostel (BH-5)</option>
+              <option value="BH-6">Boys Hostel (BH-6)</option>
+              <option value="BH-7">Boys Hostel (BH-7)</option>
+              <option value="BH-8">Boys Hostel (BH-8)</option>
+              <option value="BH-9">Boys Hostel (BH-9)</option>
+              <option value="BH-10">Boys Hostel (BH-10)</option>
+              <option value="BH-11">Boys Hostel (BH-11)</option>
+              <option value="BH-12">Boys Hostel (BH-12)</option>
+              <option value="GH-1">Girls Hostel (GH-1)</option>
+              <option value="GH-2">Girls Hostel (GH-2)</option>
+              <option value="GH-3">Girls Hostel (GH-3)</option>
+              <option value="GH-4">Girls Hostel (GH-4)</option>
+              <option value="GH-5">Girls Hostel (GH-5)</option>
+              <option value="GH-6">Girls Hostel (GH-6)</option>
+              <option value="GH-7">Girls Hostel (GH-7)</option>
+              <option value="GH-8">Girls Hostel (GH-8)</option>
+            </optgroup>
+            <optgroup label="Campus Spots & Blocks">
               <option value="Uni-Mall Food Court">Uni-Mall Food Court</option>
-              <option value="BH-1">Boys Hostels (BH-1)</option>
-              <option value="BH-2">Boys Hostels (BH-2)</option>
-              <option value="BH-3">Boys Hostels (BH-3)</option> 
-              <option value="BH-4">Boys Hostels (BH-4)</option>
-              <option value="BH-5">Boys Hostels (BH-5)</option>
-              <option value="BH-6">Boys Hostels (BH-6)</option>
-              <option value="BH-7">Boys Hostels (BH-7)</option>
-              <option value="BH-8">Boys Hostels (BH-8)</option>
-              <option value="BH-9">Boys Hostels (BH-9)</option>
-              <option value="BH-10">Boys Hostels (BH-10)</option>
-              <option value="BH-11">Boys Hostels (BH-11)</option>
-              <option value="BH-12">Boys Hostels (BH-12)</option>
-              <option value="GH-1">Girls Hostels (GH-1)</option>
-              <option value="GH-2">Girls Hostels (GH-2)</option>
-              <option value="GH-3">Girls Hostels (GH-3)</option>
-              <option value="GH-4">Girls Hostels (GH-4)</option>
-              <option value="GH-5">Girls Hostels (GH-5)</option>
-              <option value="GH-6">Girls Hostels (GH-6)</option>
-              <option value="GH-7">Girls Hostels (GH-7)</option>
-              <option value="GH-8">Girls Hostels (GH-8)</option>
-            </optgroup>
-
-            <optgroup label="Special Landmarks & Parks">
-              <option value="Robo Park (Robotics Garden)">🤖 Robo Park (Robotics Garden)</option>
-              <option value="Block 37 / 38 (School of Law)">⚖️ Block 37 / 38 (Law School)</option>
-              <option value="Baldev Raj Mittal Unipolis">🎪 Baldev Raj Mittal Unipolis</option>
-              <option value="Shanti Devi Mittal Park">🌳 Shanti Devi Mittal Park</option>
-              <option value="Central Lawn (Admin Front)">🌱 Central Lawn (Admin Front)</option>
-              <option value="Open Air Theatre (OAT)">🎭 Open Air Theatre (OAT)</option>
-            </optgroup>
-
-            <optgroup label="Campus Parking Areas">
-              <option value="Main Gate Central Parking">🚗 Main Gate Central Parking</option>
-              <option value="Uni-Mall Surface Parking">🛵 Uni-Mall Parking</option>
-              <option value="Block 34 2-Wheeler Parking">🏍️ Block 34 (CSE) Parking</option>
-              <option value="Law Block Parking">🚗 Law Block Parking</option>
-              <option value="Multi-Level Parking">🚙 Multi-Level Car Parking</option>
-            </optgroup>
-
-            <optgroup label="Academic Blocks">
-              <option value="Block 33 / 34 (CSE & IT Hub)">Block 33 / 34 (CSE & IT Hub)</option>
-              <option value="Block 13 / 14 (Food Court Area)">Block 13 / 14 (Food Court Area)</option>
-              <option value="Block 1 / 2 / 3">Block 1, 2, 3</option>
-              <option value="Block 25 - 28 (Agriculture & Sciences)">Block 25 - 28 (Sciences)</option>
-              <option value="Block 55 - 58 (Engineering & Polytechnic)">Block 55 - 58 (Engineering)</option>
+              <option value="Robo Park (Robotics Garden)">🤖 Robo Park</option>
+              <option value="Block 37 / 38 (Law School)">⚖️ Block 37 / 38 (Law School)</option>
+              <option value="Block 33 / 34 (CSE & IT Hub)">Block 33 / 34 (CSE)</option>
+              <option value="Block 13 / 14 (Food Court)">Block 13 / 14 Food Court</option>
+              <option value="Baldev Raj Mittal Unipolis">Baldev Raj Mittal Unipolis</option>
+              <option value="Shanti Devi Mittal Park">Shanti Devi Mittal Park</option>
             </optgroup>
           </select>
         </div>
 
-        <button type="submit" class="btn-red-full">Save Details & Continue</button>
+        <button type="submit" class="btn-red">Save Profile</button>
       </form>
     </div>
   </div>
@@ -413,262 +441,41 @@
   <div class="modal-overlay" id="checkoutModal">
     <div class="modal-sheet">
       <div class="modal-title">
-        <span>Order Summary & Fast Pass</span>
+        <span>Order Summary</span>
         <span style="cursor:pointer;" onclick="closeModal('checkoutModal')">✕</span>
       </div>
 
-      <div id="checkoutItemsList" style="border-bottom: 1px dashed var(--border-color); padding-bottom: 10px; margin-bottom: 10px;"></div>
+      <div id="checkoutList" style="border-bottom: 1px dashed #ddd; padding-bottom: 10px; margin-bottom: 10px;"></div>
 
       <div class="form-group">
-        <label>Handover Method</label>
-        <select id="handoverMode">
-          <option value="Hostel Main Gate Handover">🚪 Hostel Main Gate / Reception Handover</option>
-          <option value="Counter Self-Pickup (Skip Queue)">🏃 Fast-Pass Counter Self-Pickup</option>
-          <option value="Express Runner Drop to Spot">🛵 Spot Drop (Bench / Block Entry)</option>
-        </select>
+        <label>Room / Gate / Benchmark</label>
+        <input type="text" id="orderLandmark" placeholder="e.g. Room 412 / Main Gate / Near Lift">
       </div>
 
-      <div class="form-group">
-        <label>Room Number / Gate / Bench Detail</label>
-        <input type="text" id="exactLandmark" placeholder="e.g. Room 412 / BH Gate 1 / Near Lift">
-      </div>
-
-      <button class="btn-green-whatsapp" onclick="dispatchWhatsAppOrder()">📲 Place Order on LPUKART (WhatsApp)</button>
+      <button class="btn-whatsapp" onclick="dispatchOrder()">📲 Place Order on WhatsApp</button>
     </div>
   </div>
 
   <script>
     const ADMIN_WHATSAPP = "918957645702";
 
-    // 150+ COMPLETE MENU ITEMS
-    const menu = [
-      // 🍕 FAST FOOD
-      { id: 1, name: "Farmhouse Cheese Pizza", price: 160, cat: "Fast Food", kiosk: "Uni-Mall", time: "7 mins", rating: "4.8", img: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=500&auto=format&fit=crop" },
-      { id: 2, name: "Crispy Veg Burger", price: 55, cat: "Fast Food", kiosk: "Block 34", time: "3 mins", rating: "4.6", img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500&auto=format&fit=crop" },
-      { id: 3, name: "Peri Peri French Fries", price: 70, cat: "Fast Food", kiosk: "Block 34", time: "3 mins", rating: "4.7", img: "https://images.unsplash.com/photo-1576107232684-1279f3908594?w=500&auto=format&fit=crop" },
-      { id: 4, name: "Grilled Veg Sandwich", price: 65, cat: "Fast Food", kiosk: "Robo Park", time: "3 mins", rating: "4.7", img: "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=500&auto=format&fit=crop" },
-      { id: 5, name: "Classic Hot Dog", price: 75, cat: "Fast Food", kiosk: "Uni-Mall", time: "4 mins", rating: "4.5", img: "https://images.unsplash.com/photo-1619740455993-9e612b1af08a?w=500&auto=format&fit=crop" },
-      { id: 6, name: "Cheesy Garlic Bread", price: 90, cat: "Fast Food", kiosk: "Uni-Mall", time: "5 mins", rating: "4.8", img: "https://images.unsplash.com/photo-1619535860434-ba1d8fa12536?w=500&auto=format&fit=crop" },
-      { id: 7, name: "Veggie Wrap", price: 80, cat: "Fast Food", kiosk: "Robo Park", time: "4 mins", rating: "4.6", img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=500&auto=format&fit=crop" },
-      { id: 8, name: "Paneer Roll", price: 90, cat: "Fast Food", kiosk: "Robo Park", time: "4 mins", rating: "4.8", img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=500&auto=format&fit=crop" },
-      { id: 9, name: "Falafel Shawarma", price: 95, cat: "Fast Food", kiosk: "Uni-Mall", time: "4 mins", rating: "4.7", img: "https://images.unsplash.com/photo-1561651823-34feb02250e4?w=500&auto=format&fit=crop" },
-      { id: 10, name: "Mexican Tacos (2 Pcs)", price: 110, cat: "Fast Food", kiosk: "Uni-Mall", time: "5 mins", rating: "4.6", img: "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=500&auto=format&fit=crop" },
-      { id: 11, name: "Cheesy Loaded Nachos", price: 100, cat: "Fast Food", kiosk: "Uni-Mall", time: "4 mins", rating: "4.8", img: "https://images.unsplash.com/photo-1513456852971-30c0b8199d4d?w=500&auto=format&fit=crop" },
-      { id: 12, name: "Cheese Quesadilla", price: 120, cat: "Fast Food", kiosk: "Uni-Mall", time: "5 mins", rating: "4.7", img: "https://images.unsplash.com/photo-1618040996337-56904b7850b9?w=500&auto=format&fit=crop" },
-      { id: 13, name: "Submarine / Veg Sub (6 Inch)", price: 110, cat: "Fast Food", kiosk: "Block 34", time: "4 mins", rating: "4.7", img: "https://images.unsplash.com/photo-1509722747041-616f39b57569?w=500&auto=format&fit=crop" },
-      { id: 14, name: "Crispy Veg Nuggets (8 Pcs)", price: 70, cat: "Fast Food", kiosk: "Block 34", time: "3 mins", rating: "4.6", img: "https://images.unsplash.com/photo-1562967914-608f82629710?w=500&auto=format&fit=crop" },
-      { id: 15, name: "Popcorn Chicken / Paneer Popcorn", price: 90, cat: "Fast Food", kiosk: "Uni-Mall", time: "3 mins", rating: "4.8", img: "https://images.unsplash.com/photo-1562967914-608f82629710?w=500&auto=format&fit=crop" },
-
-      // 🍗 CHICKEN / NON-VEG
-      { id: 16, name: "Hyderabadi Chicken Biryani", price: 160, cat: "Non-Veg", kiosk: "Uni-Mall", time: "5 mins", rating: "4.9", img: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=500&auto=format&fit=crop" },
-      { id: 17, name: "Chicken Fried Rice", price: 130, cat: "Non-Veg", kiosk: "Block 14", time: "4 mins", rating: "4.7", img: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=500&auto=format&fit=crop" },
-      { id: 18, name: "Homestyle Chicken Curry", price: 160, cat: "Non-Veg", kiosk: "Uni-Mall", time: "6 mins", rating: "4.8", img: "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=500&auto=format&fit=crop" },
-      { id: 19, name: "Butter Chicken Special", price: 190, cat: "Non-Veg", kiosk: "Uni-Mall", time: "6 mins", rating: "4.9", img: "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=500&auto=format&fit=crop" },
-      { id: 20, name: "Tandoori Chicken Tikka", price: 170, cat: "Non-Veg", kiosk: "Uni-Mall", time: "6 mins", rating: "4.9", img: "https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?w=500&auto=format&fit=crop" },
-      { id: 21, name: "Chicken Tandoori (Half)", price: 180, cat: "Non-Veg", kiosk: "Uni-Mall", time: "7 mins", rating: "4.8", img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=500&auto=format&fit=crop" },
-      { id: 22, name: "Seekh Chicken Kebab", price: 150, cat: "Non-Veg", kiosk: "Uni-Mall", time: "5 mins", rating: "4.7", img: "https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?w=500&auto=format&fit=crop" },
-      { id: 23, name: "Crispy Chicken Lollipop (4 Pcs)", price: 140, cat: "Non-Veg", kiosk: "Block 14", time: "5 mins", rating: "4.8", img: "https://images.unsplash.com/photo-1562967914-608f82629710?w=500&auto=format&fit=crop" },
-      { id: 24, name: "Chilli Chicken (Dry/Gravy)", price: 150, cat: "Non-Veg", kiosk: "Block 14", time: "5 mins", rating: "4.8", img: "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=500&auto=format&fit=crop" },
-      { id: 25, name: "Chicken 65", price: 140, cat: "Non-Veg", kiosk: "Uni-Mall", time: "4 mins", rating: "4.7", img: "https://images.unsplash.com/photo-1562967914-608f82629710?w=500&auto=format&fit=crop" },
-      { id: 26, name: "Chicken Kathi Roll", price: 110, cat: "Non-Veg", kiosk: "Robo Park", time: "4 mins", rating: "4.9", img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=500&auto=format&fit=crop" },
-      { id: 27, name: "Chicken Shawarma Roll", price: 110, cat: "Non-Veg", kiosk: "Uni-Mall", time: "3 mins", rating: "4.9", img: "https://images.unsplash.com/photo-1561651823-34feb02250e4?w=500&auto=format&fit=crop" },
-      { id: 28, name: "Mutton Biryani", price: 230, cat: "Non-Veg", kiosk: "Uni-Mall", time: "5 mins", rating: "4.9", img: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=500&auto=format&fit=crop" },
-      { id: 29, name: "Mutton Curry", price: 240, cat: "Non-Veg", kiosk: "Uni-Mall", time: "6 mins", rating: "4.8", img: "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=500&auto=format&fit=crop" },
-      { id: 30, name: "Mutton Seekh Kebab", price: 190, cat: "Non-Veg", kiosk: "Uni-Mall", time: "5 mins", rating: "4.8", img: "https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?w=500&auto=format&fit=crop" },
-      { id: 31, name: "Crispy Fish Fry", price: 160, cat: "Non-Veg", kiosk: "Uni-Mall", time: "5 mins", rating: "4.7", img: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=500&auto=format&fit=crop" },
-      { id: 32, name: "Fish Curry with Steamed Rice", price: 170, cat: "Non-Veg", kiosk: "Uni-Mall", time: "6 mins", rating: "4.7", img: "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=500&auto=format&fit=crop" },
-      { id: 33, name: "Prawn Masala / Prawn Fry", price: 220, cat: "Non-Veg", kiosk: "Uni-Mall", time: "6 mins", rating: "4.8", img: "https://images.unsplash.com/photo-1559742811-822873691df8?w=500&auto=format&fit=crop" },
-
-      // 🍚 INDIAN MAIN COURSE
-      { id: 34, name: "Yellow Dal Tadka", price: 90, cat: "Main Course", kiosk: "Law Block", time: "3 mins", rating: "4.7", img: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=500&auto=format&fit=crop" },
-      { id: 35, name: "Dal Makhani", price: 120, cat: "Main Course", kiosk: "Uni-Mall", time: "4 mins", rating: "4.9", img: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=500&auto=format&fit=crop" },
-      { id: 36, name: "Rajma Masala", price: 90, cat: "Main Course", kiosk: "Block 34", time: "2 mins", rating: "4.8", img: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=500&auto=format&fit=crop" },
-      { id: 37, name: "Punjabi Chole", price: 90, cat: "Main Course", kiosk: "Law Block", time: "3 mins", rating: "4.8", img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=500&auto=format&fit=crop" },
-      { id: 38, name: "Punjabi Kadhi Pakoda", price: 80, cat: "Main Course", kiosk: "Block 14", time: "2 mins", rating: "4.7", img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=500&auto=format&fit=crop" },
-      { id: 39, name: "Shahi Paneer", price: 140, cat: "Main Course", kiosk: "Uni-Mall", time: "5 mins", rating: "4.8", img: "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=500&auto=format&fit=crop" },
-      { id: 40, name: "Kadai Paneer", price: 140, cat: "Main Course", kiosk: "Block 14", time: "5 mins", rating: "4.9", img: "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=500&auto=format&fit=crop" },
-      { id: 41, name: "Paneer Butter Masala", price: 150, cat: "Main Course", kiosk: "Uni-Mall", time: "5 mins", rating: "4.9", img: "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=500&auto=format&fit=crop" },
-      { id: 42, name: "Palak Paneer", price: 130, cat: "Main Course", kiosk: "Law Block", time: "4 mins", rating: "4.8", img: "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=500&auto=format&fit=crop" },
-      { id: 43, name: "Malai Kofta", price: 150, cat: "Main Course", kiosk: "Uni-Mall", time: "5 mins", rating: "4.8", img: "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=500&auto=format&fit=crop" },
-      { id: 44, name: "Mix Veg Sabzi", price: 100, cat: "Main Course", kiosk: "Law Block", time: "3 mins", rating: "4.7", img: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=500&auto=format&fit=crop" },
-      { id: 45, name: "Aloo Gobi Masala", price: 90, cat: "Main Course", kiosk: "Block 14", time: "3 mins", rating: "4.7", img: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=500&auto=format&fit=crop" },
-      { id: 46, name: "Jeera Rice Bowl", price: 60, cat: "Main Course", kiosk: "Block 34", time: "2 mins", rating: "4.7", img: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=500&auto=format&fit=crop" },
-      { id: 47, name: "Veg Matar Pulao", price: 80, cat: "Main Course", kiosk: "Block 34", time: "2 mins", rating: "4.7", img: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=500&auto=format&fit=crop" },
-      { id: 48, name: "Veg Dum Biryani with Raita", price: 120, cat: "Main Course", kiosk: "Uni-Mall", time: "4 mins", rating: "4.8", img: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=500&auto=format&fit=crop" },
-      { id: 49, name: "Desi Ghee Khichdi", price: 70, cat: "Main Course", kiosk: "Law Block", time: "2 mins", rating: "4.8", img: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=500&auto=format&fit=crop" },
-
-      // 🫓 INDIAN BREADS
-      { id: 50, name: "Tawa Roti (Phulka)", price: 8, cat: "Breads", kiosk: "Law Block", time: "1 min", rating: "4.6", img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=500&auto=format&fit=crop" },
-      { id: 51, name: "Tandoori Roti", price: 12, cat: "Breads", kiosk: "Block 14", time: "2 mins", rating: "4.7", img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=500&auto=format&fit=crop" },
-      { id: 52, name: "Butter Tandoori Roti", price: 15, cat: "Breads", kiosk: "Block 14", time: "2 mins", rating: "4.8", img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=500&auto=format&fit=crop" },
-      { id: 53, name: "Plain Naan", price: 30, cat: "Breads", kiosk: "Uni-Mall", time: "3 mins", rating: "4.7", img: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=500&auto=format&fit=crop" },
-      { id: 54, name: "Butter Naan", price: 40, cat: "Breads", kiosk: "Uni-Mall", time: "3 mins", rating: "4.9", img: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=500&auto=format&fit=crop" },
-      { id: 55, name: "Garlic Butter Naan", price: 50, cat: "Breads", kiosk: "Uni-Mall", time: "3 mins", rating: "4.9", img: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=500&auto=format&fit=crop" },
-      { id: 56, name: "Laccha Paratha", price: 35, cat: "Breads", kiosk: "Block 14", time: "3 mins", rating: "4.8", img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=500&auto=format&fit=crop" },
-      { id: 57, name: "Plain Tawa Paratha", price: 25, cat: "Breads", kiosk: "Law Block", time: "2 mins", rating: "4.7", img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=500&auto=format&fit=crop" },
-      { id: 58, name: "Aloo Paratha with Butter", price: 55, cat: "Breads", kiosk: "Law Block", time: "4 mins", rating: "4.9", img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=500&auto=format&fit=crop" },
-      { id: 59, name: "Paneer Paratha with Butter", price: 70, cat: "Breads", kiosk: "Block 34", time: "4 mins", rating: "4.9", img: "https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=500&auto=format&fit=crop" },
-      { id: 60, name: "Puri (4 Pcs)", price: 40, cat: "Breads", kiosk: "Law Block", time: "2 mins", rating: "4.7", img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=500&auto=format&fit=crop" },
-      { id: 61, name: "Bhatura (Single)", price: 30, cat: "Breads", kiosk: "Law Block", time: "2 mins", rating: "4.8", img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=500&auto=format&fit=crop" },
-      { id: 62, name: "Amritsari Kulcha with Chole", price: 85, cat: "Breads", kiosk: "Uni-Mall", time: "4 mins", rating: "4.9", img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=500&auto=format&fit=crop" },
-
-      // 🥘 SOUTH INDIAN
-      { id: 63, name: "Masala Dosa", price: 75, cat: "South Indian", kiosk: "Uni-Mall", time: "4 mins", rating: "4.8", img: "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?w=500&auto=format&fit=crop" },
-      { id: 64, name: "Plain Paper Dosa", price: 60, cat: "South Indian", kiosk: "Uni-Mall", time: "3 mins", rating: "4.7", img: "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=500&auto=format&fit=crop" },
-      { id: 65, name: "Paneer Dosa", price: 100, cat: "South Indian", kiosk: "Block 14", time: "5 mins", rating: "4.9", img: "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?w=500&auto=format&fit=crop" },
-      { id: 66, name: "Mysore Masala Dosa", price: 85, cat: "South Indian", kiosk: "Uni-Mall", time: "5 mins", rating: "4.9", img: "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?w=500&auto=format&fit=crop" },
-      { id: 67, name: "Rava Onion Dosa", price: 85, cat: "South Indian", kiosk: "Block 14", time: "5 mins", rating: "4.8", img: "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?w=500&auto=format&fit=crop" },
-      { id: 68, name: "Steamed Idli (2 Pcs) with Sambar", price: 50, cat: "South Indian", kiosk: "Uni-Mall", time: "2 mins", rating: "4.8", img: "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=500&auto=format&fit=crop" },
-      { id: 69, name: "Crispy Medu Vada (2 Pcs)", price: 60, cat: "South Indian", kiosk: "Block 14", time: "2 mins", rating: "4.7", img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=500&auto=format&fit=crop" },
-      { id: 70, name: "Extra Bowl Hot Sambar", price: 20, cat: "South Indian", kiosk: "Uni-Mall", time: "1 min", rating: "4.6", img: "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=500&auto=format&fit=crop" },
-      { id: 71, name: "Onion Tomato Uttapam", price: 80, cat: "South Indian", kiosk: "Law Block", time: "4 mins", rating: "4.7", img: "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=500&auto=format&fit=crop" },
-      { id: 72, name: "South Indian Upma", price: 45, cat: "South Indian", kiosk: "Robo Park", time: "2 mins", rating: "4.7", img: "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=500&auto=format&fit=crop" },
-      { id: 73, name: "Ghee Pongal", price: 60, cat: "South Indian", kiosk: "Uni-Mall", time: "2 mins", rating: "4.8", img: "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=500&auto=format&fit=crop" },
-      { id: 74, name: "Tangy Lemon Rice Bowl", price: 60, cat: "South Indian", kiosk: "Block 34", time: "2 mins", rating: "4.7", img: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=500&auto=format&fit=crop" },
-      { id: 75, name: "Tempered Curd Rice Bowl", price: 60, cat: "South Indian", kiosk: "Block 34", time: "2 mins", rating: "4.8", img: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=500&auto=format&fit=crop" },
-
-      // 🍜 CHINESE / ASIAN
-      { id: 76, name: "Veg Hakka Noodles", price: 80, cat: "Chinese", kiosk: "Block 34", time: "4 mins", rating: "4.6", img: "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=500&auto=format&fit=crop" },
-      { id: 77, name: "Desi Street Chowmein", price: 70, cat: "Chinese", kiosk: "Robo Park", time: "3 mins", rating: "4.7", img: "https://images.unsplash.com/photo-1612927601601-6638404737ce?w=500&auto=format&fit=crop" },
-      { id: 78, name: "Schezwan Spicy Noodles", price: 90, cat: "Chinese", kiosk: "Uni-Mall", time: "4 mins", rating: "4.8", img: "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=500&auto=format&fit=crop" },
-      { id: 79, name: "Veg Fried Rice", price: 80, cat: "Chinese", kiosk: "Block 14", time: "3 mins", rating: "4.7", img: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=500&auto=format&fit=crop" },
-      { id: 80, name: "Schezwan Fried Rice", price: 90, cat: "Chinese", kiosk: "Uni-Mall", time: "4 mins", rating: "4.8", img: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=500&auto=format&fit=crop" },
-      { id: 81, name: "Veg Manchurian (Dry/Gravy)", price: 90, cat: "Chinese", kiosk: "Block 14", time: "4 mins", rating: "4.8", img: "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=500&auto=format&fit=crop" },
-      { id: 82, name: "Chilli Paneer (Dry/Gravy)", price: 130, cat: "Chinese", kiosk: "Uni-Mall", time: "5 mins", rating: "4.9", img: "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=500&auto=format&fit=crop" },
-      { id: 83, name: "Crispy Spring Roll (4 Pcs)", price: 70, cat: "Chinese", kiosk: "Robo Park", time: "3 mins", rating: "4.7", img: "https://images.unsplash.com/photo-1544025162-d76694265947?w=500&auto=format&fit=crop" },
-      { id: 84, name: "Steamed Asian Dumplings", price: 80, cat: "Chinese", kiosk: "Uni-Mall", time: "4 mins", rating: "4.8", img: "https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=500&auto=format&fit=crop" },
-      { id: 85, name: "Thai Green/Red Curry with Rice", price: 160, cat: "Chinese", kiosk: "Uni-Mall", time: "6 mins", rating: "4.7", img: "https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?w=500&auto=format&fit=crop" },
-      { id: 86, name: "Hot Veg Ramen Bowl", price: 140, cat: "Chinese", kiosk: "Uni-Mall", time: "5 mins", rating: "4.8", img: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=500&auto=format&fit=crop" },
-      { id: 87, name: "Veg Sushi Roll Platter (4 Pcs)", price: 180, cat: "Chinese", kiosk: "Uni-Mall", time: "6 mins", rating: "4.7", img: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=500&auto=format&fit=crop" },
-
-      // 🥟 MOMOS SPECIAL
-      { id: 88, name: "Steamed Veg Momos (6 Pcs)", price: 50, cat: "Momos", kiosk: "Uni-Mall", time: "2 mins", rating: "4.7", img: "https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=500&auto=format&fit=crop" },
-      { id: 89, name: "Steamed Paneer Momos (6 Pcs)", price: 65, cat: "Momos", kiosk: "Uni-Mall", time: "2 mins", rating: "4.8", img: "https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=500&auto=format&fit=crop" },
-      { id: 90, name: "Cheese Sweet Corn Momos (6 Pcs)", price: 75, cat: "Momos", kiosk: "Uni-Mall", time: "3 mins", rating: "4.8", img: "https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=500&auto=format&fit=crop" },
-      { id: 91, name: "Steamed Chicken Momos (6 Pcs)", price: 80, cat: "Momos", kiosk: "Uni-Mall", time: "3 mins", rating: "4.9", img: "https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=500&auto=format&fit=crop" },
-      { id: 92, name: "Crispy Fried Momos (6 Pcs)", price: 60, cat: "Momos", kiosk: "Robo Park", time: "3 mins", rating: "4.7", img: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=500&auto=format&fit=crop" },
-      { id: 93, name: "Tandoori Paneer Momos (6 Pcs)", price: 85, cat: "Momos", kiosk: "Uni-Mall", time: "4 mins", rating: "4.9", img: "https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=500&auto=format&fit=crop" },
-      { id: 94, name: "Creamy Afghani Momos (6 Pcs)", price: 95, cat: "Momos", kiosk: "Uni-Mall", time: "4 mins", rating: "4.9", img: "https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=500&auto=format&fit=crop" },
-      { id: 95, name: "Crunchy Kurkure Momos (6 Pcs)", price: 90, cat: "Momos", kiosk: "Uni-Mall", time: "4 mins", rating: "4.9", img: "https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=500&auto=format&fit=crop" },
-      { id: 96, name: "Spicy Schezwan Gravy Momos", price: 85, cat: "Momos", kiosk: "Block 14", time: "4 mins", rating: "4.8", img: "https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=500&auto=format&fit=crop" },
-
-      // 🌯 ROLLS & WRAPS
-      { id: 97, name: "Chatpata Aloo Roll", price: 60, cat: "Rolls", kiosk: "Robo Park", time: "3 mins", rating: "4.6", img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=500&auto=format&fit=crop" },
-      { id: 98, name: "Double Egg Roll", price: 75, cat: "Rolls", kiosk: "Robo Park", time: "3 mins", rating: "4.8", img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=500&auto=format&fit=crop" },
-      { id: 99, name: "Paneer Tikka Wrap", price: 95, cat: "Rolls", kiosk: "Robo Park", time: "4 mins", rating: "4.8", img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=500&auto=format&fit=crop" },
-
-      // 🍳 BREAKFAST CLASSICS
-      { id: 100, name: "Indori Poha with Sev & Peanuts", price: 40, cat: "Breakfast", kiosk: "Robo Park", time: "1 min", rating: "4.8", img: "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=500&auto=format&fit=crop" },
-      { id: 101, name: "Poori Sabji (4 Puris + Aloo Sabji)", price: 60, cat: "Breakfast", kiosk: "Law Block", time: "2 mins", rating: "4.8", img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=500&auto=format&fit=crop" },
-      { id: 102, name: "Chole Bhature (2 Bhature + Salad)", price: 80, cat: "Breakfast", kiosk: "Law Block", time: "3 mins", rating: "4.9", img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=500&auto=format&fit=crop" },
-      { id: 103, name: "Cheese Omelette with Toast", price: 70, cat: "Breakfast", kiosk: "Fruit Hub", time: "3 mins", rating: "4.8", img: "https://images.unsplash.com/photo-1525351484163-7529414344d8?w=500&auto=format&fit=crop" },
-      { id: 104, name: "Boiled Eggs (4 Pcs)", price: 40, cat: "Breakfast", kiosk: "Fruit Hub", time: "1 min", rating: "4.9", img: "https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?w=500&auto=format&fit=crop" },
-      { id: 105, name: "Classic Bread Omelette", price: 50, cat: "Breakfast", kiosk: "Fruit Hub", time: "2 mins", rating: "4.8", img: "https://images.unsplash.com/photo-1525351484163-7529414344d8?w=500&auto=format&fit=crop" },
-      { id: 106, name: "Fluffy Maple Pancakes (2 Pcs)", price: 90, cat: "Breakfast", kiosk: "Uni-Mall", time: "4 mins", rating: "4.8", img: "https://images.unsplash.com/photo-1528207776546-365bb710ee93?w=500&auto=format&fit=crop" },
-      { id: 107, name: "Crispy Belgian Waffles with Chocolate", price: 90, cat: "Breakfast", kiosk: "Uni-Mall", time: "4 mins", rating: "4.9", img: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?w=500&auto=format&fit=crop" },
-
-      // 🍰 BAKERY & DESSERTS
-      { id: 108, name: "Chocolate Truffle Cake (Pastry)", price: 70, cat: "Bakery", kiosk: "Uni-Mall", time: "1 min", rating: "4.9", img: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=500&auto=format&fit=crop" },
-      { id: 109, name: "Sizzling Chocolate Brownie", price: 80, cat: "Bakery", kiosk: "Uni-Mall", time: "2 mins", rating: "4.9", img: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=500&auto=format&fit=crop" },
-      { id: 110, name: "Glazed Donut", price: 60, cat: "Bakery", kiosk: "Uni-Mall", time: "1 min", rating: "4.7", img: "https://images.unsplash.com/photo-1527515862127-a4fc05baf7a5?w=500&auto=format&fit=crop" },
-      { id: 111, name: "Choco Chip Muffin", price: 50, cat: "Bakery", kiosk: "Uni-Mall", time: "1 min", rating: "4.7", img: "https://images.unsplash.com/photo-1586985289688-ca3cf47d3e6e?w=500&auto=format&fit=crop" },
-      { id: 112, name: "Red Velvet Cupcake", price: 60, cat: "Bakery", kiosk: "Uni-Mall", time: "1 min", rating: "4.8", img: "https://images.unsplash.com/photo-1614707267537-b85aaf00c4b7?w=500&auto=format&fit=crop" },
-      { id: 113, name: "New York Cheesecake Slice", price: 120, cat: "Bakery", kiosk: "Uni-Mall", time: "1 min", rating: "4.9", img: "https://images.unsplash.com/photo-1533134242443-d4fd215305ad?w=500&auto=format&fit=crop" },
-      { id: 114, name: "Vanilla / Chocolate Ice Cream Cup", price: 40, cat: "Bakery", kiosk: "Uni-Mall", time: "1 min", rating: "4.8", img: "https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?w=500&auto=format&fit=crop" },
-      { id: 115, name: "Malai Matka Kulfi", price: 50, cat: "Bakery", kiosk: "Robo Park", time: "1 min", rating: "4.9", img: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=500&auto=format&fit=crop" },
-      { id: 116, name: "Royal Falooda Shake", price: 80, cat: "Bakery", kiosk: "Uni-Mall", time: "3 mins", rating: "4.9", img: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=500&auto=format&fit=crop" },
-      { id: 117, name: "Hot Gulab Jamun (2 Pcs)", price: 35, cat: "Bakery", kiosk: "Law Block", time: "1 min", rating: "4.9", img: "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=500&auto=format&fit=crop" },
-      { id: 118, name: "Kesar Rasmalai (2 Pcs)", price: 60, cat: "Bakery", kiosk: "Law Block", time: "1 min", rating: "4.9", img: "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=500&auto=format&fit=crop" },
-      { id: 119, name: "Desi Ghee Jalebi (100g)", price: 50, cat: "Bakery", kiosk: "Law Block", time: "2 mins", rating: "4.8", img: "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=500&auto=format&fit=crop" },
-      { id: 120, name: "Spongy Rasgulla (2 Pcs)", price: 40, cat: "Bakery", kiosk: "Uni-Mall", time: "1 min", rating: "4.7", img: "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=500&auto=format&fit=crop" },
-      { id: 121, name: "Rice Kheer Bowl", price: 50, cat: "Bakery", kiosk: "Block 14", time: "1 min", rating: "4.8", img: "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=500&auto=format&fit=crop" },
-      { id: 122, name: "Gajar Ka Halwa (Desi Ghee)", price: 60, cat: "Bakery", kiosk: "Law Block", time: "1 min", rating: "4.9", img: "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=500&auto=format&fit=crop" },
-      { id: 123, name: "Thick Rabri Bowl", price: 60, cat: "Bakery", kiosk: "Law Block", time: "1 min", rating: "4.9", img: "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=500&auto=format&fit=crop" },
-
-      // 🍿 SNACKS
-      { id: 124, name: "Crispy Aloo Samosa (2 Pcs)", price: 30, cat: "Snacks", kiosk: "Block 34", time: "1 min", rating: "4.8", img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=500&auto=format&fit=crop" },
-      { id: 125, name: "Khasta Pyaaz/Dal Kachori (2 Pcs)", price: 35, cat: "Snacks", kiosk: "Robo Park", time: "1 min", rating: "4.7", img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=500&auto=format&fit=crop" },
-      { id: 126, name: "Mix Veg Pakora Plate", price: 40, cat: "Snacks", kiosk: "Law Block", time: "2 mins", rating: "4.8", img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=500&auto=format&fit=crop" },
-      { id: 127, name: "Paneer Bread Pakora", price: 35, cat: "Snacks", kiosk: "Robo Park", time: "1 min", rating: "4.7", img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=500&auto=format&fit=crop" },
-      { id: 128, name: "Kurkuri Aloo Tikki Chaat", price: 50, cat: "Snacks", kiosk: "Uni-Mall", time: "2 mins", rating: "4.9", img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=500&auto=format&fit=crop" },
-      { id: 129, name: "Golgappa / Pani Puri (6 Pcs)", price: 40, cat: "Snacks", kiosk: "Uni-Mall", time: "1 min", rating: "4.9", img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=500&auto=format&fit=crop" },
-      { id: 130, name: "Mumbai Bhel Puri", price: 40, cat: "Snacks", kiosk: "Robo Park", time: "1 min", rating: "4.7", img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=500&auto=format&fit=crop" },
-      { id: 131, name: "Sev Puri Plate", price: 50, cat: "Snacks", kiosk: "Uni-Mall", time: "2 mins", rating: "4.8", img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=500&auto=format&fit=crop" },
-      { id: 132, name: "Dahi Puri Chatpata", price: 60, cat: "Snacks", kiosk: "Uni-Mall", time: "2 mins", rating: "4.9", img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=500&auto=format&fit=crop" },
-      { id: 133, name: "Dahi Papdi Chaat", price: 50, cat: "Snacks", kiosk: "Uni-Mall", time: "2 mins", rating: "4.8", img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=500&auto=format&fit=crop" },
-      { id: 134, name: "Butter Pav Bhaji Plate", price: 80, cat: "Snacks", kiosk: "Uni-Mall", time: "3 mins", rating: "4.9", img: "https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=500&auto=format&fit=crop" },
-      { id: 135, name: "Mumbai Vada Pav", price: 35, cat: "Snacks", kiosk: "Block 34", time: "1 min", rating: "4.8", img: "https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=500&auto=format&fit=crop" },
-      { id: 136, name: "Kutchi Dabeli", price: 35, cat: "Snacks", kiosk: "Block 34", time: "1 min", rating: "4.7", img: "https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=500&auto=format&fit=crop" },
-
-      // 🥗 HEALTHY FOOD
-      { id: 137, name: "Healthy Green Garden Salad", price: 50, cat: "Healthy", kiosk: "Fruit Hub", time: "2 mins", rating: "4.7", img: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=500&auto=format&fit=crop" },
-      { id: 138, name: "High Protein Paneer Salad Bowl", price: 90, cat: "Healthy", kiosk: "Fruit Hub", time: "2 mins", rating: "4.9", img: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&auto=format&fit=crop" },
-      { id: 139, name: "Boiled Chicken Protein Bowl", price: 120, cat: "Healthy", kiosk: "Fruit Hub", time: "3 mins", rating: "4.9", img: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&auto=format&fit=crop" },
-      { id: 140, name: "Brown Rice Veg Meal Bowl", price: 100, cat: "Healthy", kiosk: "Block 34", time: "3 mins", rating: "4.7", img: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&auto=format&fit=crop" },
-      { id: 141, name: "Healthy Sprouted Moong Salad", price: 50, cat: "Healthy", kiosk: "Fruit Hub", time: "1 min", rating: "4.8", img: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=500&auto=format&fit=crop" },
-      { id: 142, name: "Warm Milk Rolled Oats with Honey", price: 60, cat: "Healthy", kiosk: "Fruit Hub", time: "2 mins", rating: "4.7", img: "https://images.unsplash.com/photo-1517673132405-a56a62b18caf?w=500&auto=format&fit=crop" },
-      { id: 143, name: "Berry Smoothie Bowl with Nuts", price: 110, cat: "Healthy", kiosk: "Fruit Hub", time: "3 mins", rating: "4.9", img: "https://images.unsplash.com/photo-1590080875515-8a3a8dc5735e?w=500&auto=format&fit=crop" },
-      { id: 144, name: "Herb Grilled Chicken Breast", price: 140, cat: "Healthy", kiosk: "Uni-Mall", time: "5 mins", rating: "4.9", img: "https://images.unsplash.com/photo-1532550907401-a500c9a57435?w=500&auto=format&fit=crop" },
-
-      // 🥤 DRINKS & BEVERAGES
-      { id: 145, name: "Cold Can (Coke / Pepsi / Sprite / ThumsUp)", price: 40, cat: "Drinks", kiosk: "Block 34", time: "1 min", rating: "4.8", img: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=500&auto=format&fit=crop" },
-      { id: 146, name: "Thick Cold Coffee with Chocolate Drizzle", price: 60, cat: "Drinks", kiosk: "Law Block", time: "2 mins", rating: "4.8", img: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=500&auto=format&fit=crop" },
-      { id: 147, name: "Hot Cappuccino / Latte", price: 50, cat: "Drinks", kiosk: "Robo Park", time: "2 mins", rating: "4.7", img: "https://images.unsplash.com/photo-1534778101976-62847782c213?w=500&auto=format&fit=crop" },
-      { id: 148, name: "Kullad Masala Ginger Tea", price: 20, cat: "Drinks", kiosk: "Robo Park", time: "1 min", rating: "4.9", img: "https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=500&auto=format&fit=crop" },
-      { id: 149, name: "Healthy Green Tea", price: 25, cat: "Drinks", kiosk: "Fruit Hub", time: "1 min", rating: "4.7", img: "https://images.unsplash.com/photo-1627435601361-ec25f5b1d0e5?w=500&auto=format&fit=crop" },
-      { id: 150, name: "Chilled Sweet Lassi (Patiala Style)", price: 45, cat: "Drinks", kiosk: "Block 14", time: "1 min", rating: "4.8", img: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=500&auto=format&fit=crop" },
-      { id: 151, name: "Mango Lassi", price: 55, cat: "Drinks", kiosk: "Block 14", time: "1 min", rating: "4.9", img: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=500&auto=format&fit=crop" },
-      { id: 152, name: "Oreo Monster Chocolate Shake", price: 80, cat: "Drinks", kiosk: "Uni-Mall", time: "3 mins", rating: "4.9", img: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=500&auto=format&fit=crop" },
-      { id: 153, name: "Fresh Mint Virgin Mojito", price: 60, cat: "Drinks", kiosk: "Uni-Mall", time: "2 mins", rating: "4.8", img: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=500&auto=format&fit=crop" },
-      { id: 154, name: "Fresh Nimbu Paani / Lemonade", price: 30, cat: "Drinks", kiosk: "Fruit Hub", time: "1 min", rating: "4.8", img: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=500&auto=format&fit=crop" },
-
-      // 🍱 COMBOS & MEALS
-      { id: 155, name: "Deluxe Veg Thali (Paneer, Dal, Rice, 3 Roti, Gulab Jamun)", price: 140, cat: "Combos", kiosk: "Block 14", time: "4 mins", rating: "4.9", img: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=500&auto=format&fit=crop" },
-      { id: 156, name: "Deluxe Non-Veg Thali (Chicken Curry, Dal, Rice, Roti)", price: 170, cat: "Combos", kiosk: "Uni-Mall", time: "4 mins", rating: "4.9", img: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=500&auto=format&fit=crop" },
-      { id: 157, name: "Student Mini Thali (Dal, Aloo Sabji, 3 Roti, Rice)", price: 90, cat: "Combos", kiosk: "Law Block", time: "2 mins", rating: "4.8", img: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=500&auto=format&fit=crop" },
-      { id: 158, name: "Express Burger Combo (Burger + Fries + Coke)", price: 130, cat: "Combos", kiosk: "Block 34", time: "3 mins", rating: "4.9", img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500&auto=format&fit=crop" },
-      { id: 159, name: "Express Pizza Combo (7-inch Pizza + Garlic Bread + Drink)", price: 230, cat: "Combos", kiosk: "Uni-Mall", time: "7 mins", rating: "4.9", img: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=500&auto=format&fit=crop" },
-      { id: 160, name: "Chinese Combo Box (Fried Rice + Manchurian Gravy + Spring Roll)", price: 140, cat: "Combos", kiosk: "Block 14", time: "4 mins", rating: "4.8", img: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=500&auto=format&fit=crop" },
-
-      // 🌍 INTERNATIONAL
-      { id: 161, name: "Italian Creamy White Sauce Pasta", price: 130, cat: "International", kiosk: "Uni-Mall", time: "5 mins", rating: "4.8", img: "https://images.unsplash.com/photo-1621996346565-e3d5d6281691?w=500&auto=format&fit=crop" },
-      { id: 162, name: "Mexican Bean & Cheese Burrito", price: 120, cat: "International", kiosk: "Uni-Mall", time: "4 mins", rating: "4.7", img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=500&auto=format&fit=crop" },
-      { id: 163, name: "Korean Spicy Kimchi Fried Rice", price: 130, cat: "International", kiosk: "Uni-Mall", time: "4 mins", rating: "4.8", img: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=500&auto=format&fit=crop" },
-      { id: 164, name: "Lebanese Hummus with Fresh Pita Bread", price: 110, cat: "International", kiosk: "Uni-Mall", time: "3 mins", rating: "4.8", img: "https://images.unsplash.com/photo-1577906096429-f73c2c312435?w=500&auto=format&fit=crop" },
-      { id: 165, name: "Mughlai Shahi Biryani with Salan", price: 160, cat: "International", kiosk: "Uni-Mall", time: "4 mins", rating: "4.9", img: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=500&auto=format&fit=crop" },
-
-      // 🍎 FRUITS & FRUIT-BASED ITEMS
-      { id: 166, name: "Fresh Kashmiri Apple (Cut & Cleaned)", price: 40, cat: "Fruits", kiosk: "Fruit Hub", time: "1 min", rating: "4.8", img: "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=500&auto=format&fit=crop" },
-      { id: 167, name: "Fresh Robusta Bananas (2 Pcs)", price: 20, cat: "Fruits", kiosk: "Fruit Hub", time: "1 min", rating: "4.9", img: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=500&auto=format&fit=crop" },
-      { id: 168, name: "Nagpur Sweet Orange (Peeled Platter)", price: 40, cat: "Fruits", kiosk: "Fruit Hub", time: "1 min", rating: "4.7", img: "https://images.unsplash.com/photo-1547514701-42782101795e?w=500&auto=format&fit=crop" },
-      { id: 169, name: "Black & Green Seedless Grapes Bowl", price: 50, cat: "Fruits", kiosk: "Fruit Hub", time: "1 min", rating: "4.8", img: "https://images.unsplash.com/photo-1537640538966-79f369143f8f?w=500&auto=format&fit=crop" },
-      { id: 170, name: "Chilled Sweet Watermelon Bowl", price: 40, cat: "Fruits", kiosk: "Fruit Hub", time: "1 min", rating: "4.9", img: "https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=500&auto=format&fit=crop" },
-      { id: 171, name: "Fresh Sweet Muskmelon (Kharbooja) Slices", price: 40, cat: "Fruits", kiosk: "Fruit Hub", time: "1 min", rating: "4.7", img: "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=500&auto=format&fit=crop" },
-      { id: 172, name: "Ripe Papaya Bowl with Lime & Chaat Masala", price: 40, cat: "Fruits", kiosk: "Fruit Hub", time: "1 min", rating: "4.8", img: "https://images.unsplash.com/photo-1517282009859-f000ec3b26fe?w=500&auto=format&fit=crop" },
-      { id: 173, name: "Fresh Guava (Amrood) with Chilli Salt", price: 30, cat: "Fruits", kiosk: "Fruit Hub", time: "1 min", rating: "4.8", img: "https://images.unsplash.com/photo-1536511135899-73895e69bf8e?w=500&auto=format&fit=crop" },
-      { id: 174, name: "Fresh Pomegranate (Anaar Dane Bowl)", price: 60, cat: "Fruits", kiosk: "Fruit Hub", time: "1 min", rating: "4.9", img: "https://images.unsplash.com/photo-1557800636-894a64c1696f?w=500&auto=format&fit=crop" },
-      { id: 175, name: "Fresh Pineapple Slices Platter", price: 50, cat: "Fruits", kiosk: "Fruit Hub", time: "1 min", rating: "4.8", img: "https://images.unsplash.com/photo-1550258987-190a2d41a8ba?w=500&auto=format&fit=crop" },
-      { id: 176, name: "Fresh Strawberries Bowl", price: 80, cat: "Fruits", kiosk: "Fruit Hub", time: "1 min", rating: "4.9", img: "https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=500&auto=format&fit=crop" },
-      { id: 177, name: "Fresh Kiwi Fruit (Cut & Peeled)", price: 60, cat: "Fruits", kiosk: "Fruit Hub", time: "1 min", rating: "4.8", img: "https://images.unsplash.com/photo-1518492104633-130d0cc84637?w=500&auto=format&fit=crop" },
-      { id: 178, name: "Exotic Dragon Fruit (Pink & White)", price: 80, cat: "Fruits", kiosk: "Fruit Hub", time: "1 min", rating: "4.8", img: "https://images.unsplash.com/photo-1527324688151-0e627063f2b1?w=500&auto=format&fit=crop" },
-      { id: 179, name: "Fresh Kashmiri Pear (Nashpati)", price: 40, cat: "Fruits", kiosk: "Fruit Hub", time: "1 min", rating: "4.6", img: "https://images.unsplash.com/photo-1514756331096-242fdeb70d4a?w=500&auto=format&fit=crop" },
-      { id: 180, name: "Juicy Peach / Plum Platter", price: 50, cat: "Fruits", kiosk: "Fruit Hub", time: "1 min", rating: "4.7", img: "https://images.unsplash.com/photo-1522741172097-6a161f3f74aa?w=500&auto=format&fit=crop" },
-      { id: 181, name: "Sweet Chikoo Platter", price: 40, cat: "Fruits", kiosk: "Fruit Hub", time: "1 min", rating: "4.7", img: "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=500&auto=format&fit=crop" },
-      { id: 182, name: "Fresh Litchi Bowl (Seasonal)", price: 70, cat: "Fruits", kiosk: "Fruit Hub", time: "1 min", rating: "4.9", img: "https://images.unsplash.com/photo-1587393855524-087f83d95bc9?w=500&auto=format&fit=crop" },
-      { id: 183, name: "Fresh Tender Coconut Water with Malai", price: 55, cat: "Fruits", kiosk: "Fruit Hub", time: "1 min", rating: "4.9", img: "https://images.unsplash.com/photo-1525385133512-2f3bdd039054?w=500&auto=format&fit=crop" },
-      { id: 184, name: "Custard Apple (Sitaphal) Pulp Bowl", price: 70, cat: "Fruits", kiosk: "Fruit Hub", time: "1 min", rating: "4.8", img: "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=500&auto=format&fit=crop" },
-      { id: 185, name: "Premium Soft Dates (Khajoor)", price: 50, cat: "Fruits", kiosk: "Fruit Hub", time: "1 min", rating: "4.9", img: "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=500&auto=format&fit=crop" },
-      { id: 186, name: "Exotic Berries Bowl (Blueberry/Blackberry)", price: 90, cat: "Fruits", kiosk: "Fruit Hub", time: "1 min", rating: "4.9", img: "https://images.unsplash.com/photo-1498557850523-fd3d118b962e?w=500&auto=format&fit=crop" },
-      { id: 187, name: "Fresh Hass Avocado Slices", price: 80, cat: "Fruits", kiosk: "Fruit Hub", time: "1 min", rating: "4.8", img: "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?w=500&auto=format&fit=crop" },
-      { id: 188, name: "Royal Mixed Fruit Chaat with Honey & Lime", price: 60, cat: "Fruits", kiosk: "Fruit Hub", time: "2 mins", rating: "4.9", img: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&auto=format&fit=crop" },
-      { id: 189, name: "Rich Fruit Cream Bowl", price: 70, cat: "Fruits", kiosk: "Fruit Hub", time: "2 mins", rating: "4.9", img: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&auto=format&fit=crop" },
-      { id: 190, name: "100% Pure Mixed Fresh Fruit Juice", price: 60, cat: "Fruits", kiosk: "Fruit Hub", time: "3 mins", rating: "4.9", img: "https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?w=500&auto=format&fit=crop" },
-      { id: 191, name: "Fresh Strawberry Shake with Real Pulp", price: 70, cat: "Fruits", kiosk: "Fruit Hub", time: "2 mins", rating: "4.9", img: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=500&auto=format&fit=crop" }
+    const outlets = [
+      { id: 1, name: "KFC Express", item: "Hot Chicken Wings (4 Pcs)", price: 199, rating: 4.1, time: "15-20 mins", dist: "2.4 km", tag: "50% OFF on select items", isVeg: false, cat: "Fast Food", kiosk: "Uni-Mall", img: "https://images.unsplash.com/photo-1562967914-608f82629710?w=600" },
+      { id: 2, name: "Om Vaishno Dhaba", item: "Special Deluxe Thali", price: 180, rating: 3.8, time: "20-25 mins", dist: "1.2 km", tag: "50% OFF up to ₹100", isVeg: true, cat: "North Indian", kiosk: "Block 14", img: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=600" },
+      { id: 3, name: "Patwari Vaishno Dhaba", item: "Crispy Samosa Platter (2 Pcs)", price: 40, rating: 4.3, time: "15-20 mins", dist: "1.8 km", tag: "Flat ₹140 OFF above ₹249", isVeg: true, cat: "North Indian", kiosk: "Law Block", img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600" },
+      { id: 4, name: "Domino's Pizza", item: "Double Cheese Margherita", price: 199, rating: 4.6, time: "20-25 mins", dist: "4.3 km", tag: "55% OFF on select items", isVeg: true, cat: "Pizza", kiosk: "Uni-Mall", img: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600" },
+      { id: 5, name: "Roll Express", item: "Double Egg Chicken Kathi Roll", price: 90, rating: 4.4, time: "10-15 mins", dist: "3.1 km", tag: "Flat ₹140 OFF above ₹249", isVeg: false, cat: "Rolls", kiosk: "Robo Park", img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600" },
+      { id: 6, name: "The Belgian Waffle Co.", item: "Triple Choco Waffle", price: 165, rating: 4.3, time: "25-30 mins", dist: "2.3 km", tag: "Pure Veg • Sweet Treat", isVeg: true, cat: "Desserts", kiosk: "Uni-Mall", img: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?w=600" },
+      { id: 7, name: "Behrouz Biryani", item: "Hyderabadi Shahi Biryani", price: 230, rating: 4.3, time: "15-20 mins", dist: "4.1 km", tag: "Items starting at ₹129", isVeg: false, cat: "Biryani", kiosk: "Uni-Mall", img: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600" },
+      { id: 8, name: "Fresh Fruit Hub", item: "Special Mixed Fruit Platter", price: 60, rating: 4.9, time: "10-15 mins", dist: "0.8 km", tag: "100% Pure Fresh Cuts", isVeg: true, cat: "Fruits", kiosk: "Robo Park", img: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600" },
+      { id: 9, name: "Hunger Hut", item: "Kurkure Paneer Momos (6 Pcs)", price: 79, rating: 3.5, time: "30-35 mins", dist: "4.3 km", tag: "Flat ₹140 OFF above ₹249", isVeg: true, cat: "Momos", kiosk: "Block 34", img: "https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=600" },
+      { id: 10, name: "ChaiVyanjan", item: "Veg Grilled Sandwich + Adrak Chai", price: 110, rating: 4.1, time: "20-25 mins", dist: "2.2 km", tag: "50% OFF on select items", isVeg: true, cat: "North Indian", kiosk: "Law Block", img: "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=600" }
     ];
 
     let cart = {};
-    let activeCircle = "All";
-    let activeKiosk = "All";
+    let activeCategory = "All";
+    let activeQuickFilter = "All";
+    let isVegOnly = false;
     let user = JSON.parse(localStorage.getItem('lpukart_user')) || {
       name: "Himanshu Yadav",
       phone: "9876543210",
@@ -676,79 +483,102 @@
     };
 
     function init() {
-      updateLocationUI();
-      renderFood();
+      updateUserUI();
+      renderFeed();
     }
 
-    function updateLocationUI() {
-      document.getElementById('headerLocTitle').innerText = user.location ? user.location.split('(')[0] : "BH-1";
-      document.getElementById('headerLocSub').innerText = user.location || "Lovely Professional University";
+    function updateUserUI() {
+      document.getElementById('locHeader').innerText = user.location ? user.location.split('(')[0] : "BH-1";
       document.getElementById('userNameInput').value = user.name || "";
       document.getElementById('userPhoneInput').value = user.phone || "";
       document.getElementById('userLocationSelect').value = user.location || "";
     }
 
-    function selectCircle(cat, el) {
-      activeCircle = cat;
-      document.querySelectorAll('.circle-item').forEach(c => c.classList.remove('active'));
-      el.classList.add('active');
-      renderFood();
+    function toggleVegMode() {
+      isVegOnly = !isVegOnly;
+      const toggleEl = document.getElementById('vegToggle');
+      if (isVegOnly) {
+        toggleEl.classList.add('active');
+      } else {
+        toggleEl.classList.remove('active');
+      }
+      renderFeed();
     }
 
-    function setKioskFilter(kiosk, el) {
-      activeKiosk = kiosk;
-      document.querySelectorAll('.filter-pill').forEach(f => f.classList.remove('active'));
-      el.classList.add('active');
-      renderFood();
+    function filterCategory(cat, el) {
+      activeCategory = cat;
+      document.querySelectorAll('.explore-item').forEach(c => c.classList.remove('active'));
+      if (el) el.classList.add('active');
+      renderFeed();
     }
 
-    function renderFood() {
-      const container = document.getElementById('foodContainer');
+    function setQuickFilter(f, el) {
+      activeQuickFilter = f;
+      document.querySelectorAll('.chip-btn').forEach(c => c.classList.remove('active'));
+      if (el) el.classList.add('active');
+      renderFeed();
+    }
+
+    function quickAddItem(id) {
+      changeQty(id, 1);
+    }
+
+    function renderFeed() {
+      const container = document.getElementById('outletContainer');
       const search = document.getElementById('searchInput').value.toLowerCase();
 
-      const filtered = menu.filter(m => {
-        const matchCat = activeCircle === "All" || m.cat === activeCircle;
-        const matchKiosk = activeKiosk === "All" || m.kiosk.toLowerCase().includes(activeKiosk.toLowerCase());
-        const matchSearch = m.name.toLowerCase().includes(search) || m.cat.toLowerCase().includes(search) || m.kiosk.toLowerCase().includes(search);
-        return matchCat && matchKiosk && matchSearch;
+      const filtered = outlets.filter(o => {
+        const matchVeg = !isVegOnly || o.isVeg;
+        const matchCategory = activeCategory === "All" || o.cat === activeCategory;
+        const matchQuick = activeQuickFilter === "All" ||
+          (activeQuickFilter === "Near" && parseFloat(o.dist) <= 2.5) ||
+          (activeQuickFilter === "Under150" && o.price <= 150) ||
+          (o.kiosk.toLowerCase().includes(activeQuickFilter.toLowerCase()));
+        const matchSearch = o.name.toLowerCase().includes(search) || o.item.toLowerCase().includes(search) || o.cat.toLowerCase().includes(search);
+
+        return matchVeg && matchCategory && matchQuick && matchSearch;
       });
 
-      document.getElementById('menuCountHeading').innerText = `ALL ITEMS (${filtered.length} DISHES)`;
+      document.getElementById('feedCountTitle').innerText = `${filtered.length} RESTAURANTS DELIVERING TO YOU`;
 
       if (filtered.length === 0) {
-        container.innerHTML = `<div style="text-align:center; padding:30px; color:#888;">No dishes found! Try searching for another item or category.</div>`;
+        container.innerHTML = `<div style="text-align:center; padding:30px; color:#888;">No matching restaurants or dishes found!</div>`;
         return;
       }
 
       container.innerHTML = filtered.map(item => {
         const qty = cart[item.id] ? cart[item.id].qty : 0;
         return `
-          <div class="lpukart-card">
-            <div class="card-top">
+          <div class="feed-card">
+            <div class="feed-img-wrap">
               <img src="${item.img}" alt="${item.name}" loading="lazy">
-              <div class="card-offer-badge">⚡ 24x7 Express</div>
-              <div class="card-time-pill">⏱️ ${item.time}</div>
+              <div class="feed-price-tag">₹${item.price} • ${item.item}</div>
+              <div class="bookmark-btn">🔖</div>
+              <div class="free-del-pill">FREE delivery</div>
             </div>
-            <div class="card-body">
-              <div class="card-info">
-                <div class="dish-title">${item.name}</div>
-                <div class="outlet-sub">📍 ${item.kiosk} • <strong style="color:var(--lpukart-red);">${item.cat}</strong></div>
-                <div class="rating-row">
-                  <span class="star-badge">★ ${item.rating}</span>
-                  <span style="font-size:11px; color:#777;">Campus Favorite</span>
-                </div>
-                <div class="dish-price">₹${item.price}</div>
+            <div class="feed-body">
+              <div class="feed-header-line">
+                <div class="feed-name">${item.name}</div>
+                <div class="feed-rating">★ ${item.rating}</div>
               </div>
-              <div class="card-action">
-                ${qty === 0 ? `
-                  <button class="btn-lpukart-add" onclick="changeQty(${item.id}, 1)">ADD</button>
-                ` : `
-                  <div class="qty-box">
-                    <button class="qty-btn" onclick="changeQty(${item.id}, -1)">-</button>
-                    <span style="font-weight:900; font-size:13px;">${qty}</span>
-                    <button class="qty-btn" onclick="changeQty(${item.id}, 1)">+</button>
-                  </div>
-                `}
+              <div class="feed-meta-line">
+                <span>⏱️ ${item.time}</span>
+                <span>•</span>
+                <span>📍 ${item.dist} (${item.kiosk})</span>
+              </div>
+              <div class="feed-offer-line">
+                <div class="feed-offer-text">🏷️ ${item.tag}</div>
+                <div>
+                  ${qty === 0 ? `
+                    <button class="feed-btn-add" onclick="changeQty(${item.id}, 1)">ADD +</button>
+                  ` : `
+                    <div class="feed-qty-ctrl">
+                      <button class="feed-qty-btn" onclick="changeQty(${item.id}, -1)">-</button>
+                      <span>${qty}</span>
+                      <button class="feed-qty-btn" onclick="changeQty(${item.id}, 1)">+</button>
+                    </div>
+                  `}
+                </div>
               </div>
             </div>
           </div>
@@ -760,29 +590,28 @@
 
     function changeQty(id, delta) {
       if (!cart[id]) {
-        const item = menu.find(m => m.id === id);
+        const item = outlets.find(m => m.id === id);
         cart[id] = { ...item, qty: 0 };
       }
       cart[id].qty += delta;
       if (cart[id].qty <= 0) {
         delete cart[id];
       }
-      renderFood();
+      renderFeed();
     }
 
     function updateCartBar() {
       const items = Object.values(cart);
-      const bar = document.getElementById('floatingCart');
+      const bar = document.getElementById('cartFloat');
       if (items.length === 0) {
         bar.style.display = 'none';
         return;
       }
       bar.style.display = 'flex';
-      const totalCount = items.reduce((s, i) => s + i.qty, 0);
-      const totalPrice = items.reduce((s, i) => s + (i.qty * i.price), 0);
-
-      document.getElementById('cartCount').innerText = `${totalCount} ITEM${totalCount > 1 ? 'S' : ''}`;
-      document.getElementById('cartTotal').innerText = `₹${totalPrice}`;
+      const count = items.reduce((s, i) => s + i.qty, 0);
+      const sum = items.reduce((s, i) => s + (i.qty * i.price), 0);
+      document.getElementById('cartItemsCount').innerText = `${count} ITEM${count > 1 ? 'S' : ''}`;
+      document.getElementById('cartTotalSum').innerText = `₹${sum}`;
     }
 
     function openLocationModal() {
@@ -792,25 +621,21 @@
     function openCheckoutModal() {
       const items = Object.values(cart);
       if (items.length === 0) {
-        alert("Pehle cart me food add karein!");
+        alert("Pehle food item add karein!");
         return;
       }
-      const container = document.getElementById('checkoutItemsList');
-      let grand = 0;
-      container.innerHTML = items.map(i => {
-        grand += i.price * i.qty;
-        return `
-          <div style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:13px;">
-            <span>${i.name} × <strong>${i.qty}</strong></span>
-            <span style="font-weight:800;">₹${i.price * i.qty}</span>
-          </div>
-        `;
-      }).join('') + `
-        <div style="display:flex; justify-content:space-between; margin-top:8px; font-size:16px; font-weight:900; color:var(--lpukart-red);">
-          <span>Total:</span>
-          <span>₹${grand}</span>
-        </div>
-      `;
+      const list = document.getElementById('checkoutList');
+      let total = 0;
+      list.innerHTML = items.map(i => {
+        total += i.price * i.qty;
+        return `<div style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:13px;">
+          <span>${i.item} x <strong>${i.qty}</strong></span>
+          <span style="font-weight:800;">₹${i.price * i.qty}</span>
+        </div>`;
+      }).join('') + `<div style="display:flex; justify-content:space-between; margin-top:8px; font-size:15px; font-weight:900; color:var(--primary-red);">
+        <span>Grand Total:</span>
+        <span>₹${total}</span>
+      </div>`;
 
       document.getElementById('checkoutModal').style.display = 'flex';
     }
@@ -826,42 +651,40 @@
       user.location = document.getElementById('userLocationSelect').value;
 
       localStorage.setItem('lpukart_user', JSON.stringify(user));
-      updateLocationUI();
+      updateUserUI();
       closeModal('locationModal');
-      renderFood();
+      renderFeed();
     }
 
-    function dispatchWhatsAppOrder() {
+    function dispatchOrder() {
       const token = Math.floor(1000 + Math.random() * 9000);
       const slot = document.getElementById('slotSelect').value;
-      const mode = document.getElementById('handoverMode').value;
-      const spot = document.getElementById('exactLandmark').value.trim() || "Hostel Gate / Reception";
+      const spot = document.getElementById('orderLandmark').value.trim() || "Hostel Main Gate";
 
       const items = Object.values(cart);
       let grand = 0;
       const itemList = items.map(i => {
         grand += i.price * i.qty;
-        return `• ${i.name} x${i.qty} = ₹${i.price * i.qty}`;
+        return `• ${i.name} - ${i.item} x${i.qty} = ₹${i.price * i.qty}`;
       }).join("\n");
 
       const message = 
-`🛒 *LPUKART - 24x7 CAMPUS ORDER* 🛒
+`🛒 *LPUKART EXPRESS ORDER* 🛒
 ━━━━━━━━━━━━━━━━━━━━
-🎫 *EXPRESS TOKEN:* #${token}
+🎫 *TOKEN NUMBER:* #${token}
 ━━━━━━━━━━━━━━━━━━━━
 👤 *Student:* ${user.name} (${user.phone})
-⏰ *Time Window:* ${slot}
-🚀 *Handover:* ${mode}
-📍 *Hostel/Spot:* ${user.location}
-🚩 *Room/Detail:* ${spot}
+⏰ *Slot:* ${slot}
+📍 *Delivery Spot:* ${user.location}
+🚩 *Room/Gate:* ${spot}
 
-📦 *ITEMS ORDERED:*
+📦 *ITEMS:*
 ${itemList}
 
 💰 *TOTAL PAYABLE:* ₹${grand}
-💳 *PAYMENT:* UPI on Handover / At Counter
+💳 *PAYMENT:* UPI on Handover
 
-_Show Token #${token} to runner/counter for handover._`;
+_Show Token #${token} to runner at gate._`;
 
       const url = `https://wa.me/${ADMIN_WHATSAPP}?text=${encodeURIComponent(message)}`;
       window.open(url, '_blank');
