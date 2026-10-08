@@ -21,7 +21,7 @@
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; }
-    body { background-color: #ffffff; color: var(--text-black); padding-bottom: 80px; -webkit-tap-highlight-color: transparent; }
+    body { background-color: #ffffff; color: var(--text-black); padding-bottom: 85px; -webkit-tap-highlight-color: transparent; }
 
     /* Top Sticky Bar */
     header { background: #ffffff; position: sticky; top: 0; z-index: 100; padding: 10px 14px 6px; box-shadow: 0 2px 10px rgba(0,0,0,0.03); }
@@ -79,7 +79,7 @@
       background: transparent; border: none; font-size: 12px; font-weight: 800; color: #222; outline: none; cursor: pointer;
     }
 
-    /* Category Round Cards Row */
+    /* Category Round Circles */
     .explore-row { display: flex; gap: 14px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
     .explore-row::-webkit-scrollbar { display: none; }
     .explore-item { display: flex; flex-direction: column; align-items: center; width: 62px; flex-shrink: 0; cursor: pointer; }
@@ -112,26 +112,48 @@
     .rec-title { font-size: 12px; font-weight: 800; color: #222; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .rec-meta { font-size: 10px; color: var(--text-gray); margin-top: 2px; }
 
-    /* Vertical Full Outlet Cards Feed */
+    /* Feed Outlets with Multi-Photo Slider */
     .outlet-feed { display: flex; flex-direction: column; gap: 16px; margin-top: 10px; }
     .feed-card {
       background: white; border-radius: 18px; overflow: hidden;
       border: 1px solid var(--border-light); box-shadow: 0 2px 10px rgba(0,0,0,0.04);
-      cursor: pointer; position: relative;
+      position: relative;
     }
-    .feed-img-wrap { position: relative; height: 160px; background: #f0f0f0; }
-    .feed-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+    
+    /* 4-5 Photos Slider Container */
+    .slider-container {
+      position: relative; height: 175px; background: #1c1c1c; overflow: hidden;
+    }
+    .slider-track {
+      display: flex; height: 100%; overflow-x: auto; scroll-snap-type: x mandatory;
+      scrollbar-width: none; -webkit-overflow-scrolling: touch;
+    }
+    .slider-track::-webkit-scrollbar { display: none; }
+    .slider-slide {
+      min-width: 100%; height: 100%; scroll-snap-align: start; position: relative;
+    }
+    .slider-slide img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* Slider Dot Indicators (••••) */
+    .slider-dots {
+      position: absolute; bottom: 8px; right: 12px; display: flex; gap: 4px;
+      z-index: 10; background: rgba(0,0,0,0.4); padding: 3px 6px; border-radius: 12px; backdrop-blur: 2px;
+    }
+    .dot { width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,0.5); }
+    .dot.active { background: #ffffff; width: 12px; border-radius: 4px; }
+
+    /* Card Overlays */
     .feed-price-tag {
       position: absolute; top: 12px; left: 12px; background: rgba(15,15,15,0.85);
-      color: white; font-size: 11px; font-weight: 800; padding: 4px 8px; border-radius: 6px;
+      color: white; font-size: 11px; font-weight: 800; padding: 4px 8px; border-radius: 6px; z-index: 10;
     }
     .bookmark-btn {
       position: absolute; top: 12px; right: 12px; width: 30px; height: 30px;
-      background: rgba(255,255,255,0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px;
+      background: rgba(255,255,255,0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; z-index: 10;
     }
     .free-del-pill {
-      position: absolute; bottom: 10px; left: 12px; background: #1976d2;
-      color: white; font-size: 9px; font-weight: 900; padding: 3px 6px; border-radius: 4px; text-transform: uppercase;
+      position: absolute; bottom: 8px; left: 12px; background: #1976d2;
+      color: white; font-size: 9px; font-weight: 900; padding: 3px 6px; border-radius: 4px; text-transform: uppercase; z-index: 10;
     }
 
     .feed-body { padding: 12px 14px; }
@@ -159,7 +181,7 @@
     }
     .feed-qty-btn { background: none; border: none; color: white; font-size: 14px; font-weight: 900; cursor: pointer; }
 
-    /* Floating Cart Pill */
+    /* Floating Cart Bar */
     .cart-float-bar {
       position: fixed; bottom: 62px; left: 12px; right: 12px; max-width: 576px; margin: 0 auto;
       background: var(--primary-red); color: white; border-radius: 12px; padding: 10px 16px;
@@ -170,7 +192,7 @@
     .cf-total { font-size: 16px; font-weight: 900; }
     .cf-right { background: white; color: var(--primary-red); font-size: 12px; font-weight: 900; padding: 6px 12px; border-radius: 8px; }
 
-    /* Bottom Tab Bar */
+    /* Bottom Navigation Tabs */
     .footer-nav {
       position: fixed; bottom: 0; left: 0; right: 0; background: white;
       border-top: 1px solid #ebebeb; display: flex; justify-content: space-around;
@@ -342,7 +364,7 @@
       </div>
     </div>
 
-    <!-- Main Full Outlets Feed -->
+    <!-- Main Outlets Feed -->
     <div class="section-title" id="feedCountTitle">309 RESTAURANTS DELIVERING TO YOU</div>
     <div class="outlet-feed" id="outletContainer"></div>
 
@@ -459,17 +481,108 @@
   <script>
     const ADMIN_WHATSAPP = "918957645702";
 
+    // 4 to 5 Photos for each item/restaurant (Swipeable carousel)
     const outlets = [
-      { id: 1, name: "KFC Express", item: "Hot Chicken Wings (4 Pcs)", price: 199, rating: 4.1, time: "15-20 mins", dist: "2.4 km", tag: "50% OFF on select items", isVeg: false, cat: "Fast Food", kiosk: "Uni-Mall", img: "https://images.unsplash.com/photo-1562967914-608f82629710?w=600" },
-      { id: 2, name: "Om Vaishno Dhaba", item: "Special Deluxe Thali", price: 180, rating: 3.8, time: "20-25 mins", dist: "1.2 km", tag: "50% OFF up to ₹100", isVeg: true, cat: "North Indian", kiosk: "Block 14", img: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=600" },
-      { id: 3, name: "Patwari Vaishno Dhaba", item: "Crispy Samosa Platter (2 Pcs)", price: 40, rating: 4.3, time: "15-20 mins", dist: "1.8 km", tag: "Flat ₹140 OFF above ₹249", isVeg: true, cat: "North Indian", kiosk: "Law Block", img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600" },
-      { id: 4, name: "Domino's Pizza", item: "Double Cheese Margherita", price: 199, rating: 4.6, time: "20-25 mins", dist: "4.3 km", tag: "55% OFF on select items", isVeg: true, cat: "Pizza", kiosk: "Uni-Mall", img: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600" },
-      { id: 5, name: "Roll Express", item: "Double Egg Chicken Kathi Roll", price: 90, rating: 4.4, time: "10-15 mins", dist: "3.1 km", tag: "Flat ₹140 OFF above ₹249", isVeg: false, cat: "Rolls", kiosk: "Robo Park", img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600" },
-      { id: 6, name: "The Belgian Waffle Co.", item: "Triple Choco Waffle", price: 165, rating: 4.3, time: "25-30 mins", dist: "2.3 km", tag: "Pure Veg • Sweet Treat", isVeg: true, cat: "Desserts", kiosk: "Uni-Mall", img: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?w=600" },
-      { id: 7, name: "Behrouz Biryani", item: "Hyderabadi Shahi Biryani", price: 230, rating: 4.3, time: "15-20 mins", dist: "4.1 km", tag: "Items starting at ₹129", isVeg: false, cat: "Biryani", kiosk: "Uni-Mall", img: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600" },
-      { id: 8, name: "Fresh Fruit Hub", item: "Special Mixed Fruit Platter", price: 60, rating: 4.9, time: "10-15 mins", dist: "0.8 km", tag: "100% Pure Fresh Cuts", isVeg: true, cat: "Fruits", kiosk: "Robo Park", img: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600" },
-      { id: 9, name: "Hunger Hut", item: "Kurkure Paneer Momos (6 Pcs)", price: 79, rating: 3.5, time: "30-35 mins", dist: "4.3 km", tag: "Flat ₹140 OFF above ₹249", isVeg: true, cat: "Momos", kiosk: "Block 34", img: "https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=600" },
-      { id: 10, name: "ChaiVyanjan", item: "Veg Grilled Sandwich + Adrak Chai", price: 110, rating: 4.1, time: "20-25 mins", dist: "2.2 km", tag: "50% OFF on select items", isVeg: true, cat: "North Indian", kiosk: "Law Block", img: "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=600" }
+      {
+        id: 1, name: "KFC Express", item: "Hot Chicken Wings & Strips", price: 199, rating: 4.1, time: "15-20 mins", dist: "2.4 km", tag: "50% OFF on select items", isVeg: false, cat: "Fast Food", kiosk: "Uni-Mall",
+        images: [
+          "https://images.unsplash.com/photo-1562967914-608f82629710?w=600",
+          "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=600",
+          "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600",
+          "https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?w=600",
+          "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600"
+        ]
+      },
+      {
+        id: 2, name: "Om Vaishno Dhaba", item: "Special Deluxe Thali & Naan", price: 180, rating: 3.8, time: "20-25 mins", dist: "1.2 km", tag: "50% OFF up to ₹100", isVeg: true, cat: "North Indian", kiosk: "Block 14",
+        images: [
+          "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=600",
+          "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600",
+          "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=600",
+          "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600",
+          "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600"
+        ]
+      },
+      {
+        id: 3, name: "Patwari Vaishno Dhaba", item: "Crispy Samosa & Chole Bhature", price: 40, rating: 4.3, time: "15-20 mins", dist: "1.8 km", tag: "Flat ₹140 OFF above ₹249", isVeg: true, cat: "North Indian", kiosk: "Law Block",
+        images: [
+          "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600",
+          "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600",
+          "https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=600",
+          "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600",
+          "https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=600"
+        ]
+      },
+      {
+        id: 4, name: "Domino's Pizza", item: "Double Cheese Margherita & Garlic Bread", price: 199, rating: 4.6, time: "20-25 mins", dist: "4.3 km", tag: "55% OFF on select items", isVeg: true, cat: "Pizza", kiosk: "Uni-Mall",
+        images: [
+          "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600",
+          "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600",
+          "https://images.unsplash.com/photo-1619535860434-ba1d8fa12536?w=600",
+          "https://images.unsplash.com/photo-1576107232684-1279f3908594?w=600",
+          "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=600"
+        ]
+      },
+      {
+        id: 5, name: "Roll Express", item: "Double Egg Chicken Kathi Roll", price: 90, rating: 4.4, time: "10-15 mins", dist: "3.1 km", tag: "Flat ₹140 OFF above ₹249", isVeg: false, cat: "Rolls", kiosk: "Robo Park",
+        images: [
+          "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600",
+          "https://images.unsplash.com/photo-1561651823-34feb02250e4?w=600",
+          "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=600",
+          "https://images.unsplash.com/photo-1509722747041-616f39b57569?w=600",
+          "https://images.unsplash.com/photo-1544025162-d76694265947?w=600"
+        ]
+      },
+      {
+        id: 6, name: "The Belgian Waffle Co.", item: "Triple Choco Waffle & Brownies", price: 165, rating: 4.3, time: "25-30 mins", dist: "2.3 km", tag: "Pure Veg • Sweet Treat", isVeg: true, cat: "Desserts", kiosk: "Uni-Mall",
+        images: [
+          "https://images.unsplash.com/photo-1562376552-0d160a2f238d?w=600",
+          "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=600",
+          "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600",
+          "https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?w=600",
+          "https://images.unsplash.com/photo-1527515862127-a4fc05baf7a5?w=600"
+        ]
+      },
+      {
+        id: 7, name: "Behrouz Biryani", item: "Hyderabadi Shahi Dum Biryani", price: 230, rating: 4.3, time: "15-20 mins", dist: "4.1 km", tag: "Items starting at ₹129", isVeg: false, cat: "Biryani", kiosk: "Uni-Mall",
+        images: [
+          "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600",
+          "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=600",
+          "https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?w=600",
+          "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600",
+          "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=600"
+        ]
+      },
+      {
+        id: 8, name: "Fresh Fruit Hub", item: "Special Mixed Fruit Platter & Juices", price: 60, rating: 4.9, time: "10-15 mins", dist: "0.8 km", tag: "100% Pure Fresh Cuts", isVeg: true, cat: "Fruits", kiosk: "Robo Park",
+        images: [
+          "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
+          "https://images.unsplash.com/photo-1568584711075-3d021a7c3ca3?w=600",
+          "https://images.unsplash.com/photo-1550258987-190a2d41a8ba?w=600",
+          "https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?w=600",
+          "https://images.unsplash.com/photo-1557800636-894a64c1696f?w=600"
+        ]
+      },
+      {
+        id: 9, name: "Hunger Hut", item: "Kurkure Paneer Momos (6 Pcs)", price: 79, rating: 3.5, time: "30-35 mins", dist: "4.3 km", tag: "Flat ₹140 OFF above ₹249", isVeg: true, cat: "Momos", kiosk: "Block 34",
+        images: [
+          "https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=600",
+          "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=600",
+          "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=600",
+          "https://images.unsplash.com/photo-1612927601601-6638404737ce?w=600",
+          "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=600"
+        ]
+      },
+      {
+        id: 10, name: "ChaiVyanjan", item: "Veg Grilled Sandwich + Adrak Chai", price: 110, rating: 4.1, time: "20-25 mins", dist: "2.2 km", tag: "50% OFF on select items", isVeg: true, cat: "North Indian", kiosk: "Law Block",
+        images: [
+          "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=600",
+          "https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=600",
+          "https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=600",
+          "https://images.unsplash.com/photo-1554433607-66b5efe9d304?w=600",
+          "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=600"
+        ]
+      }
     ];
 
     let cart = {};
@@ -523,6 +636,15 @@
       changeQty(id, 1);
     }
 
+    function updateSlideIndicator(slider, itemId) {
+      const index = Math.round(slider.scrollLeft / slider.offsetWidth);
+      const dots = document.querySelectorAll(`#dots-${itemId} .dot`);
+      dots.forEach((dot, idx) => {
+        if (idx === index) dot.classList.add('active');
+        else dot.classList.remove('active');
+      });
+    }
+
     function renderFeed() {
       const container = document.getElementById('outletContainer');
       const search = document.getElementById('searchInput').value.toLowerCase();
@@ -548,14 +670,33 @@
 
       container.innerHTML = filtered.map(item => {
         const qty = cart[item.id] ? cart[item.id].qty : 0;
+        
+        // Multi-image slides (4 to 5 images)
+        const slidesHtml = item.images.map(imgUrl => `
+          <div class="slider-slide">
+            <img src="${imgUrl}" alt="${item.name}" loading="lazy">
+          </div>
+        `).join('');
+
+        // Dots (•••••)
+        const dotsHtml = item.images.map((_, i) => `
+          <div class="dot ${i === 0 ? 'active' : ''}"></div>
+        `).join('');
+
         return `
           <div class="feed-card">
-            <div class="feed-img-wrap">
-              <img src="${item.img}" alt="${item.name}" loading="lazy">
+            <div class="slider-container">
+              <div class="slider-track" onscroll="updateSlideIndicator(this, ${item.id})">
+                ${slidesHtml}
+              </div>
+              <div class="slider-dots" id="dots-${item.id}">
+                ${dotsHtml}
+              </div>
               <div class="feed-price-tag">₹${item.price} • ${item.item}</div>
               <div class="bookmark-btn">🔖</div>
               <div class="free-del-pill">FREE delivery</div>
             </div>
+
             <div class="feed-body">
               <div class="feed-header-line">
                 <div class="feed-name">${item.name}</div>
