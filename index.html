@@ -12,40 +12,40 @@
   <style>
     :root {
       --primary-red: #E23744;
-      --veg-green: #24963f;
-      --gold-bg: #fdf3d6;
-      --gold-border: #dfa83d;
+      --veg-green: #0f8a3c;
+      --nonveg-red: #d32f2f;
       --text-black: #1c1c1c;
       --text-gray: #686b78;
+      --bg-gray: #f4f5f7;
       --border-light: #e8e8e8;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; }
-    body { background-color: #f4f5f7; color: var(--text-black); padding-bottom: 80px; -webkit-tap-highlight-color: transparent; }
+    body { background-color: #ffffff; color: var(--text-black); padding-bottom: 90px; -webkit-tap-highlight-color: transparent; }
 
-    /* Sticky Top Header */
-    header { background: #ffffff; position: sticky; top: 0; z-index: 100; padding: 10px 14px 6px; box-shadow: 0 1px 8px rgba(0,0,0,0.04); }
+    /* Top Sticky Header */
+    header { background: #ffffff; position: sticky; top: 0; z-index: 100; padding: 10px 14px 6px; box-shadow: 0 2px 10px rgba(0,0,0,0.03); }
     .header-top { display: flex; justify-content: space-between; align-items: center; max-width: 600px; margin: 0 auto; }
     
     .loc-box { display: flex; align-items: center; gap: 8px; cursor: pointer; flex: 1; }
-    .loc-icon { font-size: 18px; color: var(--primary-red); }
+    .loc-icon { font-size: 18px; color: var(--text-black); }
     .loc-info { display: flex; flex-direction: column; }
     .loc-main { font-size: 14.5px; font-weight: 800; color: var(--text-black); display: flex; align-items: center; gap: 3px; }
-    .loc-sub { font-size: 11px; color: var(--text-gray); max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 500; }
+    .loc-sub { font-size: 11px; color: var(--text-gray); max-width: 190px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 500; }
 
     .header-right { display: flex; align-items: center; gap: 8px; }
     .gold-badge {
-      background: var(--gold-bg); color: #694402; font-size: 11px; font-weight: 900;
-      padding: 4px 8px; border-radius: 8px; border: 1px solid var(--gold-border);
-      display: flex; align-items: center; gap: 4px;
+      background: linear-gradient(135deg, #f7d58a 0%, #e2ab4b 100%);
+      color: #3b2800; font-size: 10.5px; font-weight: 900; padding: 4px 8px; border-radius: 8px;
+      display: flex; align-items: center; gap: 3px; border: 1px solid #d89f36;
     }
-    .profile-avatar { width: 32px; height: 32px; border-radius: 50%; background: #222; color: white; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; cursor: pointer; }
+    .profile-avatar { width: 32px; height: 32px; border-radius: 50%; background: #222; color: white; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; cursor: pointer; }
 
-    /* Search Bar with Mic & Veg Toggle */
+    /* Search & Veg Mode Toggle */
     .search-row { display: flex; align-items: center; gap: 10px; max-width: 600px; margin: 8px auto 2px; }
     .search-box {
       flex: 1; background: #ffffff; border: 1px solid #d4d5d9; border-radius: 12px;
-      display: flex; align-items: center; padding: 8px 12px; gap: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.02);
+      display: flex; align-items: center; padding: 8px 12px; gap: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.03);
     }
     .search-box input { border: none; outline: none; width: 100%; font-size: 13px; font-weight: 500; color: #222; }
     .mic-icon { font-size: 14px; color: var(--primary-red); }
@@ -59,7 +59,7 @@
 
     .content-area { max-width: 600px; margin: 0 auto; padding: 10px 14px; }
 
-    /* Welcome Benefits Banner */
+    /* Welcome Banner */
     .welcome-card {
       background: linear-gradient(135deg, #fff2f0 0%, #ffeae8 100%);
       border: 1px solid #fed2ce; border-radius: 16px; padding: 12px 14px; margin-bottom: 12px;
@@ -69,106 +69,84 @@
     .wc-left p { font-size: 11px; color: #555; margin-top: 2px; font-weight: 600; }
     .wc-tag { display: inline-block; background: var(--primary-red); color: white; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 4px; margin-top: 4px; }
 
-    /* Category Circles */
-    .cat-circles-row { display: flex; gap: 14px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
-    .cat-circles-row::-webkit-scrollbar { display: none; }
-    .cat-circle-item { display: flex; flex-direction: column; align-items: center; width: 62px; flex-shrink: 0; cursor: pointer; }
-    .cat-img-box { width: 56px; height: 56px; border-radius: 50%; overflow: hidden; background: #eee; border: 2px solid transparent; box-shadow: 0 2px 5px rgba(0,0,0,0.06); }
-    .cat-circle-item.active .cat-img-box { border-color: var(--primary-red); transform: scale(1.05); }
-    .cat-img-box img { width: 100%; height: 100%; object-fit: cover; }
-    .cat-name { font-size: 11px; font-weight: 700; color: #333; margin-top: 4px; text-align: center; }
+    /* 24x7 Break Slots */
+    .slot-bar-wrap {
+      background: #fafafa; border: 1px solid var(--border-light); border-radius: 12px;
+      padding: 8px 12px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;
+    }
+    .slot-bar-wrap select { background: transparent; border: none; font-size: 12px; font-weight: 800; color: #222; outline: none; cursor: pointer; }
 
-    /* Filter Chips Bar */
-    .filter-scroll { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
-    .filter-scroll::-webkit-scrollbar { display: none; }
-    .chip-btn {
-      background: white; border: 1px solid #d4d5d9; padding: 6px 12px; border-radius: 20px;
+    /* Category Chips */
+    .category-scroll { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
+    .category-scroll::-webkit-scrollbar { display: none; }
+    .cat-chip {
+      background: white; border: 1px solid #d4d5d9; padding: 6px 14px; border-radius: 20px;
       font-size: 11.5px; font-weight: 700; color: #333; white-space: nowrap; cursor: pointer;
     }
-    .chip-btn.active { background: #fff2f3; border-color: var(--primary-red); color: var(--primary-red); }
+    .cat-chip.active { background: #fff2f3; border-color: var(--primary-red); color: var(--primary-red); }
 
-    /* Section Headings */
-    .section-title { font-size: 13px; font-weight: 900; color: #444; text-transform: uppercase; letter-spacing: 0.5px; margin: 12px 0 8px; }
+    .section-title { font-size: 13px; font-weight: 900; color: #333; text-transform: uppercase; letter-spacing: 0.5px; margin: 10px 0 8px; }
 
-    /* Recommended For You Carousel */
-    .rec-scroll { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 12px; scrollbar-width: none; }
-    .rec-scroll::-webkit-scrollbar { display: none; }
-    .rec-card {
-      width: 150px; flex-shrink: 0; background: white; border-radius: 14px; overflow: hidden;
-      border: 1px solid var(--border-light); box-shadow: 0 2px 6px rgba(0,0,0,0.04); cursor: pointer;
-    }
-    .rec-img-box { position: relative; height: 100px; background: #eee; }
-    .rec-img-box img { width: 100%; height: 100%; object-fit: cover; }
-    .rec-tag { position: absolute; top: 6px; left: 6px; background: rgba(0,0,0,0.75); color: white; font-size: 8.5px; font-weight: 800; padding: 2px 5px; border-radius: 4px; }
-    .rec-body { padding: 8px; }
-    .rec-title { font-size: 12px; font-weight: 800; color: #222; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .rec-meta { font-size: 10px; color: var(--text-gray); margin-top: 2px; }
-
-    /* Restaurant Card Feed with Swipeable Photo Carousel */
-    .restaurant-feed { display: flex; flex-direction: column; gap: 18px; margin-top: 6px; }
-    .res-card {
+    /* Card Feed */
+    .outlet-feed { display: flex; flex-direction: column; gap: 16px; margin-top: 10px; }
+    .feed-card {
       background: white; border-radius: 18px; overflow: hidden;
       border: 1px solid var(--border-light); box-shadow: 0 2px 10px rgba(0,0,0,0.04);
       position: relative;
     }
     
-    .carousel-wrap { position: relative; height: 185px; background: #111; overflow: hidden; }
-    .carousel-track {
+    .slider-container { position: relative; height: 185px; background: #1c1c1c; overflow: hidden; }
+    .slider-track {
       display: flex; height: 100%; overflow-x: auto; scroll-snap-type: x mandatory;
       scrollbar-width: none; -webkit-overflow-scrolling: touch;
     }
-    .carousel-track::-webkit-scrollbar { display: none; }
-    .carousel-slide { min-width: 100%; height: 100%; scroll-snap-align: start; position: relative; }
-    .carousel-slide img { width: 100%; height: 100%; object-fit: cover; }
+    .slider-track::-webkit-scrollbar { display: none; }
+    .slider-slide { min-width: 100%; height: 100%; scroll-snap-align: start; position: relative; }
+    .slider-slide img { width: 100%; height: 100%; object-fit: cover; }
 
-    /* Black Overlay Label for Dish Name + Price */
-    .dish-tag-overlay {
-      position: absolute; top: 12px; left: 12px; background: rgba(20,20,20,0.85);
-      color: white; font-size: 11px; font-weight: 800; padding: 4px 8px; border-radius: 6px; z-index: 10;
-      backdrop-filter: blur(2px);
-    }
-    .bookmark-icon {
-      position: absolute; top: 12px; right: 12px; width: 30px; height: 30px;
-      background: rgba(255,255,255,0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; z-index: 10;
-    }
-    .free-delivery-badge {
-      position: absolute; bottom: 8px; left: 12px; background: #1976d2;
-      color: white; font-size: 9.5px; font-weight: 900; padding: 3px 6px; border-radius: 4px; text-transform: uppercase; z-index: 10;
-    }
-
-    /* Swipe Indicator Dots (••••) */
-    .dots-box {
+    .slider-dots {
       position: absolute; bottom: 8px; right: 12px; display: flex; gap: 4px;
-      z-index: 10; background: rgba(0,0,0,0.45); padding: 3px 6px; border-radius: 12px;
+      z-index: 10; background: rgba(0,0,0,0.4); padding: 3px 6px; border-radius: 12px;
     }
     .dot { width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,0.5); }
     .dot.active { background: #ffffff; width: 12px; border-radius: 4px; }
 
-    /* Restaurant Card Body */
-    .res-body { padding: 12px 14px; }
-    .res-header-row { display: flex; justify-content: space-between; align-items: flex-start; }
-    .res-name { font-size: 16px; font-weight: 900; color: var(--text-black); }
-    .res-rating-badge {
+    .feed-price-tag {
+      position: absolute; top: 12px; left: 12px; background: rgba(15,15,15,0.85);
+      color: white; font-size: 11px; font-weight: 800; padding: 4px 8px; border-radius: 6px; z-index: 10;
+    }
+    .veg-dot-badge {
+      position: absolute; top: 12px; right: 12px; z-index: 10;
+      background: white; padding: 3px 5px; border-radius: 6px; box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+      font-size: 10px; font-weight: 900;
+    }
+    .veg-dot-badge.veg { color: var(--veg-green); border: 1.5px solid var(--veg-green); }
+    .veg-dot-badge.nonVeg { color: var(--nonveg-red); border: 1.5px solid var(--nonveg-red); }
+
+    .feed-body { padding: 12px 14px; }
+    .feed-header-line { display: flex; justify-content: space-between; align-items: flex-start; }
+    .feed-name { font-size: 15.5px; font-weight: 900; color: var(--text-black); }
+    .feed-rating {
       background: var(--veg-green); color: white; font-size: 11px; font-weight: 900;
       padding: 3px 6px; border-radius: 6px; display: flex; align-items: center; gap: 2px;
     }
-    .res-meta-line { font-size: 12px; font-weight: 600; color: var(--text-gray); margin-top: 3px; display: flex; align-items: center; gap: 6px; }
-    
-    .res-footer-row {
+
+    .feed-meta-line { font-size: 12px; font-weight: 600; color: var(--text-gray); margin-top: 4px; display: flex; align-items: center; gap: 6px; }
+    .feed-offer-line {
       margin-top: 8px; padding-top: 8px; border-top: 1px dashed #eee;
       display: flex; align-items: center; justify-content: space-between;
     }
-    .res-offer-text { font-size: 11.5px; font-weight: 800; color: #1976d2; display: flex; align-items: center; gap: 4px; }
+    .feed-cat-badge { font-size: 11.5px; font-weight: 800; color: #1976d2; }
 
-    .btn-add {
+    .feed-btn-add {
       background: #fff2f3; color: var(--primary-red); border: 1px solid var(--primary-red);
       font-weight: 900; font-size: 12px; padding: 6px 14px; border-radius: 8px; cursor: pointer;
     }
-    .qty-box {
+    .feed-qty-ctrl {
       display: flex; align-items: center; gap: 8px; background: var(--primary-red); color: white;
       padding: 4px 8px; border-radius: 8px; font-size: 12px; font-weight: 800;
     }
-    .qty-btn { background: none; border: none; color: white; font-size: 14px; font-weight: 900; cursor: pointer; }
+    .feed-qty-btn { background: none; border: none; color: white; font-size: 14px; font-weight: 900; cursor: pointer; }
 
     /* Floating Cart Bar */
     .cart-float-bar {
@@ -181,7 +159,7 @@
     .cf-total { font-size: 16px; font-weight: 900; }
     .cf-right { background: white; color: var(--primary-red); font-size: 12px; font-weight: 900; padding: 6px 12px; border-radius: 8px; }
 
-    /* Bottom 4 Tabs (Zomato Video Style) */
+    /* Bottom Navigation Tabs */
     .footer-nav {
       position: fixed; bottom: 0; left: 0; right: 0; background: white;
       border-top: 1px solid #ebebeb; display: flex; justify-content: space-around;
@@ -190,10 +168,6 @@
     .tab-item { display: flex; flex-direction: column; align-items: center; color: #888; font-size: 10px; font-weight: 700; cursor: pointer; }
     .tab-item.active { color: var(--primary-red); }
     .tab-icon { font-size: 18px; }
-    .district-pill {
-      background: #48286a; color: #f2e9fb; padding: 3px 10px; border-radius: 8px;
-      font-size: 10.5px; font-weight: 900; display: flex; align-items: center; gap: 3px;
-    }
 
     /* Modals */
     .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; align-items: flex-end; justify-content: center; z-index: 200; }
@@ -208,13 +182,12 @@
 </head>
 <body>
 
-  <!-- Top Location Bar -->
   <header>
     <div class="header-top">
       <div class="loc-box" onclick="openLocationModal()">
         <span class="loc-icon">📍</span>
         <div class="loc-info">
-          <div class="loc-main"><span id="locHeader">Block 37 / 38</span> ▾</div>
+          <div class="loc-main"><span id="locHeader">BH-1</span> ▾</div>
           <div class="loc-sub" id="locSubHeader">Lovely Professional University, Phagwara</div>
         </div>
       </div>
@@ -224,11 +197,10 @@
       </div>
     </div>
 
-    <!-- Search with Mic & Veg Mode -->
     <div class="search-row">
       <div class="search-box">
         <span>🔍</span>
-        <input type="text" id="searchInput" placeholder="Search across all campus restaurants & dishes..." onkeyup="renderFeed()">
+        <input type="text" id="searchInput" placeholder="Search across all food items & fruits..." onkeyup="renderFeed()">
         <span class="mic-icon">🎙️</span>
       </div>
       <div class="veg-mode-toggle" id="vegToggle" onclick="toggleVegMode()">
@@ -239,110 +211,33 @@
   </header>
 
   <div class="content-area">
-
-    <!-- Welcome Benefits Banner -->
     <div class="welcome-card">
       <div class="wc-left">
         <h3>ENJOY WELCOME BENEFITS</h3>
         <p>on first 3 campus orders</p>
         <span class="wc-tag">₹100 OFF + FREE Express Delivery</span>
       </div>
-      <div style="font-size: 32px;">🎁</div>
+      <div style="font-size:32px;">🎁</div>
     </div>
 
-    <!-- Category Round Circles -->
-    <div class="cat-circles-row">
-      <div class="cat-circle-item active" onclick="filterCategory('All', this)">
-        <div class="cat-img-box"><img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=150" alt="All"></div>
-        <div class="cat-name">All</div>
-      </div>
-      <div class="cat-circle-item" onclick="filterCategory('Pizza', this)">
-        <div class="cat-img-box"><img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=150" alt="Pizza"></div>
-        <div class="cat-name">Pizza</div>
-      </div>
-      <div class="cat-circle-item" onclick="filterCategory('Biryani', this)">
-        <div class="cat-img-box"><img src="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=150" alt="Biryani"></div>
-        <div class="cat-name">Biryani</div>
-      </div>
-      <div class="cat-circle-item" onclick="filterCategory('North Indian', this)">
-        <div class="cat-img-box"><img src="https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=150" alt="North Indian"></div>
-        <div class="cat-name">North Indian</div>
-      </div>
-      <div class="cat-circle-item" onclick="filterCategory('Burger', this)">
-        <div class="cat-img-box"><img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=150" alt="Burger"></div>
-        <div class="cat-name">Burger</div>
-      </div>
-      <div class="cat-circle-item" onclick="filterCategory('Momos', this)">
-        <div class="cat-img-box"><img src="https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=150" alt="Momos"></div>
-        <div class="cat-name">Momos</div>
-      </div>
-      <div class="cat-circle-item" onclick="filterCategory('Fruits', this)">
-        <div class="cat-img-box"><img src="https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=150" alt="Fruits"></div>
-        <div class="cat-name">Fruits</div>
-      </div>
+    <div class="slot-bar-wrap">
+      <span style="font-size:11px; font-weight:800; color:#555;">⚡ TIME SLOT:</span>
+      <select id="slotSelect">
+        <option value="24x7 Anytime Instant (10-15 Mins)">24x7 Instant Delivery (10-15 Mins)</option>
+        <option value="Late Night Express (11:00 PM - 04:00 AM)">Late Night Hostel Express</option>
+        <option value="08:00 AM - 09:30 AM Breakfast">08:00 AM - 09:30 AM Breakfast</option>
+        <option value="10:45 AM - 11:00 AM Class Break">10:45 AM - 11:00 AM Class Break</option>
+        <option value="12:45 PM - 01:15 PM Lunch Break">12:45 PM - 01:15 PM Lunch Break</option>
+        <option value="04:45 PM Evening Snacks">04:45 PM Evening Snacks</option>
+      </select>
     </div>
 
-    <!-- Filter Buttons Bar -->
-    <div class="filter-scroll">
-      <div class="chip-btn active" onclick="setQuickFilter('All', this)">⚡ Filters</div>
-      <div class="chip-btn" onclick="setQuickFilter('Near', this)">Near & Fast</div>
-      <div class="chip-btn" onclick="setQuickFilter('Under150', this)">Under ₹150</div>
-      <div class="chip-btn" onclick="setQuickFilter('Uni-Mall', this)">Uni-Mall Food Court</div>
-      <div class="chip-btn" onclick="setQuickFilter('Robo Park', this)">Robo Park</div>
-    </div>
+    <div class="category-scroll" id="categoryScroll"></div>
 
-    <!-- Recommended For You Carousel -->
-    <div class="section-title">RECOMMENDED FOR YOU</div>
-    <div class="rec-scroll">
-      <div class="rec-card" onclick="quickSelect(1)">
-        <div class="rec-img-box">
-          <img src="https://images.unsplash.com/photo-1562967914-608f82629710?w=250" alt="KFC">
-          <span class="rec-tag">50% OFF</span>
-        </div>
-        <div class="rec-body">
-          <div class="rec-title">KFC Express</div>
-          <div class="rec-meta">★ 4.1 • 15-20 mins</div>
-        </div>
-      </div>
-      <div class="rec-card" onclick="quickSelect(2)">
-        <div class="rec-img-box">
-          <img src="https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=250" alt="Om Vaishno">
-          <span class="rec-tag">50% OFF UPTO ₹100</span>
-        </div>
-        <div class="rec-body">
-          <div class="rec-title">Om Vaishno Dhaba</div>
-          <div class="rec-meta">★ 3.8 • 20-25 mins</div>
-        </div>
-      </div>
-      <div class="rec-card" onclick="quickSelect(3)">
-        <div class="rec-img-box">
-          <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=250" alt="Dominos">
-          <span class="rec-tag">55% OFF</span>
-        </div>
-        <div class="rec-body">
-          <div class="rec-title">Domino's Pizza</div>
-          <div class="rec-meta">★ 4.6 • 20-25 mins</div>
-        </div>
-      </div>
-      <div class="rec-card" onclick="quickSelect(4)">
-        <div class="rec-img-box">
-          <img src="https://images.unsplash.com/photo-1562376552-0d160a2f238d?w=250" alt="Waffles">
-          <span class="rec-tag">FLAT ₹100 OFF</span>
-        </div>
-        <div class="rec-body">
-          <div class="rec-title">The Belgian Waffle Co.</div>
-          <div class="rec-meta">★ 4.3 • 25-30 mins</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Main Restaurant Feed -->
-    <div class="section-title" id="feedCountTitle">309 RESTAURANTS DELIVERING TO YOU</div>
-    <div class="restaurant-feed" id="restaurantContainer"></div>
-
+    <div class="section-title" id="feedCountTitle">ALL CAMPUS FOOD ITEMS</div>
+    <div class="outlet-feed" id="outletContainer"></div>
   </div>
 
-  <!-- Floating Cart Bar -->
   <div class="cart-float-bar" id="cartFloat" style="display:none;" onclick="openCheckoutModal()">
     <div>
       <div class="cf-left" id="cartItemsCount">0 ITEMS</div>
@@ -351,23 +246,26 @@
     <div class="cf-right">View Cart ➔</div>
   </div>
 
-  <!-- Bottom Tabs Bar -->
   <div class="footer-nav">
-    <div class="tab-item active">
+    <div class="tab-item active" onclick="filterCategory('All')">
       <span class="tab-icon">🛵</span>
       <span>Delivery</span>
     </div>
-    <div class="tab-item" onclick="setQuickFilter('Under150', null)">
-      <span class="tab-icon">🏷️</span>
-      <span>Under ₹250</span>
+    <div class="tab-item" onclick="filterCategory('Pizza')">
+      <span class="tab-icon">🍕</span>
+      <span>Pizza</span>
+    </div>
+    <div class="tab-item" onclick="filterCategory('Burger')">
+      <span class="tab-icon">🍔</span>
+      <span>Burgers</span>
+    </div>
+    <div class="tab-item" onclick="filterCategory('Common Fruits')">
+      <span class="tab-icon">🍎</span>
+      <span>Fruits</span>
     </div>
     <div class="tab-item" onclick="openLocationModal()">
-      <span class="tab-icon">🍽️</span>
-      <span>Dining</span>
-    </div>
-    <div class="district-pill" onclick="openLocationModal()">
-      <span>district</span>
-      <span>✨</span>
+      <span class="tab-icon">👤</span>
+      <span>Profile</span>
     </div>
   </div>
 
@@ -451,231 +349,390 @@
   <script>
     const ADMIN_WHATSAPP = "918957645702";
 
-    // RESTAURANTS EXACTLY AS SHOWN IN VIDEO with 4-5 DISTINCT DISH SLIDES EACH
-    const RESTAURANTS = [
-      {
-        id: 1,
-        name: "KFC",
-        rating: "4.1",
-        time: "15-20 mins",
-        dist: "2.4 km",
-        isVeg: false,
-        cat: "Burger",
-        tag: "50% OFF on select items",
-        kiosk: "Uni-Mall",
-        slides: [
-          { name: "Hot Chicken Wings", price: 199, img: "https://images.unsplash.com/photo-1562967914-608f82629710?w=600" },
-          { name: "Chicken Zinger Burger", price: 179, img: "https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?w=600" },
-          { name: "Chicken Popcorn Bucket", price: 149, img: "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=600" },
-          { name: "Crispy Chicken Strips", price: 169, img: "https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?w=600" }
-        ]
-      },
-      {
-        id: 2,
-        name: "Om Vaishno Dhaba",
-        rating: "3.8",
-        time: "20-25 mins",
-        dist: "1.2 km",
-        isVeg: true,
-        cat: "North Indian",
-        tag: "50% OFF up to ₹100 above ₹99",
-        kiosk: "Block 14",
-        slides: [
-          { name: "Om Special Thai Thali", price: 288, img: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=600" },
-          { name: "Dal Makhani Butter Naan Combo", price: 159, img: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600" },
-          { name: "Paneer Butter Masala", price: 179, img: "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=600" },
-          { name: "Shahi Paneer + 2 Tandoori Roti", price: 169, img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600" }
-        ]
-      },
-      {
-        id: 3,
-        name: "Patwari Vaishno Dhaba",
-        rating: "4.3",
-        time: "25-30 mins",
-        dist: "3.7 km",
-        isVeg: true,
-        cat: "North Indian",
-        tag: "Flat ₹140 OFF above ₹249",
-        kiosk: "Law Block",
-        slides: [
-          { name: "Samosa Per Pc", price: 20, img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600" },
-          { name: "Chole Bhature (2 Pcs)", price: 129, img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600" },
-          { name: "Paneer Bread Pakora", price: 35, img: "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600" },
-          { name: "Aloo Pyaaz Paratha", price: 69, img: "https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=600" }
-        ]
-      },
-      {
-        id: 4,
-        name: "Domino's Pizza",
-        rating: "4.6",
-        time: "20-25 mins",
-        dist: "4.3 km",
-        isVeg: true,
-        cat: "Pizza",
-        tag: "55% OFF on select items",
-        kiosk: "Uni-Mall",
-        slides: [
-          { name: "Chicken Double Cheese", price: 159, img: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600" },
-          { name: "Farmhouse Fresh Veggie", price: 229, img: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600" },
-          { name: "Stuffed Garlic Bread", price: 129, img: "https://images.unsplash.com/photo-1619535860434-ba1d8fa12536?w=600" },
-          { name: "Margherita Classic Pizza", price: 149, img: "https://images.unsplash.com/photo-1604382355076-af4b0eb60143?w=600" }
-        ]
-      },
-      {
-        id: 5,
-        name: "Subway",
-        rating: "3.8",
-        time: "15-20 mins",
-        dist: "2.3 km",
-        isVeg: true,
-        cat: "Fast Food",
-        tag: "Items starting at ₹119",
-        kiosk: "Uni-Mall",
-        slides: [
-          { name: "Double Dark Chunk Cookie", price: 75, img: "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=600" },
-          { name: "Veggie Delite Sub 6-Inch", price: 149, img: "https://images.unsplash.com/photo-1509722747041-616f39b57569?w=600" },
-          { name: "Paneer Tikka Sub", price: 189, img: "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=600" },
-          { name: "Toasted Cheese Submarine", price: 169, img: "https://images.unsplash.com/photo-1554433607-66b5efe9d304?w=600" }
-        ]
-      },
-      {
-        id: 6,
-        name: "The Belgian Waffle Co.",
-        rating: "4.3",
-        time: "25-30 mins",
-        dist: "2.3 km",
-        isVeg: true,
-        cat: "Dessert",
-        tag: "Pure Veg restaurant",
-        kiosk: "Uni-Mall",
-        slides: [
-          { name: "Triple Chocomelt Waffle", price: 195, img: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?w=600" },
-          { name: "Almond Brownie Waffle", price: 205, img: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600" },
-          { name: "Belgian Milk Chocolate Waffle", price: 165, img: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=600" },
-          { name: "Oreo Waffle Sandwich", price: 207, img: "https://images.unsplash.com/photo-1527515862127-a4fc05baf7a5?w=600" }
-        ]
-      },
-      {
-        id: 7,
-        name: "Roll Express",
-        rating: "4.4",
-        time: "10-15 mins",
-        dist: "3.1 km",
-        isVeg: false,
-        cat: "Burger",
-        tag: "Flat ₹140 OFF above ₹249",
-        kiosk: "Robo Park",
-        slides: [
-          { name: "Double Egg Roll", price: 90, img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600" },
-          { name: "Paneer Kathi Roll", price: 109, img: "https://images.unsplash.com/photo-1561651823-34feb02250e4?w=600" },
-          { name: "Chicken Tikka Wrap", price: 149, img: "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=600" },
-          { name: "Peri Peri Chicken Roll", price: 159, img: "https://images.unsplash.com/photo-1509722747041-616f39b57569?w=600" }
-        ]
-      },
-      {
-        id: 8,
-        name: "Tibet Kitchen",
-        rating: "4.1",
-        time: "20-25 mins",
-        dist: "4.3 km",
-        isVeg: false,
-        cat: "Momos",
-        tag: "Flat ₹140 OFF above ₹249",
-        kiosk: "Block 34",
-        slides: [
-          { name: "Veg Chowmein", price: 80, img: "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=600" },
-          { name: "Chicken Fried Rice", price: 180, img: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=600" },
-          { name: "Steamed Veg Momos (6 Pcs)", price: 79, img: "https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=600" },
-          { name: "Chicken Momos in Bamboo Steamer", price: 119, img: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=600" }
-        ]
-      },
-      {
-        id: 9,
-        name: "Behrouz Biryani",
-        rating: "4.3",
-        time: "15-20 mins",
-        dist: "4.1 km",
-        isVeg: false,
-        cat: "Biryani",
-        tag: "Items starting at ₹129",
-        kiosk: "Uni-Mall",
-        slides: [
-          { name: "Hyderabadi Lazeez Dum Biryani", price: 419, img: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600" },
-          { name: "Shahi Paneer Dum Biryani", price: 219, img: "https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=600" },
-          { name: "Murgh Tikka Biryani with Raita", price: 259, img: "https://images.unsplash.com/photo-1633945274405-b6c8069047b0?w=600" },
-          { name: "Gosht Dum Mutton Biryani", price: 329, img: "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=600" }
-        ]
-      },
-      {
-        id: 10,
-        name: "ChaiVyanjan",
-        rating: "4.1",
-        time: "20-25 mins",
-        dist: "2.2 km",
-        isVeg: true,
-        cat: "North Indian",
-        tag: "50% OFF on select items",
-        kiosk: "Law Block",
-        slides: [
-          { name: "Veg Grill Sandwich", price: 149, img: "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=600" },
-          { name: "White Sauce Pasta", price: 149, img: "https://images.unsplash.com/photo-1621996346565-e3d5d6281691?w=600" },
-          { name: "Oreo Monster Shake", price: 139, img: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=600" },
-          { name: "Veggie Steamed Momos", price: 130, img: "https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=600" }
-        ]
-      },
-      {
-        id: 11,
-        name: "Gianis - Ice cream, shakes & more",
-        rating: "3.7",
-        time: "30-35 mins",
-        dist: "2.4 km",
-        isVeg: true,
-        cat: "Dessert",
-        tag: "Flat ₹100 OFF above ₹149",
-        kiosk: "Uni-Mall",
-        slides: [
-          { name: "Mango Faluda Glass", price: 149, img: "https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=600" },
-          { name: "Kesar Kulfi Faluda Bowl", price: 138, img: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=600" },
-          { name: "Black Currant Ice Cream Cup", price: 98, img: "https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?w=600" },
-          { name: "Brownie Sundae Loaded", price: 265, img: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=600" }
-        ]
-      },
-      {
-        id: 12,
-        name: "Fruit Bliss & Bowls",
-        rating: "4.9",
-        time: "10-15 mins",
-        dist: "0.8 km",
-        isVeg: true,
-        cat: "Fruits",
-        tag: "100% Pure Fresh Cuts",
-        kiosk: "Robo Park",
-        slides: [
-          { name: "Royal Mixed Fruit Bowl", price: 129, img: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600" },
-          { name: "Fresh Cut Papaya Platter", price: 70, img: "https://images.unsplash.com/photo-1517282009859-f000ec3b26fe?w=600" },
-          { name: "Fresh Pomegranate Anaar Bowl", price: 140, img: "https://images.unsplash.com/photo-1557800636-894a64c1696f?w=600" },
-          { name: "Pure Watermelon Fresh Slices", price: 60, img: "https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=600" }
-        ]
-      }
+    // EXACT LIST OF ALL USER REQUESTED ITEMS
+    const FULL_ITEMS_INPUT = [
+      // Common Fruits
+      { name: "Apple", category: "Common Fruits", price: 120, veg: "veg" },
+      { name: "Banana", category: "Common Fruits", price: 60, veg: "veg" },
+      { name: "Mango", category: "Common Fruits", price: 90, veg: "veg" },
+      { name: "Orange", category: "Common Fruits", price: 80, veg: "veg" },
+      { name: "Grapes", category: "Common Fruits", price: 100, veg: "veg" },
+      { name: "Watermelon", category: "Common Fruits", price: 60, veg: "veg" },
+      { name: "Muskmelon", category: "Common Fruits", price: 70, veg: "veg" },
+      { name: "Papaya", category: "Common Fruits", price: 70, veg: "veg" },
+      { name: "Guava", category: "Common Fruits", price: 80, veg: "veg" },
+      { name: "Pomegranate", category: "Common Fruits", price: 140, veg: "veg" },
+      { name: "Pineapple", category: "Common Fruits", price: 100, veg: "veg" },
+      { name: "Coconut", category: "Common Fruits", price: 60, veg: "veg" },
+      { name: "Pear", category: "Common Fruits", price: 120, veg: "veg" },
+      { name: "Peach", category: "Common Fruits", price: 140, veg: "veg" },
+      { name: "Plum", category: "Common Fruits", price: 130, veg: "veg" },
+      { name: "Apricot", category: "Common Fruits", price: 150, veg: "veg" },
+      { name: "Cherry", category: "Common Fruits", price: 190, veg: "veg" },
+      { name: "Strawberry", category: "Common Fruits", price: 180, veg: "veg" },
+      { name: "Raspberry", category: "Common Fruits", price: 210, veg: "veg" },
+      { name: "Blackberry", category: "Common Fruits", price: 210, veg: "veg" },
+      { name: "Blueberry", category: "Common Fruits", price: 220, veg: "veg" },
+      { name: "Kiwi", category: "Common Fruits", price: 150, veg: "veg" },
+      { name: "Dragon Fruit", category: "Common Fruits", price: 130, veg: "veg" },
+      { name: "Litchi", category: "Common Fruits", price: 160, veg: "veg" },
+      { name: "Fig (Anjeer)", category: "Common Fruits", price: 140, veg: "veg" },
+      { name: "Dates (Khajoor)", category: "Common Fruits", price: 110, veg: "veg" },
+      { name: "Custard Apple (Sitaphal)", category: "Common Fruits", price: 120, veg: "veg" },
+      { name: "Jackfruit", category: "Common Fruits", price: 90, veg: "veg" },
+      { name: "Chikoo", category: "Common Fruits", price: 90, veg: "veg" },
+      { name: "Amla", category: "Common Fruits", price: 50, veg: "veg" },
+
+      // Citrus Fruits
+      { name: "Lemon", category: "Citrus Fruits", price: 30, veg: "veg" },
+      { name: "Lime", category: "Citrus Fruits", price: 30, veg: "veg" },
+      { name: "Mosambi", category: "Citrus Fruits", price: 80, veg: "veg" },
+      { name: "Mandarin", category: "Citrus Fruits", price: 90, veg: "veg" },
+      { name: "Grapefruit", category: "Citrus Fruits", price: 110, veg: "veg" },
+      { name: "Pomelo", category: "Citrus Fruits", price: 120, veg: "veg" },
+      { name: "Tangerine", category: "Citrus Fruits", price: 90, veg: "veg" },
+      { name: "Kumquat", category: "Citrus Fruits", price: 140, veg: "veg" },
+
+      // Tropical & Exotic Fruits
+      { name: "Avocado", category: "Exotic Fruits", price: 160, veg: "veg" },
+      { name: "Passion Fruit", category: "Exotic Fruits", price: 170, veg: "veg" },
+      { name: "Star Fruit", category: "Exotic Fruits", price: 100, veg: "veg" },
+      { name: "Rambutan", category: "Exotic Fruits", price: 190, veg: "veg" },
+      { name: "Mangosteen", category: "Exotic Fruits", price: 210, veg: "veg" },
+      { name: "Durian", category: "Exotic Fruits", price: 250, veg: "veg" },
+      { name: "Longan", category: "Exotic Fruits", price: 180, veg: "veg" },
+      { name: "Persimmon", category: "Exotic Fruits", price: 140, veg: "veg" },
+      { name: "Soursop", category: "Exotic Fruits", price: 190, veg: "veg" },
+      { name: "Breadfruit", category: "Exotic Fruits", price: 110, veg: "veg" },
+      { name: "Tamarind", category: "Exotic Fruits", price: 50, veg: "veg" },
+      { name: "Rose Apple", category: "Exotic Fruits", price: 120, veg: "veg" },
+      { name: "Wood Apple (Bel)", category: "Exotic Fruits", price: 60, veg: "veg" },
+      { name: "Jamun", category: "Exotic Fruits", price: 120, veg: "veg" },
+      { name: "Mulberry", category: "Exotic Fruits", price: 100, veg: "veg" },
+      { name: "Cranberry", category: "Exotic Fruits", price: 180, veg: "veg" },
+      { name: "Gooseberry", category: "Exotic Fruits", price: 60, veg: "veg" },
+      { name: "Star Apple", category: "Exotic Fruits", price: 130, veg: "veg" },
+      { name: "Snake Fruit", category: "Exotic Fruits", price: 190, veg: "veg" },
+      { name: "Kiwi Berry", category: "Exotic Fruits", price: 210, veg: "veg" },
+      { name: "Prickly Pear", category: "Exotic Fruits", price: 110, veg: "veg" },
+
+      // Indian Traditional Fruits
+      { name: "Ber", category: "Indian Fruits", price: 50, veg: "veg" },
+      { name: "Karonda", category: "Indian Fruits", price: 60, veg: "veg" },
+      { name: "Phalsa", category: "Indian Fruits", price: 90, veg: "veg" },
+      { name: "Kokum", category: "Indian Fruits", price: 80, veg: "veg" },
+      { name: "Mahua", category: "Indian Fruits", price: 70, veg: "veg" },
+      { name: "Tendu", category: "Indian Fruits", price: 60, veg: "veg" },
+      { name: "Lasoda", category: "Indian Fruits", price: 70, veg: "veg" },
+      { name: "Kafal", category: "Indian Fruits", price: 110, veg: "veg" },
+      { name: "Chironji", category: "Indian Fruits", price: 140, veg: "veg" },
+      { name: "Bilimbi", category: "Indian Fruits", price: 80, veg: "veg" },
+
+      // Pizza
+      { name: "Margherita Pizza", category: "Pizza", price: 149, veg: "veg" },
+      { name: "Farmhouse Pizza", category: "Pizza", price: 229, veg: "veg" },
+      { name: "Cheese Pizza", category: "Pizza", price: 169, veg: "veg" },
+      { name: "Paneer Pizza", category: "Pizza", price: 219, veg: "veg" },
+      { name: "Veggie Pizza", category: "Pizza", price: 199, veg: "veg" },
+      { name: "Corn Pizza", category: "Pizza", price: 169, veg: "veg" },
+      { name: "Mushroom Pizza", category: "Pizza", price: 219, veg: "veg" },
+      { name: "Chicken Pizza", category: "Pizza", price: 239, veg: "nonVeg" },
+      { name: "Tandoori Chicken Pizza", category: "Pizza", price: 269, veg: "nonVeg" },
+      { name: "BBQ Chicken Pizza", category: "Pizza", price: 279, veg: "nonVeg" },
+      { name: "Pepperoni Pizza", category: "Pizza", price: 299, veg: "nonVeg" },
+
+      // Burger
+      { name: "Veg Burger", category: "Burger", price: 69, veg: "veg" },
+      { name: "Cheese Burger", category: "Burger", price: 89, veg: "veg" },
+      { name: "Aloo Tikki Burger", category: "Burger", price: 59, veg: "veg" },
+      { name: "Paneer Burger", category: "Burger", price: 99, veg: "veg" },
+      { name: "Mexican Burger", category: "Burger", price: 109, veg: "veg" },
+      { name: "Crispy Chicken Burger", category: "Burger", price: 139, veg: "nonVeg" },
+      { name: "Chicken Cheese Burger", category: "Burger", price: 129, veg: "nonVeg" },
+      { name: "BBQ Chicken Burger", category: "Burger", price: 149, veg: "nonVeg" },
+      { name: "Double Patty Burger", category: "Burger", price: 169, veg: "veg" },
+      { name: "Veggie Burger", category: "Burger", price: 79, veg: "veg" },
+
+      // Fast Food
+      { name: "French Fries", category: "Fast Food", price: 79, veg: "veg" },
+      { name: "Peri Peri Fries", category: "Fast Food", price: 99, veg: "veg" },
+      { name: "Cheese Fries", category: "Fast Food", price: 119, veg: "veg" },
+      { name: "Potato Wedges", category: "Fast Food", price: 99, veg: "veg" },
+      { name: "Garlic Bread", category: "Fast Food", price: 99, veg: "veg" },
+      { name: "Cheese Garlic Bread", category: "Fast Food", price: 129, veg: "veg" },
+      { name: "Nachos", category: "Fast Food", price: 109, veg: "veg" },
+      { name: "Mozzarella Sticks", category: "Fast Food", price: 149, veg: "veg" },
+      { name: "Spring Rolls", category: "Fast Food", price: 99, veg: "veg" },
+      { name: "Nuggets", category: "Fast Food", price: 109, veg: "veg" },
+      { name: "Chicken Wings", category: "Fast Food", price: 169, veg: "nonVeg" },
+      { name: "Chicken Popcorn", category: "Fast Food", price: 149, veg: "nonVeg" },
+
+      // Chinese
+      { name: "Veg Chowmein", category: "Chinese", price: 119, veg: "veg" },
+      { name: "Chicken Chowmein", category: "Chinese", price: 159, veg: "nonVeg" },
+      { name: "Hakka Noodles", category: "Chinese", price: 129, veg: "veg" },
+      { name: "Schezwan Noodles", category: "Chinese", price: 149, veg: "veg" },
+      { name: "Veg Fried Rice", category: "Chinese", price: 129, veg: "veg" },
+      { name: "Chicken Fried Rice", category: "Chinese", price: 169, veg: "nonVeg" },
+      { name: "Schezwan Fried Rice", category: "Chinese", price: 149, veg: "veg" },
+      { name: "Manchurian", category: "Chinese", price: 139, veg: "veg" },
+      { name: "Chilli Paneer", category: "Chinese", price: 169, veg: "veg" },
+      { name: "Chilli Chicken", category: "Chinese", price: 189, veg: "nonVeg" },
+      { name: "Veg Momos", category: "Chinese", price: 79, veg: "veg" },
+      { name: "Fried Momos", category: "Chinese", price: 99, veg: "veg" },
+      { name: "Tandoori Momos", category: "Chinese", price: 139, veg: "veg" },
+      { name: "Paneer Momos", category: "Chinese", price: 109, veg: "veg" },
+      { name: "Chicken Momos", category: "Chinese", price: 119, veg: "nonVeg" },
+
+      // Indian Main Course
+      { name: "Dal Tadka", category: "Indian Main Course", price: 119, veg: "veg" },
+      { name: "Dal Makhani", category: "Indian Main Course", price: 159, veg: "veg" },
+      { name: "Rajma", category: "Indian Main Course", price: 139, veg: "veg" },
+      { name: "Chole", category: "Indian Main Course", price: 129, veg: "veg" },
+      { name: "Kadhi", category: "Indian Main Course", price: 109, veg: "veg" },
+      { name: "Shahi Paneer", category: "Indian Main Course", price: 169, veg: "veg" },
+      { name: "Kadhai Paneer", category: "Indian Main Course", price: 179, veg: "veg" },
+      { name: "Palak Paneer", category: "Indian Main Course", price: 169, veg: "veg" },
+      { name: "Paneer Butter Masala", category: "Indian Main Course", price: 179, veg: "veg" },
+      { name: "Matar Paneer", category: "Indian Main Course", price: 159, veg: "veg" },
+      { name: "Malai Kofta", category: "Indian Main Course", price: 179, veg: "veg" },
+      { name: "Mix Veg", category: "Indian Main Course", price: 139, veg: "veg" },
+      { name: "Aloo Gobhi", category: "Indian Main Course", price: 129, veg: "veg" },
+      { name: "Aloo Matar", category: "Indian Main Course", price: 129, veg: "veg" },
+      { name: "Bhindi Masala", category: "Indian Main Course", price: 139, veg: "veg" },
+      { name: "Baingan Bharta", category: "Indian Main Course", price: 139, veg: "veg" },
+
+      // Non-Veg
+      { name: "Chicken Curry", category: "Non-Veg", price: 219, veg: "nonVeg" },
+      { name: "Butter Chicken", category: "Non-Veg", price: 229, veg: "nonVeg" },
+      { name: "Kadhai Chicken", category: "Non-Veg", price: 229, veg: "nonVeg" },
+      { name: "Chicken Tikka", category: "Non-Veg", price: 199, veg: "nonVeg" },
+      { name: "Chicken Tandoori", category: "Non-Veg", price: 249, veg: "nonVeg" },
+      { name: "Chicken Biryani", category: "Non-Veg", price: 219, veg: "nonVeg" },
+      { name: "Mutton Biryani", category: "Non-Veg", price: 299, veg: "nonVeg" },
+      { name: "Mutton Curry", category: "Non-Veg", price: 299, veg: "nonVeg" },
+      { name: "Mutton Korma", category: "Non-Veg", price: 329, veg: "nonVeg" },
+      { name: "Fish Curry", category: "Non-Veg", price: 249, veg: "nonVeg" },
+      { name: "Fish Fry", category: "Non-Veg", price: 229, veg: "nonVeg" },
+      { name: "Egg Curry", category: "Non-Veg", price: 149, veg: "nonVeg" },
+      { name: "Chicken Kebab", category: "Non-Veg", price: 219, veg: "nonVeg" },
+      { name: "Chicken 65", category: "Non-Veg", price: 179, veg: "nonVeg" },
+
+      // Rice & Biryani
+      { name: "Veg Biryani", category: "Rice & Biryani", price: 149, veg: "veg" },
+      { name: "Paneer Biryani", category: "Rice & Biryani", price: 189, veg: "veg" },
+      { name: "Egg Biryani", category: "Rice & Biryani", price: 169, veg: "nonVeg" },
+      { name: "Hyderabadi Biryani", category: "Rice & Biryani", price: 249, veg: "nonVeg" },
+      { name: "Lucknowi Biryani", category: "Rice & Biryani", price: 259, veg: "nonVeg" },
+      { name: "Jeera Rice", category: "Rice & Biryani", price: 99, veg: "veg" },
+      { name: "Plain Rice", category: "Rice & Biryani", price: 79, veg: "veg" },
+      { name: "Veg Pulao", category: "Rice & Biryani", price: 119, veg: "veg" },
+
+      // Roti & Paratha
+      { name: "Roti", category: "Roti & Paratha", price: 15, veg: "veg" },
+      { name: "Tandoori Roti", category: "Roti & Paratha", price: 25, veg: "veg" },
+      { name: "Butter Roti", category: "Roti & Paratha", price: 30, veg: "veg" },
+      { name: "Naan", category: "Roti & Paratha", price: 45, veg: "veg" },
+      { name: "Butter Naan", category: "Roti & Paratha", price: 55, veg: "veg" },
+      { name: "Garlic Naan", category: "Roti & Paratha", price: 65, veg: "veg" },
+      { name: "Cheese Naan", category: "Roti & Paratha", price: 89, veg: "veg" },
+      { name: "Plain Paratha", category: "Roti & Paratha", price: 40, veg: "veg" },
+      { name: "Aloo Paratha", category: "Roti & Paratha", price: 69, veg: "veg" },
+      { name: "Paneer Paratha", category: "Roti & Paratha", price: 89, veg: "veg" },
+      { name: "Gobi Paratha", category: "Roti & Paratha", price: 69, veg: "veg" },
+      { name: "Methi Paratha", category: "Roti & Paratha", price: 59, veg: "veg" },
+      { name: "Lachha Paratha", category: "Roti & Paratha", price: 59, veg: "veg" },
+      { name: "Stuffed Paratha", category: "Roti & Paratha", price: 89, veg: "veg" },
+
+      // Snacks & Street Food
+      { name: "Samosa", category: "Snacks", price: 20, veg: "veg" },
+      { name: "Kachori", category: "Snacks", price: 25, veg: "veg" },
+      { name: "Pakora", category: "Snacks", price: 50, veg: "veg" },
+      { name: "Bread Pakora", category: "Snacks", price: 35, veg: "veg" },
+      { name: "Aloo Tikki", category: "Snacks", price: 50, veg: "veg" },
+      { name: "Chole Bhature", category: "Snacks", price: 129, veg: "veg" },
+      { name: "Chole Kulche", category: "Snacks", price: 89, veg: "veg" },
+      { name: "Pav Bhaji", category: "Snacks", price: 99, veg: "veg" },
+      { name: "Vada Pav", category: "Snacks", price: 49, veg: "veg" },
+      { name: "Dahi Puri", category: "Snacks", price: 69, veg: "veg" },
+      { name: "Pani Puri", category: "Snacks", price: 49, veg: "veg" },
+      { name: "Bhel Puri", category: "Snacks", price: 59, veg: "veg" },
+      { name: "Sev Puri", category: "Snacks", price: 59, veg: "veg" },
+      { name: "Dahi Bhalla", category: "Snacks", price: 79, veg: "veg" },
+      { name: "Aloo Chaat", category: "Snacks", price: 60, veg: "veg" },
+      { name: "Papdi Chaat", category: "Snacks", price: 69, veg: "veg" },
+      { name: "Raj Kachori", category: "Snacks", price: 89, veg: "veg" },
+
+      // Rolls & Wraps
+      { name: "Veg Roll", category: "Rolls", price: 79, veg: "veg" },
+      { name: "Paneer Roll", category: "Rolls", price: 99, veg: "veg" },
+      { name: "Egg Roll", category: "Rolls", price: 89, veg: "nonVeg" },
+      { name: "Chicken Roll", category: "Rolls", price: 119, veg: "nonVeg" },
+      { name: "Chicken Kathi Roll", category: "Rolls", price: 139, veg: "nonVeg" },
+      { name: "Paneer Wrap", category: "Rolls", price: 109, veg: "veg" },
+      { name: "Chicken Wrap", category: "Rolls", price: 129, veg: "nonVeg" },
+      { name: "Shawarma", category: "Rolls", price: 119, veg: "nonVeg" },
+      { name: "Frankie", category: "Rolls", price: 89, veg: "veg" },
+
+      // Italian & Pasta
+      { name: "White Sauce Pasta", category: "Pasta", price: 149, veg: "veg" },
+      { name: "Red Sauce Pasta", category: "Pasta", price: 139, veg: "veg" },
+      { name: "Pink Sauce Pasta", category: "Pasta", price: 159, veg: "veg" },
+      { name: "Arrabbiata Pasta", category: "Pasta", price: 149, veg: "veg" },
+      { name: "Alfredo Pasta", category: "Pasta", price: 169, veg: "veg" },
+      { name: "Macaroni", category: "Pasta", price: 110, veg: "veg" },
+      { name: "Spaghetti", category: "Pasta", price: 160, veg: "veg" },
+      { name: "Lasagna", category: "Pasta", price: 190, veg: "veg" },
+      { name: "Ravioli", category: "Pasta", price: 180, veg: "veg" },
+
+      // Sandwich
+      { name: "Veg Sandwich", category: "Sandwich", price: 69, veg: "veg" },
+      { name: "Cheese Sandwich", category: "Sandwich", price: 89, veg: "veg" },
+      { name: "Grilled Sandwich", category: "Sandwich", price: 99, veg: "veg" },
+      { name: "Club Sandwich", category: "Sandwich", price: 129, veg: "veg" },
+      { name: "Paneer Sandwich", category: "Sandwich", price: 109, veg: "veg" },
+      { name: "Corn Sandwich", category: "Sandwich", price: 99, veg: "veg" },
+      { name: "Chicken Sandwich", category: "Sandwich", price: 119, veg: "nonVeg" },
+      { name: "Grilled Chicken Sandwich", category: "Sandwich", price: 149, veg: "nonVeg" },
+      { name: "Bombay Sandwich", category: "Sandwich", price: 89, veg: "veg" },
+
+      // Desserts & Sweets
+      { name: "Gulab Jamun", category: "Desserts", price: 59, veg: "veg" },
+      { name: "Rasgulla", category: "Desserts", price: 59, veg: "veg" },
+      { name: "Jalebi", category: "Desserts", price: 69, veg: "veg" },
+      { name: "Kaju Katli", category: "Desserts", price: 120, veg: "veg" },
+      { name: "Rasmalai", category: "Desserts", price: 89, veg: "veg" },
+      { name: "Gajar Ka Halwa", category: "Desserts", price: 89, veg: "veg" },
+      { name: "Moong Dal Halwa", category: "Desserts", price: 99, veg: "veg" },
+      { name: "Kulfi", category: "Desserts", price: 79, veg: "veg" },
+      { name: "Ice Cream", category: "Desserts", price: 50, veg: "veg" },
+      { name: "Brownie", category: "Desserts", price: 99, veg: "veg" },
+      { name: "Chocolate Cake", category: "Desserts", price: 119, veg: "veg" },
+      { name: "Red Velvet Cake", category: "Desserts", price: 169, veg: "veg" },
+      { name: "Black Forest Cake", category: "Desserts", price: 149, veg: "veg" },
+      { name: "Cheesecake", category: "Desserts", price: 199, veg: "veg" },
+      { name: "Donut", category: "Desserts", price: 59, veg: "veg" },
+      { name: "Pastry", category: "Desserts", price: 70, veg: "veg" },
+      { name: "Muffin", category: "Desserts", price: 59, veg: "veg" },
+      { name: "Waffle", category: "Desserts", price: 120, veg: "veg" },
+      { name: "Pancake", category: "Desserts", price: 110, veg: "veg" },
+
+      // Beverages
+      { name: "Mineral Water", category: "Beverages", price: 20, veg: "veg" },
+      { name: "Cold Drink", category: "Beverages", price: 40, veg: "veg" },
+      { name: "Coca-Cola", category: "Beverages", price: 40, veg: "veg" },
+      { name: "Pepsi", category: "Beverages", price: 40, veg: "veg" },
+      { name: "Sprite", category: "Beverages", price: 40, veg: "veg" },
+      { name: "Fanta", category: "Beverages", price: 40, veg: "veg" },
+      { name: "Limca", category: "Beverages", price: 40, veg: "veg" },
+      { name: "Fresh Lime Soda", category: "Beverages", price: 69, veg: "veg" },
+      { name: "Lemonade", category: "Beverages", price: 50, veg: "veg" },
+      { name: "Mango Shake", category: "Beverages", price: 109, veg: "veg" },
+      { name: "Banana Shake", category: "Beverages", price: 99, veg: "veg" },
+      { name: "Strawberry Shake", category: "Beverages", price: 109, veg: "veg" },
+      { name: "Chocolate Shake", category: "Beverages", price: 119, veg: "veg" },
+      { name: "Cold Coffee", category: "Beverages", price: 109, veg: "veg" },
+      { name: "Hot Coffee", category: "Beverages", price: 59, veg: "veg" },
+      { name: "Tea", category: "Beverages", price: 25, veg: "veg" },
+      { name: "Masala Tea", category: "Beverages", price: 39, veg: "veg" },
+      { name: "Green Tea", category: "Beverages", price: 59, veg: "veg" },
+      { name: "Lassi", category: "Beverages", price: 70, veg: "veg" },
+      { name: "Mango Lassi", category: "Beverages", price: 89, veg: "veg" },
+      { name: "Sweet Lassi", category: "Beverages", price: 79, veg: "veg" },
+      { name: "Buttermilk (Chaas)", category: "Beverages", price: 40, veg: "veg" },
+      { name: "Coconut Water", category: "Beverages", price: 60, veg: "veg" },
+      { name: "Orange Juice", category: "Beverages", price: 89, veg: "veg" },
+      { name: "Apple Juice", category: "Beverages", price: 99, veg: "veg" },
+      { name: "Watermelon Juice", category: "Beverages", price: 79, veg: "veg" },
+      { name: "Pineapple Juice", category: "Beverages", price: 89, veg: "veg" },
+
+      // Healthy Food
+      { name: "Fruit Salad", category: "Healthy Food", price: 99, veg: "veg" },
+      { name: "Vegetable Salad", category: "Healthy Food", price: 80, veg: "veg" },
+      { name: "Greek Salad", category: "Healthy Food", price: 149, veg: "veg" },
+      { name: "Sprouts Salad", category: "Healthy Food", price: 109, veg: "veg" },
+      { name: "Caesar Salad", category: "Healthy Food", price: 159, veg: "veg" },
+      { name: "Oats", category: "Healthy Food", price: 90, veg: "veg" },
+      { name: "Ragi Dosa", category: "Healthy Food", price: 110, veg: "veg" },
+      { name: "Vegetable Soup", category: "Healthy Food", price: 79, veg: "veg" },
+      { name: "Tomato Soup", category: "Healthy Food", price: 79, veg: "veg" },
+      { name: "Corn Soup", category: "Healthy Food", price: 89, veg: "veg" },
+      { name: "Dal Khichdi", category: "Healthy Food", price: 129, veg: "veg" },
+      { name: "Vegetable Khichdi", category: "Healthy Food", price: 119, veg: "veg" },
+
+      // South Indian
+      { name: "Idli", category: "South Indian", price: 59, veg: "veg" },
+      { name: "Sambar", category: "South Indian", price: 40, veg: "veg" },
+      { name: "Vada", category: "South Indian", price: 60, veg: "veg" },
+      { name: "Masala Dosa", category: "South Indian", price: 99, veg: "veg" },
+      { name: "Plain Dosa", category: "South Indian", price: 79, veg: "veg" },
+      { name: "Mysore Masala Dosa", category: "South Indian", price: 119, veg: "veg" },
+      { name: "Rava Dosa", category: "South Indian", price: 109, veg: "veg" },
+      { name: "Uttapam", category: "South Indian", price: 89, veg: "veg" },
+      { name: "Medu Vada", category: "South Indian", price: 69, veg: "veg" },
+      { name: "Pongal", category: "South Indian", price: 89, veg: "veg" },
+      { name: "Lemon Rice", category: "South Indian", price: 89, veg: "veg" },
+      { name: "Curd Rice", category: "South Indian", price: 89, veg: "veg" },
+      { name: "Tamarind Rice", category: "South Indian", price: 89, veg: "veg" },
+
+      // Breakfast
+      { name: "Omelette", category: "Breakfast", price: 60, veg: "nonVeg" },
+      { name: "Boiled Egg", category: "Breakfast", price: 40, veg: "nonVeg" },
+      { name: "Scrambled Egg", category: "Breakfast", price: 80, veg: "nonVeg" },
+      { name: "Egg Bhurji", category: "Breakfast", price: 99, veg: "nonVeg" },
+      { name: "Bread Omelette", category: "Breakfast", price: 89, veg: "nonVeg" },
+      { name: "Poha", category: "Breakfast", price: 59, veg: "veg" },
+      { name: "Upma", category: "Breakfast", price: 69, veg: "veg" },
+      { name: "Pancakes", category: "Breakfast", price: 129, veg: "veg" },
+      { name: "Cornflakes", category: "Breakfast", price: 70, veg: "veg" },
+      { name: "Oatmeal", category: "Breakfast", price: 99, veg: "veg" }
     ];
+
+    // GENERATE 4 ALAG ALAG UNIQUE PHOTOS PER DISH USING ACCURATE FOOD PHOTO ENGINE
+    function generate4UniquePhotos(name, category, id) {
+      const q = encodeURIComponent(name.toLowerCase());
+      const cat = encodeURIComponent(category.toLowerCase());
+      
+      // 4 distinct real food photo providers/seeds based on dish name so no two dishes look the same
+      return [
+        `https://source.unsplash.com/featured/600x400?${q},food&sig=${id * 4 + 1}`,
+        `https://source.unsplash.com/featured/600x400?${q},dish&sig=${id * 4 + 2}`,
+        `https://source.unsplash.com/featured/600x400?${q},plate&sig=${id * 4 + 3}`,
+        `https://source.unsplash.com/featured/600x400?${cat},${q}&sig=${id * 4 + 4}`
+      ];
+    }
+
+    // Hydrate dataset with unique IDs and ratings
+    const ITEMS = FULL_ITEMS_INPUT.map((item, index) => {
+      const id = index + 1;
+      return {
+        id,
+        name: item.name,
+        category: item.category,
+        price: item.price,
+        veg: item.veg,
+        rating: (4.0 + ((id * 3) % 11) / 10).toFixed(1),
+        images: generate4UniquePhotos(item.name, item.category, id)
+      };
+    });
 
     let cart = {};
     let activeCategory = "All";
-    let activeQuickFilter = "All";
     let isVegOnly = false;
     let user = JSON.parse(localStorage.getItem('lpukart_user')) || {
       name: "Himanshu Yadav",
       phone: "9876543210",
-      location: "Block 37 / 38 (Law School)"
+      location: "BH-1"
     };
 
     function init() {
       updateUserUI();
+      renderCategoryChips();
       renderFeed();
     }
 
     function updateUserUI() {
-      document.getElementById('locHeader').innerText = user.location ? user.location.split('(')[0] : "Block 37 / 38";
+      document.getElementById('locHeader').innerText = user.location ? user.location.split('(')[0] : "BH-1";
       document.getElementById('userNameInput').value = user.name || "";
       document.getElementById('userPhoneInput').value = user.phone || "";
       document.getElementById('userLocationSelect').value = user.location || "";
@@ -689,132 +746,98 @@
       renderFeed();
     }
 
-    function filterCategory(cat, el) {
+    function renderCategoryChips() {
+      const cats = ["All", ...new Set(ITEMS.map(i => i.category))];
+      const wrap = document.getElementById('categoryScroll');
+      wrap.innerHTML = cats.map(c => `
+        <div class="cat-chip ${c === activeCategory ? 'active' : ''}" onclick="filterCategory('${c}')">
+          ${c}
+        </div>
+      `).join('');
+    }
+
+    function filterCategory(cat) {
       activeCategory = cat;
-      document.querySelectorAll('.cat-circle-item').forEach(c => c.classList.remove('active'));
-      if (el) el.classList.add('active');
+      document.querySelectorAll('.cat-chip').forEach(el => {
+        if (el.innerText.trim() === cat) el.classList.add('active');
+        else el.classList.remove('active');
+      });
       renderFeed();
     }
 
-    function setQuickFilter(f, el) {
-      activeQuickFilter = f;
-      document.querySelectorAll('.chip-btn').forEach(c => c.classList.remove('active'));
-      if (el) el.classList.add('active');
-      renderFeed();
-    }
-
-    function quickSelect(id) {
-      const res = RESTAURANTS.find(r => r.id === id);
-      if (res && res.slides[0]) {
-        changeQty(res.name, res.slides[0].name, res.slides[0].price, 1);
-      }
-    }
-
-    function updateSlideIndicator(slider, resId) {
+    function updateSlideIndicator(slider, itemId) {
       const index = Math.round(slider.scrollLeft / slider.offsetWidth);
-      const dots = document.querySelectorAll(`#dots-${resId} .dot`);
+      const dots = document.querySelectorAll(`#dots-${itemId} .dot`);
       dots.forEach((dot, idx) => {
         if (idx === index) dot.classList.add('active');
         else dot.classList.remove('active');
       });
-
-      // Update the dish tag overlay to match the active slide
-      const res = RESTAURANTS.find(r => r.id === resId);
-      if (res && res.slides[index]) {
-        const tag = document.getElementById(`tag-${resId}`);
-        if (tag) tag.innerText = `₹${res.slides[index].price} • ${res.slides[index].name}`;
-      }
     }
 
     function renderFeed() {
-      const container = document.getElementById('restaurantContainer');
+      const container = document.getElementById('outletContainer');
       const search = document.getElementById('searchInput').value.toLowerCase();
 
-      const filtered = RESTAURANTS.filter(r => {
-        const matchVeg = !isVegOnly || r.isVeg;
-        const matchCategory = activeCategory === "All" || r.cat === activeCategory;
-        const matchQuick = activeQuickFilter === "All" ||
-          (activeQuickFilter === "Near" && parseFloat(r.dist) <= 2.5) ||
-          (activeQuickFilter === "Under150" && r.slides.some(s => s.price <= 150)) ||
-          (r.kiosk.toLowerCase().includes(activeQuickFilter.toLowerCase()));
-        
-        const matchSearch = r.name.toLowerCase().includes(search) ||
-          r.slides.some(s => s.name.toLowerCase().includes(search));
-
-        return matchVeg && matchCategory && matchQuick && matchSearch;
+      const filtered = ITEMS.filter(item => {
+        const matchVeg = !isVegOnly || item.veg === "veg";
+        const matchCategory = activeCategory === "All" || item.category === activeCategory;
+        const matchSearch = item.name.toLowerCase().includes(search) || item.category.toLowerCase().includes(search);
+        return matchVeg && matchCategory && matchSearch;
       });
 
-      document.getElementById('feedCountTitle').innerText = `${filtered.length} RESTAURANTS DELIVERING TO YOU`;
+      document.getElementById('feedCountTitle').innerText = `${filtered.length} ITEMS AVAILABLE ON CAMPUS`;
 
       if (filtered.length === 0) {
-        container.innerHTML = `<div style="text-align:center; padding:40px; color:#888;">No matching restaurants or dishes found!</div>`;
+        container.innerHTML = `<div style="text-align:center; padding:40px; color:#888;">No matching items found! Try another search or turn off Veg Mode.</div>`;
         return;
       }
 
-      container.innerHTML = filtered.map(res => {
-        const firstSlide = res.slides[0];
-        const itemKey = `${res.name}__${firstSlide.name}`;
-        const qty = cart[itemKey] ? cart[itemKey].qty : 0;
+      container.innerHTML = filtered.map(item => {
+        const qty = cart[item.id] ? cart[item.id].qty : 0;
 
-        // Exact horizontal slides carousel for this restaurant
-        const slidesHtml = res.slides.map(slide => `
-          <div class="carousel-slide">
-            <img src="${slide.img}" alt="${slide.name}" loading="lazy">
+        const slidesHtml = item.images.map(imgUrl => `
+          <div class="slider-slide">
+            <img src="${imgUrl}" alt="${item.name}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600'">
           </div>
         `).join('');
 
-        const dotsHtml = res.slides.map((_, i) => `
+        const dotsHtml = item.images.map((_, i) => `
           <div class="dot ${i === 0 ? 'active' : ''}"></div>
         `).join('');
 
         return `
-          <div class="res-card">
-            <div class="carousel-wrap">
-              <div class="carousel-track" onscroll="updateSlideIndicator(this, ${res.id})">
+          <div class="feed-card">
+            <div class="slider-container">
+              <div class="slider-track" onscroll="updateSlideIndicator(this, ${item.id})">
                 ${slidesHtml}
               </div>
-
-              <!-- Dish tag overlay exactly like the video: Top-Left Black Pill -->
-              <div class="dish-tag-overlay" id="tag-${res.id}">
-                ₹${firstSlide.price} • ${firstSlide.name}
-              </div>
-
-              <!-- Top-Right Bookmark -->
-              <div class="bookmark-icon">🔖</div>
-
-              <!-- Bottom-Left FREE Delivery -->
-              <div class="free-delivery-badge">FREE delivery</div>
-
-              <!-- Bottom-Right Carousel Dots (••••) -->
-              <div class="dots-box" id="dots-${res.id}">
+              <div class="slider-dots" id="dots-${item.id}">
                 ${dotsHtml}
               </div>
+              <div class="feed-price-tag">₹${item.price}</div>
+              <div class="veg-dot-badge ${item.veg}">${item.veg === 'veg' ? '🟢 VEG' : '🔴 NON-VEG'}</div>
             </div>
 
-            <div class="res-body">
-              <div class="res-header-row">
-                <div class="res-name">${res.name}</div>
-                <div class="res-rating-badge">★ ${res.rating}</div>
+            <div class="feed-body">
+              <div class="feed-header-line">
+                <div class="feed-name">${item.name}</div>
+                <div class="feed-rating">★ ${item.rating}</div>
               </div>
-
-              <div class="res-meta-line">
-                <span>⚡ Near & Fast</span>
+              <div class="feed-meta-line">
+                <span>⏱️ 10-15 mins</span>
                 <span>•</span>
-                <span>⏱️ ${res.time}</span>
-                <span>•</span>
-                <span>📍 ${res.dist}</span>
+                <span>📍 LPU Campus Express</span>
               </div>
-
-              <div class="res-footer-row">
-                <div class="res-offer-text">🏷️ ${res.tag}</div>
+              <div class="feed-offer-line">
+                <div class="feed-cat-badge">🏷️ ${item.category}</div>
                 <div>
                   ${qty === 0 ? `
-                    <button class="btn-add" onclick="changeQty('${res.name}', '${firstSlide.name}',${firstSlide.price}, 1)">ADD +</button>
+                    <button class="feed-btn-add" onclick="changeQty(${item.id}, 1)">ADD +</button>
                   ` : `
-                    <div class="qty-box">
-                      <button class="qty-btn" onclick="changeQty('${res.name}', '${firstSlide.name}',${firstSlide.price}, -1)">-</button>
+                    <div class="feed-qty-ctrl">
+                      <button class="feed-qty-btn" onclick="changeQty(${item.id}, -1)">-</button>
                       <span>${qty}</span>
-                      <button class="qty-btn" onclick="changeQty('${res.name}', '${firstSlide.name}',${firstSlide.price}, 1)">+</button>
+                      <button class="feed-qty-btn" onclick="changeQty(${item.id}, 1)">+</button>
                     </div>
                   `}
                 </div>
@@ -827,14 +850,14 @@
       updateCartBar();
     }
 
-    function changeQty(resName, dishName, price, delta) {
-      const key = `${resName}__${dishName}`;
-      if (!cart[key]) {
-        cart[key] = { resName, dishName, price, qty: 0 };
+    function changeQty(id, delta) {
+      if (!cart[id]) {
+        const item = ITEMS.find(m => m.id === id);
+        cart[id] = { ...item, qty: 0 };
       }
-      cart[key].qty += delta;
-      if (cart[key].qty <= 0) {
-        delete cart[key];
+      cart[id].qty += delta;
+      if (cart[id].qty <= 0) {
+        delete cart[id];
       }
       renderFeed();
     }
@@ -868,7 +891,7 @@
       list.innerHTML = items.map(i => {
         total += i.price * i.qty;
         return `<div style="display:flex; justify-content:space-between; margin-bottom:6px; font-size:13px;">
-          <span>${i.dishName} (${i.resName}) x <strong>${i.qty}</strong></span>
+          <span>${i.name} x <strong>${i.qty}</strong></span>
           <span style="font-weight:800;">₹${i.price * i.qty}</span>
         </div>`;
       }).join('') + `<div style="display:flex; justify-content:space-between; margin-top:8px; font-size:15px; font-weight:900; color:var(--primary-red);">
@@ -904,7 +927,7 @@
       let grand = 0;
       const itemList = items.map(i => {
         grand += i.price * i.qty;
-        return `• ${i.resName} - ${i.dishName} x${i.qty} = ₹${i.price * i.qty}`;
+        return `• ${i.name} x${i.qty} = ₹${i.price * i.qty}`;
       }).join("\n");
 
       const message = 
