@@ -3,37 +3,37 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>LPUKART - Zomato Campus Delivery</title>
+  <title>LPUKART - 24x7 Campus Food & Express Delivery</title>
   <meta name="theme-color" content="#E23744">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Okra:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --zomato-red: #E23744;
-      --zomato-dark: #b81b27;
-      --zomato-bg: #f4f5f7;
-      --zomato-green: #24963f;
+      --lpukart-red: #E23744;
+      --lpukart-dark: #b81b27;
+      --lpukart-bg: #f4f5f7;
+      --lpukart-green: #24963f;
       --text-main: #1c1c1c;
       --text-muted: #696969;
       --border-color: #e8e8e8;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; }
-    body { background-color: var(--zomato-bg); color: var(--text-main); padding-bottom: 110px; -webkit-tap-highlight-color: transparent; }
+    body { background-color: var(--lpukart-bg); color: var(--text-main); padding-bottom: 115px; -webkit-tap-highlight-color: transparent; }
 
     /* Top Sticky Header */
     header { background: white; padding: 12px 16px 8px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
     .header-top { display: flex; justify-content: space-between; align-items: center; max-width: 600px; margin: 0 auto; }
     
     .location-wrap { display: flex; align-items: center; gap: 8px; cursor: pointer; }
-    .loc-pin { color: var(--zomato-red); font-size: 20px; }
+    .loc-pin { color: var(--lpukart-red); font-size: 20px; }
     .loc-text { display: flex; flex-direction: column; }
     .loc-title { font-size: 15px; font-weight: 900; color: var(--text-main); display: flex; align-items: center; gap: 4px; }
     .loc-sub { font-size: 11px; color: var(--text-muted); font-weight: 500; max-width: 220px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-    .brand-pill { font-size: 20px; font-weight: 900; font-style: italic; color: var(--zomato-red); letter-spacing: -0.5px; }
+    .brand-pill { font-size: 22px; font-weight: 900; font-style: italic; color: var(--lpukart-red); letter-spacing: -0.5px; }
 
     /* Search Bar */
     .search-wrap { max-width: 600px; margin: 10px auto 4px; position: relative; }
@@ -42,21 +42,17 @@
 
     .main-wrap { max-width: 600px; margin: 0 auto; padding: 10px 12px; }
 
-    /* Zomato Gold / Express Rush Pass Banner */
+    /* 24x7 Express Rush Banner */
     .rush-pass-card {
       background: linear-gradient(135deg, #1c1c1c 0%, #303030 100%);
       color: white; border-radius: 18px; padding: 14px; margin-bottom: 14px;
       position: relative; overflow: hidden; box-shadow: 0 4px 14px rgba(0,0,0,0.15);
       border: 1px solid rgba(255,255,255,0.08);
     }
-    .rush-pass-card::after {
-      content: '⚡ P20'; position: absolute; right: -8px; top: -10px;
-      font-size: 50px; font-weight: 900; color: rgba(255,255,255,0.05);
-    }
     .pass-badge {
       display: inline-flex; align-items: center; gap: 4px;
-      background: rgba(226,55,68,0.25); color: #ff6b77; font-size: 10px; font-weight: 800;
-      padding: 3px 8px; border-radius: 20px; border: 1px solid rgba(226,55,68,0.4); text-transform: uppercase;
+      background: rgba(36,150,63,0.3); color: #51ff9a; font-size: 10px; font-weight: 800;
+      padding: 3px 8px; border-radius: 20px; border: 1px solid rgba(36,150,63,0.5); text-transform: uppercase;
     }
     .pass-title { font-size: 16px; font-weight: 800; margin: 6px 0 2px; }
     .pass-desc { font-size: 11px; color: #bbb; line-height: 1.4; }
@@ -71,18 +67,18 @@
     }
     .slot-bar select option { color: black; }
 
-    /* Zomato Circular "What's on your mind?" Section */
+    /* Categories */
     .section-heading { font-size: 13px; font-weight: 800; color: #4f4f4f; text-transform: uppercase; letter-spacing: 0.5px; margin: 12px 4px 8px; }
     .circle-cats { display: flex; gap: 14px; overflow-x: auto; padding: 4px 4px 10px; scrollbar-width: none; }
     .circle-cats::-webkit-scrollbar { display: none; }
-    .circle-item { display: flex; flex-direction: column; align-items: center; cursor: pointer; flex-shrink: 0; width: 68px; }
+    .circle-item { display: flex; flex-direction: column; align-items: center; cursor: pointer; flex-shrink: 0; width: 70px; }
     .circle-img-wrap {
-      width: 60px; height: 60px; border-radius: 50%; background: white;
-      display: flex; align-items: center; justify-content: center; font-size: 28px;
+      width: 58px; height: 58px; border-radius: 50%; background: white;
+      display: flex; align-items: center; justify-content: center; font-size: 26px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.08); border: 2px solid transparent; transition: 0.2s;
     }
-    .circle-item.active .circle-img-wrap { border-color: var(--zomato-red); transform: scale(1.05); }
-    .circle-name { font-size: 11px; font-weight: 700; color: #333; margin-top: 6px; text-align: center; }
+    .circle-item.active .circle-img-wrap { border-color: var(--lpukart-red); transform: scale(1.05); }
+    .circle-name { font-size: 10.5px; font-weight: 700; color: #333; margin-top: 5px; text-align: center; }
 
     /* Filter Pills */
     .filter-row { display: flex; gap: 8px; overflow-x: auto; padding: 4px 2px 10px; scrollbar-width: none; }
@@ -90,11 +86,11 @@
       background: white; border: 1px solid var(--border-color); padding: 6px 12px;
       border-radius: 20px; font-size: 12px; font-weight: 600; color: #444; white-space: nowrap; cursor: pointer;
     }
-    .filter-pill.active { background: #fff2f3; border-color: var(--zomato-red); color: var(--zomato-red); font-weight: 700; }
+    .filter-pill.active { background: #fff2f3; border-color: var(--lpukart-red); color: var(--lpukart-red); font-weight: 700; }
 
-    /* Zomato Restaurant / Dish Food Cards */
+    /* LPUKART Food Cards */
     .food-card-list { display: flex; flex-direction: column; gap: 14px; }
-    .zomato-card {
+    .lpukart-card {
       background: white; border-radius: 18px; overflow: hidden;
       box-shadow: 0 2px 8px rgba(0,0,0,0.05); border: 1px solid var(--border-color);
       display: flex; flex-direction: column;
@@ -114,29 +110,29 @@
 
     .card-body { padding: 12px 14px; display: flex; justify-content: space-between; align-items: center; }
     .card-info { flex: 1; padding-right: 12px; }
-    .dish-title { font-size: 16px; font-weight: 800; color: var(--text-main); line-height: 1.2; }
+    .dish-title { font-size: 15px; font-weight: 800; color: var(--text-main); line-height: 1.25; }
     .outlet-sub { font-size: 12px; color: var(--text-muted); margin-top: 3px; }
     .rating-row { display: flex; align-items: center; gap: 6px; margin-top: 5px; }
-    .star-badge { background: var(--zomato-green); color: white; font-size: 10px; font-weight: 800; padding: 2px 5px; border-radius: 4px; }
+    .star-badge { background: var(--lpukart-green); color: white; font-size: 10px; font-weight: 800; padding: 2px 5px; border-radius: 4px; }
     .dish-price { font-size: 15px; font-weight: 900; color: #111; margin-top: 6px; }
 
     .card-action { width: 88px; text-align: center; }
-    .btn-zomato-add {
-      background: #fff2f3; color: var(--zomato-red); border: 1px solid var(--zomato-red);
+    .btn-lpukart-add {
+      background: #fff2f3; color: var(--lpukart-red); border: 1px solid var(--lpukart-red);
       font-weight: 900; font-size: 13px; padding: 8px 18px; border-radius: 10px; cursor: pointer;
       box-shadow: 0 2px 5px rgba(226,55,68,0.12); width: 100%;
     }
-    .btn-zomato-add:active { transform: scale(0.96); }
+    .btn-lpukart-add:active { transform: scale(0.96); }
     .qty-box {
       display: flex; align-items: center; justify-content: space-between;
-      background: var(--zomato-red); color: white; border-radius: 10px; padding: 6px 10px;
+      background: var(--lpukart-red); color: white; border-radius: 10px; padding: 6px 10px;
     }
     .qty-btn { background: none; border: none; color: white; font-size: 16px; font-weight: 900; cursor: pointer; }
 
-    /* Floating Cart Bar (Zomato Style) */
+    /* Floating Cart */
     .floating-cart {
       position: fixed; bottom: 68px; left: 14px; right: 14px; max-width: 572px; margin: 0 auto;
-      background: var(--zomato-red); color: white; border-radius: 14px; padding: 12px 16px;
+      background: var(--lpukart-red); color: white; border-radius: 14px; padding: 12px 16px;
       display: flex; justify-content: space-between; align-items: center; box-shadow: 0 6px 18px rgba(226,55,68,0.45);
       cursor: pointer; z-index: 90;
     }
@@ -144,18 +140,18 @@
     .cart-items-count { font-size: 11px; text-transform: uppercase; font-weight: 800; opacity: 0.9; }
     .cart-total-price { font-size: 17px; font-weight: 900; }
     .cart-right-btn {
-      background: white; color: var(--zomato-red); padding: 8px 14px; border-radius: 10px;
+      background: white; color: var(--lpukart-red); padding: 8px 14px; border-radius: 10px;
       font-size: 13px; font-weight: 900; display: flex; align-items: center; gap: 4px;
     }
 
-    /* Zomato Bottom Bar */
+    /* Bottom Bar */
     .bottom-nav {
       position: fixed; bottom: 0; left: 0; right: 0; background: white;
       border-top: 1px solid var(--border-color); display: flex; justify-content: space-around;
       padding: 8px 0 6px; z-index: 80; max-width: 600px; margin: 0 auto;
     }
     .nav-tab { display: flex; flex-direction: column; align-items: center; color: #888; font-size: 10px; font-weight: 700; cursor: pointer; }
-    .nav-tab.active { color: var(--zomato-red); }
+    .nav-tab.active { color: var(--lpukart-red); }
     .nav-icon { font-size: 18px; margin-bottom: 2px; }
 
     /* Modals */
@@ -165,67 +161,80 @@
     .form-group { margin-bottom: 12px; }
     .form-group label { display: block; font-size: 11px; font-weight: 800; color: #666; margin-bottom: 5px; text-transform: uppercase; }
     .form-group input, .form-group select { width: 100%; padding: 12px; border: 1.5px solid var(--border-color); border-radius: 10px; font-size: 13px; outline: none; background: #fff; font-weight: 600; }
-    .form-group input:focus, .form-group select:focus { border-color: var(--zomato-red); }
+    .form-group input:focus, .form-group select:focus { border-color: var(--lpukart-red); }
 
-    .btn-red-full { width: 100%; background: var(--zomato-red); color: white; border: none; padding: 14px; border-radius: 12px; font-size: 15px; font-weight: 800; cursor: pointer; margin-top: 8px; }
+    .btn-red-full { width: 100%; background: var(--lpukart-red); color: white; border: none; padding: 14px; border-radius: 12px; font-size: 15px; font-weight: 800; cursor: pointer; margin-top: 8px; }
     .btn-green-whatsapp { width: 100%; background: #25D366; color: white; border: none; padding: 14px; border-radius: 12px; font-size: 15px; font-weight: 800; cursor: pointer; margin-top: 10px; }
   </style>
 </head>
 <body>
 
-  <!-- Zomato Header -->
+  <!-- LPUKART Header -->
   <header>
     <div class="header-top">
       <div class="location-wrap" onclick="openLocationModal()">
         <span class="loc-pin">📍</span>
         <div class="loc-text">
-          <div class="loc-title"><span id="headerLocTitle">Block 34 (CSE Hub)</span> ▾</div>
+          <div class="loc-title"><span id="headerLocTitle">BH-1</span> ▾</div>
           <div class="loc-sub" id="headerLocSub">Lovely Professional University, Phagwara</div>
         </div>
       </div>
       <div class="brand-pill">LPUKART</div>
     </div>
 
-    <!-- Live Search Box -->
+    <!-- Search Box -->
     <div class="search-wrap">
       <div class="search-box">
         <span>🔍</span>
-        <input type="text" id="searchInput" placeholder="Search 'Samosa', 'Dosa', 'Robo Park', 'Momos'..." onkeyup="renderFood()">
+        <input type="text" id="searchInput" placeholder="Search Fruit Platter, Momos, Paratha, Dosa, Shake, Biryani..." onkeyup="renderFood()">
       </div>
     </div>
   </header>
 
   <div class="main-wrap">
 
-    <!-- Zomato P20 Rush Pass Banner -->
+    <!-- 24x7 Express Delivery Card -->
     <div class="rush-pass-card">
-      <div class="pass-badge">⚡ P20 Express Pass</div>
-      <div class="pass-title">Fifteen Minutes, One Samosa</div>
-      <div class="pass-desc">Pre-order during lecture. Pick up at kiosk counter in under <strong>45 seconds</strong> using your Fast-Pass OTP.</div>
+      <div class="pass-badge">🟢 24 Hours Open (24x7 Express)</div>
+      <div class="pass-title">LPUKART 24x7 Express Delivery</div>
+      <div class="pass-desc">Day break ho ya Late Night Hostel study sessions — fresh food delivered across all Hostels & Blocks!</div>
       
       <div class="slot-bar">
-        <span>Break Slot:</span>
+        <span>Order Time:</span>
         <select id="slotSelect">
-          <option value="10:45 AM - 11:00 AM Break">10:45 AM - 11:00 AM Break</option>
-          <option value="11:45 AM - 12:00 PM Break">11:45 AM - 12:00 PM Break</option>
-          <option value="12:45 PM - 01:15 PM Lunch Break" selected>12:45 PM - 01:15 PM Lunch Break</option>
-          <option value="01:45 PM - 02:00 PM Break">01:45 PM - 02:00 PM Break</option>
-          <option value="03:45 PM - 04:00 PM Break">03:45 PM - 04:00 PM Break</option>
-          <option value="Instant (Next 10 Mins)">Instant (Within 10 mins)</option>
+          <option value="24x7 Anytime Instant Delivery (10-15 Mins)" selected>⚡ Instant Now (Next 10-15 Mins)</option>
+          <option value="Late Night Express (11:00 PM - 04:00 AM)">🌙 Late Night Express (Hostel Study)</option>
+          <option value="08:00 AM - 09:30 AM Morning Breakfast">🌅 08:00 AM - 09:30 AM Breakfast</option>
+          <option value="10:45 AM - 11:00 AM Class Break">⏰ 10:45 AM - 11:00 AM Break</option>
+          <option value="12:45 PM - 01:15 PM Lunch Break">🍔 12:45 PM - 01:15 PM Lunch Break</option>
+          <option value="04:45 PM Evening Snacks">☕ 04:45 PM Evening Snacks</option>
+          <option value="08:00 PM - 10:30 PM Dinner">🍛 08:00 PM - 10:30 PM Dinner</option>
         </select>
       </div>
     </div>
 
-    <!-- Circular "What's on your mind?" (Zomato UI) -->
-    <div class="section-heading">WHAT'S ON YOUR MIND?</div>
+    <!-- Categories -->
+    <div class="section-heading">EXPLORE CATEGORIES</div>
     <div class="circle-cats">
       <div class="circle-item active" onclick="selectCircle('All', this)">
         <div class="circle-img-wrap">🍽️</div>
         <div class="circle-name">All</div>
       </div>
-      <div class="circle-item" onclick="selectCircle('Samosa & Snacks', this)">
+      <div class="circle-item" onclick="selectCircle('Fruits & Juices', this)">
+        <div class="circle-img-wrap">🍉</div>
+        <div class="circle-name">Fruits & Juice</div>
+      </div>
+      <div class="circle-item" onclick="selectCircle('Breakfast', this)">
+        <div class="circle-img-wrap">🍳</div>
+        <div class="circle-name">Breakfast</div>
+      </div>
+      <div class="circle-item" onclick="selectCircle('Momos & Chinese', this)">
         <div class="circle-img-wrap">🥟</div>
-        <div class="circle-name">Samosa</div>
+        <div class="circle-name">Momos</div>
+      </div>
+      <div class="circle-item" onclick="selectCircle('Burgers & Pizza', this)">
+        <div class="circle-img-wrap">🍔</div>
+        <div class="circle-name">Burgers/Pizza</div>
       </div>
       <div class="circle-item" onclick="selectCircle('South Indian', this)">
         <div class="circle-img-wrap">🥥</div>
@@ -233,37 +242,35 @@
       </div>
       <div class="circle-item" onclick="selectCircle('North Indian', this)">
         <div class="circle-img-wrap">🫓</div>
-        <div class="circle-name">Chole Bhature</div>
+        <div class="circle-name">Meals & Thali</div>
       </div>
-      <div class="circle-item" onclick="selectCircle('Fast Food', this)">
-        <div class="circle-img-wrap">🍔</div>
-        <div class="circle-name">Burgers</div>
+      <div class="circle-item" onclick="selectCircle('Snacks & Chai', this)">
+        <div class="circle-img-wrap">☕</div>
+        <div class="circle-name">Chai/Snacks</div>
       </div>
-      <div class="circle-item" onclick="selectCircle('Breakfast', this)">
-        <div class="circle-img-wrap">🍳</div>
-        <div class="circle-name">Paratha</div>
-      </div>
-      <div class="circle-item" onclick="selectCircle('Beverages', this)">
-        <div class="circle-img-wrap">🥤</div>
-        <div class="circle-name">Chai & Cold Coffee</div>
+      <div class="circle-item" onclick="selectCircle('Desserts', this)">
+        <div class="circle-img-wrap">🍰</div>
+        <div class="circle-name">Desserts</div>
       </div>
     </div>
 
-    <!-- Filter Pills -->
+    <!-- Kiosk Filter Pills -->
     <div class="filter-row">
       <div class="filter-pill active" onclick="setKioskFilter('All', this)">All Campus Outlets</div>
+      <div class="filter-pill" onclick="setKioskFilter('Fruit Kiosk', this)">🍉 Fresh Fruit Hub</div>
+      <div class="filter-pill" onclick="setKioskFilter('Uni-Mall', this)">Uni-Mall Food Court</div>
       <div class="filter-pill" onclick="setKioskFilter('Robo Park', this)">🤖 Robo Park Kiosks</div>
       <div class="filter-pill" onclick="setKioskFilter('Law Block', this)">⚖️ Law School Canteen</div>
-      <div class="filter-pill" onclick="setKioskFilter('Uni-Mall', this)">Uni-Mall Food Court</div>
       <div class="filter-pill" onclick="setKioskFilter('Block 34', this)">Block 34 (CSE)</div>
+      <div class="filter-pill" onclick="setKioskFilter('Block 14', this)">Block 14 Food Court</div>
     </div>
 
-    <!-- Food Cards (Zomato Restaurant Style) -->
-    <div class="section-heading">CAMPUS EXPRESS OUTLETS</div>
+    <!-- Food Cards -->
+    <div class="section-heading">POPULAR CAMPUS DISHES (ALL ITEMS)</div>
     <div class="food-card-list" id="foodContainer"></div>
   </div>
 
-  <!-- Floating Zomato Cart Bar -->
+  <!-- Floating Cart -->
   <div class="floating-cart" id="floatingCart" style="display:none;" onclick="openCheckoutModal()">
     <div class="cart-left">
       <span class="cart-items-count" id="cartCount">0 ITEMS</span>
@@ -272,7 +279,7 @@
     <div class="cart-right-btn">View Cart & Fast-Pass ➔</div>
   </div>
 
-  <!-- Zomato Bottom Bar -->
+  <!-- Bottom Bar -->
   <div class="bottom-nav">
     <div class="nav-tab active">
       <div class="nav-icon">🛵</div>
@@ -280,11 +287,11 @@
     </div>
     <div class="nav-tab" onclick="openLocationModal()">
       <div class="nav-icon">📍</div>
-      <span>Locations</span>
+      <span>Hostels/Spots</span>
     </div>
     <div class="nav-tab" onclick="openCheckoutModal()">
       <div class="nav-icon">🛒</div>
-      <span>My Cart</span>
+      <span>Cart</span>
     </div>
     <div class="nav-tab" onclick="openLocationModal()">
       <div class="nav-icon">👤</div>
@@ -292,11 +299,11 @@
     </div>
   </div>
 
-  <!-- LOCATION / USER MODAL -->
+  <!-- LOCATION & HOSTELS MODAL -->
   <div class="modal-overlay" id="locationModal">
     <div class="modal-sheet">
       <div class="modal-title">
-        <span>Select Your Spot on Campus</span>
+        <span>Select Your Hostel / Campus Spot</span>
         <span style="cursor:pointer;" onclick="closeModal('locationModal')">✕</span>
       </div>
 
@@ -310,17 +317,43 @@
           <input type="tel" id="userPhoneInput" placeholder="10-digit Mobile number" required>
         </div>
         <div class="form-group">
-          <label>Select Your Campus Block / Park / Parking</label>
+          <label>Campus Hostels & Academic Hubs</label>
           <select id="userLocationSelect" required>
             <option value="">-- Choose Exact Location --</option>
+            
+            <optgroup label="Hostels & Hubs">
+              <option value="Uni-Mall Food Court">Uni-Mall Food Court</option>
+              <option value="BH-1">Boys Hostels (BH-1)</option>
+              <option value="BH-2">Boys Hostels (BH-2)</option>
+              <option value="BH-3">Boys Hostels (BH-3)</option> 
+              <option value="BH-4">Boys Hostels (BH-4)</option>
+              <option value="BH-5">Boys Hostels (BH-5)</option>
+              <option value="BH-6">Boys Hostels (BH-6)</option>
+              <option value="BH-7">Boys Hostels (BH-7)</option>
+              <option value="BH-8">Boys Hostels (BH-8)</option>
+              <option value="BH-9">Boys Hostels (BH-9)</option>
+              <option value="BH-10">Boys Hostels (BH-10)</option>
+              <option value="BH-11">Boys Hostels (BH-11)</option>
+              <option value="BH-12">Boys Hostels (BH-12)</option>
+              <option value="GH-1">Girls Hostels (GH-1)</option>
+              <option value="GH-2">Girls Hostels (GH-2)</option>
+              <option value="GH-3">Girls Hostels (GH-3)</option>
+              <option value="GH-4">Girls Hostels (GH-4)</option>
+              <option value="GH-5">Girls Hostels (GH-5)</option>
+              <option value="GH-6">Girls Hostels (GH-6)</option>
+              <option value="GH-7">Girls Hostels (GH-7)</option>
+              <option value="GH-8">Girls Hostels (GH-8)</option>
+            </optgroup>
+
             <optgroup label="Special Landmarks & Parks">
-              <option value="Robo Park (Robotics Garden)">🤖 Robo Park (Robotics Garden)</option>
+              <option value="Robo Park (Robotics Garden)">🤖 Robo Park (Robotics Park)</option>
               <option value="Block 37 / 38 (School of Law)">⚖️ Block 37 / 38 (Law School)</option>
               <option value="Baldev Raj Mittal Unipolis">🎪 Baldev Raj Mittal Unipolis</option>
               <option value="Shanti Devi Mittal Park">🌳 Shanti Devi Mittal Park</option>
               <option value="Central Lawn (Admin Front)">🌱 Central Lawn (Admin Front)</option>
               <option value="Open Air Theatre (OAT)">🎭 Open Air Theatre (OAT)</option>
             </optgroup>
+
             <optgroup label="Campus Parking Areas">
               <option value="Main Gate Central Parking">🚗 Main Gate Central Parking</option>
               <option value="Uni-Mall Surface Parking">🛵 Uni-Mall Parking</option>
@@ -328,22 +361,18 @@
               <option value="Law Block Parking">🚗 Law Block Parking</option>
               <option value="Multi-Level Parking">🚙 Multi-Level Car Parking</option>
             </optgroup>
+
             <optgroup label="Academic Blocks">
-              <option value="Block 33 / 34 (CSE & IT Hub)" selected>Block 33 / 34 (CSE & IT Hub)</option>
+              <option value="Block 33 / 34 (CSE & IT Hub)">Block 33 / 34 (CSE & IT Hub)</option>
               <option value="Block 13 / 14 (Food Court Area)">Block 13 / 14 (Food Court Area)</option>
               <option value="Block 1 / 2 / 3">Block 1, 2, 3</option>
               <option value="Block 25 - 28 (Agriculture & Sciences)">Block 25 - 28 (Sciences)</option>
               <option value="Block 55 - 58 (Engineering & Polytechnic)">Block 55 - 58 (Engineering)</option>
             </optgroup>
-            <optgroup label="Hostels & Hubs">
-              <option value="Uni-Mall Food Court">Uni-Mall Food Court</option>
-              <option value="BH-1 to BH-8">Boys Hostels (BH-1 to BH-8)</option>
-              <option value="GH-1 to GH-7">Girls Hostels (GH-1 to GH-7)</option>
-            </optgroup>
           </select>
         </div>
 
-        <button type="submit" class="btn-red-full">Save Profile & Continue</button>
+        <button type="submit" class="btn-red-full">Save Details & Continue</button>
       </form>
     </div>
   </div>
@@ -361,14 +390,15 @@
       <div class="form-group">
         <label>Handover Method</label>
         <select id="handoverMode">
-          <option value="Counter Self-Pickup (Skip 15-min Queue)">🏃 Fast-Pass Counter Pickup (Skip Queue)</option>
-          <option value="Express Runner Drop to Spot">🛵 Spot Drop (Handover at Entry/Bench)</option>
+          <option value="Hostel Main Gate Handover">🚪 Hostel Main Gate / Reception Handover</option>
+          <option value="Counter Self-Pickup (Skip Queue)">🏃 Fast-Pass Counter Self-Pickup</option>
+          <option value="Express Runner Drop to Spot">🛵 Spot Drop (Bench / Block Entry)</option>
         </select>
       </div>
 
       <div class="form-group">
-        <label>Exact Spot / Bench / Gate / Pillar</label>
-        <input type="text" id="exactLandmark" placeholder="e.g. Near Robo Statue / Bench 4 / Parking Pillar C">
+        <label>Room Number / Gate / Bench Detail</label>
+        <input type="text" id="exactLandmark" placeholder="e.g. Room 412 / BH Gate 1 / Near Lift">
       </div>
 
       <button class="btn-green-whatsapp" onclick="dispatchWhatsAppOrder()">📲 Place Order on LPUKART (WhatsApp)</button>
@@ -378,56 +408,309 @@
   <script>
     const ADMIN_WHATSAPP = "918957645702";
 
+    // 60+ Full Zomato-Style Campus Menu
     const menu = [
+      /* FRESH FRUITS & HEALTHY BOWLS */
       {
-        id: 1, name: "Crispy Aloo Samosa (2 Pcs) + Mint Dip", price: 30,
-        cat: "Samosa & Snacks", kiosk: "Block 34", time: "1 min", rating: "4.8",
-        img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600&auto=format&fit=crop&q=80"
+        id: 101, name: "Special Mix Fresh Fruit Bowl (Apple, Banana, Papaya, Pomegranate)", price: 60,
+        cat: "Fruits & Juices", kiosk: "Fruit Kiosk", time: "2 mins", rating: "4.9",
+        img: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&auto=format&fit=crop&q=80"
       },
       {
-        id: 2, name: "Mysore Masala Dosa + Sambar & Coconut Dip", price: 85,
-        cat: "South Indian", kiosk: "Uni-Mall", time: "5 mins", rating: "4.7",
-        img: "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?w=600&auto=format&fit=crop&q=80"
+        id: 102, name: "Fresh Cut Papaya & Watermelon Platter with Chaat Masala", price: 50,
+        cat: "Fruits & Juices", kiosk: "Fruit Kiosk", time: "2 mins", rating: "4.8",
+        img: "https://images.unsplash.com/photo-1568584711075-3d021a7c3ca3?w=600&auto=format&fit=crop&q=80"
       },
       {
-        id: 3, name: "Delhi Special Chole Bhature (2 Pcs)", price: 80,
-        cat: "North Indian", kiosk: "Law Block", time: "4 mins", rating: "4.9",
-        img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600&auto=format&fit=crop&q=80"
+        id: 103, name: "Fresh Juicy Pineapple Slices Platter", price: 50,
+        cat: "Fruits & Juices", kiosk: "Fruit Kiosk", time: "2 mins", rating: "4.7",
+        img: "https://images.unsplash.com/photo-1550258987-190a2d41a8ba?w=600&auto=format&fit=crop&q=80"
       },
       {
-        id: 4, name: "Crispy Veg Crunch Burger with Dip", price: 55,
-        cat: "Fast Food", kiosk: "Block 34", time: "3 mins", rating: "4.5",
-        img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&auto=format&fit=crop&q=80"
+        id: 104, name: "High Protein Sprouted Moong & Paneer Salad", price: 60,
+        cat: "Fruits & Juices", kiosk: "Fruit Kiosk", time: "2 mins", rating: "4.9",
+        img: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&auto=format&fit=crop&q=80"
       },
       {
-        id: 5, name: "Steamed Paneer Momos (6 Pcs) + Red Dip", price: 60,
-        cat: "Fast Food", kiosk: "Uni-Mall", time: "2 mins", rating: "4.6",
-        img: "https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=600&auto=format&fit=crop&q=80"
+        id: 105, name: "Steamed Sweet Corn with Butter & Lemon", price: 40,
+        cat: "Fruits & Juices", kiosk: "Fruit Kiosk", time: "2 mins", rating: "4.8",
+        img: "https://images.unsplash.com/photo-1551754655-cd27e38d2076?w=600&auto=format&fit=crop&q=80"
+      },
+
+      /* FRESH JUICES & SMOOTHIES */
+      {
+        id: 106, name: "Fresh Mosambi (Sweet Lime) Juice - 100% Pure", price: 50,
+        cat: "Fruits & Juices", kiosk: "Fruit Kiosk", time: "3 mins", rating: "4.9",
+        img: "https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?w=600&auto=format&fit=crop&q=80"
       },
       {
-        id: 6, name: "Aloo Pyaaz Paratha + Butter & Curd", price: 55,
+        id: 107, name: "Fresh Pomegranate (Anaar) Pure Juice", price: 70,
+        cat: "Fruits & Juices", kiosk: "Fruit Kiosk", time: "3 mins", rating: "4.9",
+        img: "https://images.unsplash.com/photo-1557800636-894a64c1696f?w=600&auto=format&fit=crop&q=80"
+      },
+      {
+        id: 108, name: "Fresh Sugarcane (Ganne Ka) Juice with Mint & Ginger", price: 30,
+        cat: "Fruits & Juices", kiosk: "Fruit Kiosk", time: "2 mins", rating: "4.8",
+        img: "https://images.unsplash.com/photo-1556881286-fc6915169721?w=600&auto=format&fit=crop&q=80"
+      },
+      {
+        id: 109, name: "High Protein Banana Honey Shake with Dry Fruits", price: 60,
+        cat: "Fruits & Juices", kiosk: "Fruit Kiosk", time: "3 mins", rating: "4.9",
+        img: "https://images.unsplash.com/photo-1577805947697-89e18249d767?w=600&auto=format&fit=crop&q=80"
+      },
+      {
+        id: 110, name: "Fresh Mango Shake with Vanilla Ice Cream (Seasonal)", price: 70,
+        cat: "Fruits & Juices", kiosk: "Fruit Kiosk", time: "3 mins", rating: "4.8",
+        img: "https://images.unsplash.com/photo-1546173159-315724a31696?w=600&auto=format&fit=crop&q=80"
+      },
+
+      /* COMPLETE BREAKFAST & PARATHAS */
+      {
+        id: 201, name: "Aloo Pyaaz Paratha + Amul Butter & Fresh Curd", price: 55,
         cat: "Breakfast", kiosk: "Law Block", time: "4 mins", rating: "4.8",
         img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600&auto=format&fit=crop&q=80"
       },
       {
-        id: 7, name: "Kadak Adrak Chai + Bun Maska", price: 45,
-        cat: "Beverages", kiosk: "Robo Park", time: "1 min", rating: "4.9",
-        img: "https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=600&auto=format&fit=crop&q=80"
+        id: 202, name: "Paneer Stuffed Paratha + Amul Butter & Pickle", price: 70,
+        cat: "Breakfast", kiosk: "Block 34", time: "4 mins", rating: "4.9",
+        img: "https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=600&auto=format&fit=crop&q=80"
       },
       {
-        id: 8, name: "Thick Cold Coffee with Vanilla Ice Cream", price: 60,
-        cat: "Beverages", kiosk: "Law Block", time: "2 mins", rating: "4.7",
-        img: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=600&auto=format&fit=crop&q=80"
-      },
-      {
-        id: 9, name: "Paneer Tikka Kathi Roll", price: 90,
-        cat: "Fast Food", kiosk: "Robo Park", time: "4 mins", rating: "4.6",
+        id: 203, name: "Gobi Matar Paratha + Amul Butter & Curd", price: 60,
+        cat: "Breakfast", kiosk: "Law Block", time: "4 mins", rating: "4.7",
         img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600&auto=format&fit=crop&q=80"
       },
       {
-        id: 10, name: "Rajma Chawal Express Meal Bowl", price: 80,
+        id: 204, name: "Indori Poha with Sev, Pyaaz & Fried Peanuts", price: 40,
+        cat: "Breakfast", kiosk: "Robo Park", time: "1 min", rating: "4.8",
+        img: "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600&auto=format&fit=crop&q=80"
+      },
+      {
+        id: 205, name: "Halwa Puri Bhaji Combo (4 Puris + Chole + Halwa)", price: 80,
+        cat: "Breakfast", kiosk: "Uni-Mall", time: "5 mins", rating: "4.9",
+        img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600&auto=format&fit=crop&q=80"
+      },
+      {
+        id: 206, name: "Delhi Amritsari Chole Kulche Plate", price: 70,
+        cat: "Breakfast", kiosk: "Block 14", time: "3 mins", rating: "4.8",
+        img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600&auto=format&fit=crop&q=80"
+      },
+      {
+        id: 207, name: "Veg Cheese Grilled Club Sandwich with Chips", price: 65,
+        cat: "Breakfast", kiosk: "Block 34", time: "3 mins", rating: "4.7",
+        img: "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=600&auto=format&fit=crop&q=80"
+      },
+      {
+        id: 208, name: "Bombay Masala Grilled Sandwich", price: 60,
+        cat: "Breakfast", kiosk: "Uni-Mall", time: "3 mins", rating: "4.7",
+        img: "https://images.unsplash.com/photo-1554433607-66b5efe9d304?w=600&auto=format&fit=crop&q=80"
+      },
+      {
+        id: 209, name: "Classic Double Egg Bread Omelette", price: 50,
+        cat: "Breakfast", kiosk: "Fruit Kiosk", time: "3 mins", rating: "4.8",
+        img: "https://images.unsplash.com/photo-1525351484163-7529414344d8?w=600&auto=format&fit=crop&q=80"
+      },
+      {
+        id: 210, name: "Boiled Eggs (4 Pcs) with Pepper & Salt", price: 40,
+        cat: "Breakfast", kiosk: "Fruit Kiosk", time: "1 min", rating: "4.9",
+        img: "https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?w=600&auto=format&fit=crop&q=80"
+      },
+
+      /* MOMOS & CHINESE */
+      {
+        id: 301, name: "Steamed Veg Momos (6 Pcs) + Spicy Red Dip", price: 50,
+        cat: "Momos & Chinese", kiosk: "Uni-Mall", time: "2 mins", rating: "4.7",
+        img: "https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=600&auto=format&fit=crop&q=80"
+      },
+      {
+        id: 302, name: "Fried Paneer Momos (6 Pcs) + Mayo Dip", price: 70,
+        cat: "Momos & Chinese", kiosk: "Robo Park", time: "3 mins", rating: "4.8",
+        img: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=600&auto=format&fit=crop&q=80"
+      },
+      {
+        id: 303, name: "Special Kurkure Gravy Momos", price: 90,
+        cat: "Momos & Chinese", kiosk: "Uni-Mall", time: "4 mins", rating: "4.9",
+        img: "https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=600&auto=format&fit=crop&q=80"
+      },
+      {
+        id: 304, name: "Veg Hakka Noodles (Street Style)", price: 80,
+        cat: "Momos & Chinese", kiosk: "Block 34", time: "4 mins", rating: "4.6",
+        img: "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=600&auto=format&fit=crop&q=80"
+      },
+      {
+        id: 305, name: "Chilli Garlic Chowmein (Spicy)", price: 85,
+        cat: "Momos & Chinese", kiosk: "Law Block", time: "4 mins", rating: "4.7",
+        img: "https://images.unsplash.com/photo-1612927601601-6638404737ce?w=600&auto=format&fit=crop&q=80"
+      },
+      {
+        id: 306, name: "Veg Fried Rice with Manchurian Gravy Bowl", price: 110,
+        cat: "Momos & Chinese", kiosk: "Block 14", time: "4 mins", rating: "4.8",
+        img: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=600&auto=format&fit=crop&q=80"
+      },
+      {
+        id: 307, name: "Crispy Dry Chilli Paneer (8 Pcs)", price: 130,
+        cat: "Momos & Chinese", kiosk: "Uni-Mall", time: "5 mins", rating: "4.8",
+        img: "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=600&auto=format&fit=crop&q=80"
+      },
+
+      /* BURGERS, PIZZA & ROLLS */
+      {
+        id: 401, name: "Crispy Veg Crunch Burger with Dip", price: 55,
+        cat: "Burgers & Pizza", kiosk: "Block 34", time: "3 mins", rating: "4.6",
+        img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&auto=format&fit=crop&q=80"
+      },
+      {
+        id: 402, name: "Double Cheese Loaded Herb Burger", price: 80,
+        cat: "Burgers & Pizza", kiosk: "Block 34", time: "3 mins", rating: "4.7",
+        img: "https://images.unsplash.com/photo-1550547660-d9450f859349?w=600&auto=format&fit=crop&q=80"
+      },
+      {
+        id: 403, name: "Farmhouse Cheese Mini Pizza (7 Inch)", price: 150,
+        cat: "Burgers & Pizza", kiosk: "Uni-Mall", time: "6 mins", rating: "4.8",
+        img: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600&auto=format&fit=crop&q=80"
+      },
+      {
+        id: 404, name: "Paneer Makhani Cheese Pizza (7 Inch)", price: 180,
+        cat: "Burgers & Pizza", kiosk: "Uni-Mall", time: "7 mins", rating: "4.9",
+        img: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600&auto=format&fit=crop&q=80"
+      },
+      {
+        id: 405, name: "Paneer Tikka Kathi Roll", price: 90,
+        cat: "Burgers & Pizza", kiosk: "Robo Park", time: "4 mins", rating: "4.7",
+        img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600&auto=format&fit=crop&q=80"
+      },
+      {
+        id: 406, name: "Spicy Peri Peri French Fries", price: 70,
+        cat: "Burgers & Pizza", kiosk: "Block 34", time: "3 mins", rating: "4.7",
+        img: "https://images.unsplash.com/photo-1576107232684-1279f3908594?w=600&auto=format&fit=crop&q=80"
+      },
+
+      /* SOUTH INDIAN */
+      {
+        id: 501, name: "Mysore Masala Dosa + Sambar & Coconut Dip", price: 85,
+        cat: "South Indian", kiosk: "Uni-Mall", time: "5 mins", rating: "4.8",
+        img: "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?w=600&auto=format&fit=crop&q=80"
+      },
+      {
+        id: 502, name: "Paper Plain Crisp Ghee Roast Dosa", price: 65,
+        cat: "South Indian", kiosk: "Uni-Mall", time: "4 mins", rating: "4.7",
+        img: "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600&auto=format&fit=crop&q=80"
+      },
+      {
+        id: 503, name: "Paneer Butter Masala Dosa", price: 110,
+        cat: "South Indian", kiosk: "Block 14", time: "5 mins", rating: "4.9",
+        img: "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?w=600&auto=format&fit=crop&q=80"
+      },
+      {
+        id: 504, name: "Steamed Idli (2 Pcs) + Hot Sambar", price: 50,
+        cat: "South Indian", kiosk: "Uni-Mall", time: "2 mins", rating: "4.8",
+        img: "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600&auto=format&fit=crop&q=80"
+      },
+      {
+        id: 505, name: "Crispy Medu Vada (2 Pcs) with Sambar Bowl", price: 60,
+        cat: "South Indian", kiosk: "Block 14", time: "2 mins", rating: "4.7",
+        img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600&auto=format&fit=crop&q=80"
+      },
+      {
+        id: 506, name: "Onion Tomato Masala Uttapam", price: 80,
+        cat: "South Indian", kiosk: "Law Block", time: "4 mins", rating: "4.7",
+        img: "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600&auto=format&fit=crop&q=80"
+      },
+
+      /* NORTH INDIAN MEALS & THALIS */
+      {
+        id: 601, name: "Delhi Special Chole Bhature (2 Pcs) + Achar", price: 80,
+        cat: "North Indian", kiosk: "Law Block", time: "4 mins", rating: "4.9",
+        img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600&auto=format&fit=crop&q=80"
+      },
+      {
+        id: 602, name: "Rajma Chawal Express Meal Bowl with Salad", price: 80,
         cat: "North Indian", kiosk: "Block 34", time: "2 mins", rating: "4.8",
         img: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600&auto=format&fit=crop&q=80"
+      },
+      {
+        id: 603, name: "Kadhi Pakoda with Steamed Basmati Rice", price: 75,
+        cat: "North Indian", kiosk: "Block 14", time: "2 mins", rating: "4.7",
+        img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600&auto=format&fit=crop&q=80"
+      },
+      {
+        id: 604, name: "Dal Makhani + 2 Butter Naan Combo", price: 130,
+        cat: "North Indian", kiosk: "Uni-Mall", time: "5 mins", rating: "4.9",
+        img: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=600&auto=format&fit=crop&q=80"
+      },
+      {
+        id: 605, name: "Paneer Butter Masala + 3 Tandoori Rotis", price: 140,
+        cat: "North Indian", kiosk: "Block 14", time: "5 mins", rating: "4.9",
+        img: "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=600&auto=format&fit=crop&q=80"
+      },
+      {
+        id: 606, name: "Hyderabadi Veg Dum Biryani with Raita Bowl", price: 120,
+        cat: "North Indian", kiosk: "Uni-Mall", time: "4 mins", rating: "4.8",
+        img: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600&auto=format&fit=crop&q=80"
+      },
+
+      /* SNACKS & CHAI (QUICK BREAK) */
+      {
+        id: 701, name: "Crispy Aloo Samosa (2 Pcs) + Mint Dip", price: 30,
+        cat: "Snacks & Chai", kiosk: "Block 34", time: "1 min", rating: "4.8",
+        img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600&auto=format&fit=crop&q=80"
+      },
+      {
+        id: 702, name: "Crispy Veg Patty with Garlic Mayo Dip", price: 30,
+        cat: "Snacks & Chai", kiosk: "Robo Park", time: "1 min", rating: "4.6",
+        img: "https://images.unsplash.com/photo-1608897013039-887f21d8c804?w=600&auto=format&fit=crop&q=80"
+      },
+      {
+        id: 703, name: "Punjabi Paneer Bread Pakoda with Chutney", price: 35,
+        cat: "Snacks & Chai", kiosk: "Law Block", time: "1 min", rating: "4.7",
+        img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600&auto=format&fit=crop&q=80"
+      },
+      {
+        id: 704, name: "Classic Veg Masala Maggi", price: 45,
+        cat: "Snacks & Chai", kiosk: "Robo Park", time: "3 mins", rating: "4.8",
+        img: "https://images.unsplash.com/photo-1612927601601-6638404737ce?w=600&auto=format&fit=crop&q=80"
+      },
+      {
+        id: 705, name: "Cheese Butter Tadka Maggi", price: 65,
+        cat: "Snacks & Chai", kiosk: "Law Block", time: "3 mins", rating: "4.9",
+        img: "https://images.unsplash.com/photo-1612927601601-6638404737ce?w=600&auto=format&fit=crop&q=80"
+      },
+      {
+        id: 706, name: "Kullad Adrak Elaichi Kadak Chai", price: 20,
+        cat: "Snacks & Chai", kiosk: "Robo Park", time: "1 min", rating: "4.9",
+        img: "https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=600&auto=format&fit=crop&q=80"
+      },
+      {
+        id: 707, name: "Kadak Chai with Bun Maska", price: 45,
+        cat: "Snacks & Chai", kiosk: "Robo Park", time: "1 min", rating: "4.9",
+        img: "https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=600&auto=format&fit=crop&q=80"
+      },
+      {
+        id: 708, name: "Thick Cold Coffee with Chocolate Drizzle", price: 60,
+        cat: "Snacks & Chai", kiosk: "Law Block", time: "2 mins", rating: "4.8",
+        img: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=600&auto=format&fit=crop&q=80"
+      },
+      {
+        id: 709, name: "Oreo Monster Chocolate Thick Shake", price: 80,
+        cat: "Snacks & Chai", kiosk: "Uni-Mall", time: "3 mins", rating: "4.8",
+        img: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=600&auto=format&fit=crop&q=80"
+      },
+
+      /* DESSERTS & WAFFLES */
+      {
+        id: 801, name: "Belgian Chocolate Loaded Waffle", price: 90,
+        cat: "Desserts", kiosk: "Uni-Mall", time: "4 mins", rating: "4.9",
+        img: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?w=600&auto=format&fit=crop&q=80"
+      },
+      {
+        id: 802, name: "Warm Chocolate Brownie with Ice Cream", price: 85,
+        cat: "Desserts", kiosk: "Uni-Mall", time: "2 mins", rating: "4.9",
+        img: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=600&auto=format&fit=crop&q=80"
+      },
+      {
+        id: 803, name: "Hot Gulab Jamun (2 Pcs) in Desi Ghee", price: 35,
+        cat: "Desserts", kiosk: "Law Block", time: "1 min", rating: "4.8",
+        img: "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600&auto=format&fit=crop&q=80"
       }
     ];
 
@@ -437,7 +720,7 @@
     let user = JSON.parse(localStorage.getItem('lpukart_user')) || {
       name: "Himanshu Yadav",
       phone: "9876543210",
-      location: "Block 33 / 34 (CSE & IT Hub)"
+      location: "BH-1"
     };
 
     function init() {
@@ -446,7 +729,7 @@
     }
 
     function updateLocationUI() {
-      document.getElementById('headerLocTitle').innerText = user.location ? user.location.split('(')[0] : "LPU Campus";
+      document.getElementById('headerLocTitle').innerText = user.location ? user.location.split('(')[0] : "BH-1";
       document.getElementById('headerLocSub').innerText = user.location || "Lovely Professional University";
       document.getElementById('userNameInput').value = user.name || "";
       document.getElementById('userPhoneInput').value = user.phone || "";
@@ -479,23 +762,23 @@
       });
 
       if (filtered.length === 0) {
-        container.innerHTML = `<div style="text-align:center; padding:30px; color:#888;">No items found! Try another search or filter.</div>`;
+        container.innerHTML = `<div style="text-align:center; padding:30px; color:#888;">No dishes found! Try searching for another item or category.</div>`;
         return;
       }
 
       container.innerHTML = filtered.map(item => {
         const qty = cart[item.id] ? cart[item.id].qty : 0;
         return `
-          <div class="zomato-card">
+          <div class="lpukart-card">
             <div class="card-top">
               <img src="${item.img}" alt="${item.name}">
-              <div class="card-offer-badge">⚡ P20 Express Grab</div>
+              <div class="card-offer-badge">⚡ 24x7 Express</div>
               <div class="card-time-pill">⏱️ ${item.time}</div>
             </div>
             <div class="card-body">
               <div class="card-info">
                 <div class="dish-title">${item.name}</div>
-                <div class="outlet-sub">📍 ${item.kiosk} Kiosk Hub</div>
+                <div class="outlet-sub">📍 ${item.kiosk} • <strong style="color:var(--lpukart-red);">${item.cat}</strong></div>
                 <div class="rating-row">
                   <span class="star-badge">★ ${item.rating}</span>
                   <span style="font-size:11px; color:#777;">Campus Favorite</span>
@@ -504,7 +787,7 @@
               </div>
               <div class="card-action">
                 ${qty === 0 ? `
-                  <button class="btn-zomato-add" onclick="changeQty(${item.id}, 1)">ADD</button>
+                  <button class="btn-lpukart-add" onclick="changeQty(${item.id}, 1)">ADD</button>
                 ` : `
                   <div class="qty-box">
                     <button class="qty-btn" onclick="changeQty(${item.id}, -1)">-</button>
@@ -555,7 +838,7 @@
     function openCheckoutModal() {
       const items = Object.values(cart);
       if (items.length === 0) {
-        alert("Pehle food add karo!");
+        alert("Pehle cart me food add karein!");
         return;
       }
       const container = document.getElementById('checkoutItemsList');
@@ -569,7 +852,7 @@
           </div>
         `;
       }).join('') + `
-        <div style="display:flex; justify-content:space-between; margin-top:8px; font-size:16px; font-weight:900; color:var(--zomato-red);">
+        <div style="display:flex; justify-content:space-between; margin-top:8px; font-size:16px; font-weight:900; color:var(--lpukart-red);">
           <span>Total:</span>
           <span>₹${grand}</span>
         </div>
@@ -598,7 +881,7 @@
       const token = Math.floor(1000 + Math.random() * 9000);
       const slot = document.getElementById('slotSelect').value;
       const mode = document.getElementById('handoverMode').value;
-      const spot = document.getElementById('exactLandmark').value.trim() || "Main Counter / Gate";
+      const spot = document.getElementById('exactLandmark').value.trim() || "Hostel Gate / Reception";
 
       const items = Object.values(cart);
       let grand = 0;
@@ -608,16 +891,15 @@
       }).join("\n");
 
       const message = 
-`🛒 *LPUKART - ZOMATO EXPRESS PASS* 🛒
-*Problem Statement P20: 15-Min Rush Bypass*
+`🛒 *LPUKART - 24x7 CAMPUS ORDER* 🛒
 ━━━━━━━━━━━━━━━━━━━━
-🎫 *FAST-PASS OTP:* #${token}
+🎫 *EXPRESS TOKEN:* #${token}
 ━━━━━━━━━━━━━━━━━━━━
 👤 *Student:* ${user.name} (${user.phone})
-⏰ *Break Target:* ${slot}
+⏰ *Time Window:* ${slot}
 🚀 *Handover:* ${mode}
-📍 *Spot:* ${user.location}
-🚩 *Landmark:* ${spot}
+📍 *Hostel/Spot:* ${user.location}
+🚩 *Room/Detail:* ${spot}
 
 📦 *ITEMS ORDERED:*
 ${itemList}
@@ -625,7 +907,7 @@ ${itemList}
 💰 *TOTAL PAYABLE:* ₹${grand}
 💳 *PAYMENT:* UPI on Handover / At Counter
 
-_Show OTP #${token} at outlet counter for instant collection._`;
+_Show Token #${token} to runner/counter for handover._`;
 
       const url = `https://wa.me/${ADMIN_WHATSAPP}?text=${encodeURIComponent(message)}`;
       window.open(url, '_blank');
