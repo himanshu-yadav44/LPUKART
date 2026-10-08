@@ -87,7 +87,7 @@
 
     .section-title { font-size: 13px; font-weight: 900; color: #333; text-transform: uppercase; letter-spacing: 0.5px; margin: 10px 0 8px; }
 
-    /* Card Feed with Swipeable 4-Images */
+    /* Multi-Photo Card Feed */
     .outlet-feed { display: flex; flex-direction: column; gap: 16px; margin-top: 10px; }
     .feed-card {
       background: white; border-radius: 18px; overflow: hidden;
@@ -182,7 +182,6 @@
 </head>
 <body>
 
-  <!-- Top Bar -->
   <header>
     <div class="header-top">
       <div class="loc-box" onclick="openLocationModal()">
@@ -198,7 +197,6 @@
       </div>
     </div>
 
-    <!-- Search & Veg Switch -->
     <div class="search-row">
       <div class="search-box">
         <span>🔍</span>
@@ -213,8 +211,6 @@
   </header>
 
   <div class="content-area">
-
-    <!-- Welcome Benefits Banner -->
     <div class="welcome-card">
       <div class="wc-left">
         <h3>ENJOY WELCOME BENEFITS</h3>
@@ -224,7 +220,6 @@
       <div class="wc-icon">🎁</div>
     </div>
 
-    <!-- 24x7 Delivery Slot -->
     <div class="slot-bar-wrap">
       <span style="font-size:11px; font-weight:800; color:#555;">⚡ TIME SLOT:</span>
       <select id="slotSelect">
@@ -237,18 +232,12 @@
       </select>
     </div>
 
-    <!-- Dynamic Category Filter Chips -->
     <div class="category-scroll" id="categoryScroll"></div>
 
-    <!-- Feed Count Heading -->
     <div class="section-title" id="feedCountTitle">535 ITEMS AVAILABLE ON CAMPUS</div>
-    
-    <!-- Multi-Photo Item Feed -->
     <div class="outlet-feed" id="outletContainer"></div>
-
   </div>
 
-  <!-- Floating Cart Bar -->
   <div class="cart-float-bar" id="cartFloat" style="display:none;" onclick="openCheckoutModal()">
     <div>
       <div class="cf-left" id="cartItemsCount">0 ITEMS</div>
@@ -257,7 +246,6 @@
     <div class="cf-right">View Cart ➔</div>
   </div>
 
-  <!-- Bottom Navigation Tabs -->
   <div class="footer-nav">
     <div class="tab-item active" onclick="filterCategory('All')">
       <span class="tab-icon">🛵</span>
@@ -363,7 +351,7 @@
   <script>
     const ADMIN_WHATSAPP = "918957645702";
 
-    // 535 FULL DATA ENCODED (Compact: [id, name, category, price, vegStatus: 1=veg / 0=nonVeg])
+    // 535 Full Compact Database: [id, name, category, price, isVeg]
     const RAW_COMPACT = [
       [1,"Aloo Tikki Burger","Burger",59,1],[2,"Veg Burger","Burger",69,1],[3,"Cheese Burger","Burger",89,1],[4,"Double Cheese Burger","Burger",119,1],[5,"Paneer Burger","Burger",99,1],[6,"Crispy Veg Burger","Burger",89,1],[7,"Mexican Burger","Burger",109,1],[8,"Peri Peri Burger","Burger",109,1],[9,"Mushroom Burger","Burger",99,1],[10,"Corn Cheese Burger","Burger",99,1],[11,"BBQ Veg Burger","Burger",119,1],[12,"Maharaja Veg Burger","Burger",149,1],[13,"Chicken Burger","Burger",109,0],[14,"Chicken Cheese Burger","Burger",129,0],[15,"Crispy Chicken Burger","Burger",139,0],[16,"Peri Peri Chicken Burger","Burger",149,0],[17,"BBQ Chicken Burger","Burger",149,0],[18,"Tandoori Chicken Burger","Burger",159,0],[19,"Double Chicken Burger","Burger",179,0],[20,"Chicken Maharaja Burger","Burger",199,0],
       [21,"Margherita Pizza","Pizza",149,1],[22,"Cheese Pizza","Pizza",169,1],[23,"Onion Pizza","Pizza",159,1],[24,"Capsicum Pizza","Pizza",159,1],[25,"Corn Pizza","Pizza",169,1],[26,"Tomato Pizza","Pizza",169,1],[27,"Onion Capsicum Pizza","Pizza",179,1],[28,"Veggie Pizza","Pizza",199,1],[29,"Farmhouse Pizza","Pizza",229,1],[30,"Paneer Pizza","Pizza",219,1],[31,"Paneer Tikka Pizza","Pizza",249,1],[32,"Mushroom Pizza","Pizza",219,1],[33,"Corn Mushroom Pizza","Pizza",229,1],[34,"Mexican Pizza","Pizza",239,1],[35,"Peri Peri Paneer Pizza","Pizza",259,1],[36,"Cheese Burst Pizza","Pizza",249,1],[37,"Chicken Pizza","Pizza",239,0],[38,"Chicken Tikka Pizza","Pizza",269,0],[39,"BBQ Chicken Pizza","Pizza",279,0],[40,"Pepperoni Pizza","Pizza",299,0],
@@ -402,8 +390,8 @@
       [516,"Mango","Fruits",80,1],[517,"Apple","Fruits",120,1],[518,"Banana","Fruits",60,1],[519,"Orange","Fruits",80,1],[520,"Grapes","Fruits",100,1],[521,"Watermelon","Fruits",60,1],[522,"Papaya","Fruits",70,1],[523,"Guava","Fruits",80,1],[524,"Pomegranate","Fruits",140,1],[525,"Pineapple","Fruits",100,1],[526,"Kiwi","Fruits",150,1],[527,"Dragon Fruit","Fruits",120,1],[528,"Strawberry","Fruits",180,1],[529,"Litchi","Fruits",160,1],[530,"Chikoo","Fruits",90,1],[531,"Pear","Fruits",120,1],[532,"Peach","Fruits",140,1],[533,"Plum","Fruits",130,1],[534,"Coconut","Fruits",60,1],[535,"Muskmelon","Fruits",70,1]
     ];
 
-    // High quality themed photo pools for real 4-photo swipe experience
-    const CAT_IMAGES = {
+    // Dedicated Distinct 4-Photo Sets for EACH Category
+    const DISTINCT_GALLERIES = {
       "Burger": [
         "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600",
         "https://images.unsplash.com/photo-1550547660-d9450f859349?w=600",
@@ -440,36 +428,218 @@
         "https://images.unsplash.com/photo-1633945274405-b6c8069047b0?w=600",
         "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600"
       ],
+      "Rice": [
+        "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600",
+        "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=600",
+        "https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=600",
+        "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600"
+      ],
       "North Indian": [
         "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=600",
         "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600",
         "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600",
+        "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600"
+      ],
+      "Paneer": [
+        "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=600",
+        "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=600",
+        "https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=600",
+        "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=600"
+      ],
+      "Main Course": [
+        "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=600",
+        "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=600",
+        "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600",
+        "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600"
+      ],
+      "Chicken": [
+        "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=600",
+        "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=600",
+        "https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?w=600",
+        "https://images.unsplash.com/photo-1562967914-608f82629710?w=600"
+      ],
+      "Chicken Starters": [
+        "https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?w=600",
+        "https://images.unsplash.com/photo-1562967914-608f82629710?w=600",
+        "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=600",
+        "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=600"
+      ],
+      "Mutton": [
+        "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=600",
+        "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=600",
+        "https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?w=600",
+        "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=600"
+      ],
+      "Seafood": [
+        "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=600",
+        "https://images.unsplash.com/photo-1559742811-822873691df8?w=600",
+        "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=600",
+        "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=600"
+      ],
+      "Indian Bread": [
+        "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600",
+        "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=600",
+        "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600",
         "https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=600"
       ],
-      "Fruits": [
-        "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
-        "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=600",
-        "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=600",
-        "https://images.unsplash.com/photo-1550258987-190a2d41a8ba?w=600"
+      "Paratha": [
+        "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600",
+        "https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=600",
+        "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600",
+        "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600"
       ],
-      "Beverages": [
+      "Snacks": [
+        "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600",
+        "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600",
+        "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600",
+        "https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=600"
+      ],
+      "Street Food": [
+        "https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=600",
+        "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600",
+        "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600",
+        "https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=600"
+      ],
+      "Chaat": [
+        "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600",
+        "https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=600",
+        "https://images.unsplash.com/photo-1551754655-cd27e38d2076?w=600",
+        "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600"
+      ],
+      "Sandwich": [
+        "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=600",
+        "https://images.unsplash.com/photo-1554433607-66b5efe9d304?w=600",
+        "https://images.unsplash.com/photo-1509722747041-616f39b57569?w=600",
+        "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600"
+      ],
+      "Wraps": [
+        "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600",
+        "https://images.unsplash.com/photo-1561651823-34feb02250e4?w=600",
+        "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=600",
+        "https://images.unsplash.com/photo-1509722747041-616f39b57569?w=600"
+      ],
+      "Shawarma": [
+        "https://images.unsplash.com/photo-1561651823-34feb02250e4?w=600",
+        "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600",
+        "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=600",
+        "https://images.unsplash.com/photo-1509722747041-616f39b57569?w=600"
+      ],
+      "Pasta": [
+        "https://images.unsplash.com/photo-1621996346565-e3d5d6281691?w=600",
+        "https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=600",
+        "https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb?w=600",
+        "https://images.unsplash.com/photo-1608897013039-887f21d8c804?w=600"
+      ],
+      "Soup": [
+        "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=600",
+        "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=600",
+        "https://images.unsplash.com/photo-1541832676-9b763b0239ab?w=600",
+        "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=600"
+      ],
+      "South Indian": [
+        "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?w=600",
+        "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600",
+        "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600",
+        "https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=600"
+      ],
+      "Breakfast": [
+        "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600",
+        "https://images.unsplash.com/photo-1525351484163-7529414344d8?w=600",
+        "https://images.unsplash.com/photo-1528207776546-365bb710ee93?w=600",
+        "https://images.unsplash.com/photo-1517673132405-a56a62b18caf?w=600"
+      ],
+      "Dessert": [
+        "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600",
+        "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=600",
+        "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=600",
+        "https://images.unsplash.com/photo-1562376552-0d160a2f238d?w=600"
+      ],
+      "Cake": [
+        "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600",
+        "https://images.unsplash.com/photo-1614707267537-b85aaf00c4b7?w=600",
+        "https://images.unsplash.com/photo-1533134242443-d4fd215305ad?w=600",
+        "https://images.unsplash.com/photo-1562376552-0d160a2f238d?w=600"
+      ],
+      "Bakery": [
+        "https://images.unsplash.com/photo-1527515862127-a4fc05baf7a5?w=600",
+        "https://images.unsplash.com/photo-1586985289688-ca3cf47d3e6e?w=600",
+        "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600",
+        "https://images.unsplash.com/photo-1562376552-0d160a2f238d?w=600"
+      ],
+      "Shake": [
+        "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=600",
+        "https://images.unsplash.com/photo-1546173159-315724a31696?w=600",
+        "https://images.unsplash.com/photo-1577805947697-89e18249d767?w=600",
+        "https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=600"
+      ],
+      "Lassi": [
+        "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=600",
+        "https://images.unsplash.com/photo-1546173159-315724a31696?w=600",
+        "https://images.unsplash.com/photo-1577805947697-89e18249d767?w=600",
+        "https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=600"
+      ],
+      "Beverage": [
+        "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=600",
+        "https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=600",
+        "https://images.unsplash.com/photo-1534778101976-62847782c213?w=600",
+        "https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=600"
+      ],
+      "Tea": [
+        "https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=600",
+        "https://images.unsplash.com/photo-1627435601361-ec25f5b1d0e5?w=600",
+        "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=600",
+        "https://images.unsplash.com/photo-1534778101976-62847782c213?w=600"
+      ],
+      "Coffee": [
+        "https://images.unsplash.com/photo-1534778101976-62847782c213?w=600",
         "https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=600",
         "https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=600",
+        "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=600"
+      ],
+      "Mocktail": [
+        "https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=600",
+        "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=600",
         "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=600",
-        "https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=600"
+        "https://images.unsplash.com/photo-1546173159-315724a31696?w=600"
+      ],
+      "Juice": [
+        "https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?w=600",
+        "https://images.unsplash.com/photo-1557800636-894a64c1696f?w=600",
+        "https://images.unsplash.com/photo-1556881286-fc6915169721?w=600",
+        "https://images.unsplash.com/photo-1525385133512-2f3bdd039054?w=600"
+      ],
+      "Healthy Food": [
+        "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
+        "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600",
+        "https://images.unsplash.com/photo-1517673132405-a56a62b18caf?w=600",
+        "https://images.unsplash.com/photo-1590080875515-8a3a8dc5735e?w=600"
+      ],
+      "Dry Fruits": [
+        "https://images.unsplash.com/photo-1508061252224-414eb64ef8e9?w=600",
+        "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
+        "https://images.unsplash.com/photo-1517673132405-a56a62b18caf?w=600",
+        "https://images.unsplash.com/photo-1590080875515-8a3a8dc5735e?w=600"
+      ],
+      "Dry Snacks": [
+        "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600",
+        "https://images.unsplash.com/photo-1508061252224-414eb64ef8e9?w=600",
+        "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=600",
+        "https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=600"
+      ],
+      "Fruits": [
+        "https://images.unsplash.com/photo-1553279768-865429fa0078?w=600",
+        "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=600",
+        "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=600",
+        "https://images.unsplash.com/photo-1547514701-42782101795e?w=600"
       ]
     };
 
-    function getGalleryFor(category) {
-      if (CAT_IMAGES[category]) return CAT_IMAGES[category];
-      if (category.includes("Chicken") || category.includes("Mutton") || category.includes("Seafood")) return CAT_IMAGES["Biryani"];
-      if (category.includes("Paneer") || category.includes("Indian") || category.includes("Rice")) return CAT_IMAGES["North Indian"];
-      if (category.includes("Juice") || category.includes("Shake") || category.includes("Tea") || category.includes("Coffee")) return CAT_IMAGES["Beverages"];
-      if (category.includes("Healthy") || category.includes("Dry")) return CAT_IMAGES["Fruits"];
-      return CAT_IMAGES["Fast Food"];
+    function get4DistinctImages(category) {
+      if (DISTINCT_GALLERIES[category]) return DISTINCT_GALLERIES[category];
+      return DISTINCT_GALLERIES["Fast Food"];
     }
 
-    // Hydrate 535 items
+    // Hydrate 535 full dataset
     const ITEMS = RAW_COMPACT.map(([id, name, cat, price, veg]) => ({
       id,
       name,
@@ -551,13 +721,13 @@
       document.getElementById('feedCountTitle').innerText = `${filtered.length} ITEMS AVAILABLE ON CAMPUS`;
 
       if (filtered.length === 0) {
-        container.innerHTML = `<div style="text-align:center; padding:40px; color:#888;">No matching items found! Try another search or disable Veg Mode.</div>`;
+        container.innerHTML = `<div style="text-align:center; padding:40px; color:#888;">No matching items found! Try another search or turn off Veg Mode.</div>`;
         return;
       }
 
       container.innerHTML = filtered.map(item => {
         const qty = cart[item.id] ? cart[item.id].qty : 0;
-        const gallery = getGalleryFor(item.cat);
+        const gallery = get4DistinctImages(item.cat);
 
         const slidesHtml = gallery.map(imgUrl => `
           <div class="slider-slide">
@@ -647,7 +817,7 @@
     function openCheckoutModal() {
       const items = Object.values(cart);
       if (items.length === 0) {
-        alert("Pehle food item add karein!");
+        alert("Pehle cart me food item add karein!");
         return;
       }
       const list = document.getElementById('checkoutList');
