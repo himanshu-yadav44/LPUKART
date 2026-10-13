@@ -22,7 +22,7 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; }
     body { background-color: #f7f8fa; color: var(--text-black); padding-bottom: 110px; -webkit-tap-highlight-color: transparent; }
 
-    /* Sticky Header */
+    /* Header */
     header { background: #ffffff; position: sticky; top: 0; z-index: 100; padding: 12px 16px 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.03); }
     .header-top { display: flex; justify-content: space-between; align-items: center; max-width: 600px; margin: 0 auto; }
     
@@ -34,7 +34,6 @@
 
     .header-right { display: flex; align-items: center; gap: 10px; }
     
-    /* 🔴 TOP LPUKART BRAND LOGO */
     .brand-logo-lpukart {
       font-size: 24px; font-weight: 900; font-style: italic; color: var(--primary-red);
       letter-spacing: -0.8px; text-transform: uppercase; cursor: pointer;
@@ -71,7 +70,7 @@
     .banner-title { font-size: 16.5px; font-weight: 800; }
     .banner-desc { font-size: 11.5px; color: #bbb; margin-top: 4px; line-height: 1.4; }
 
-    /* Categories Horizontal Scroll */
+    /* Category Scroll */
     .category-scroll { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
     .category-scroll::-webkit-scrollbar { display: none; }
     .cat-chip {
@@ -84,23 +83,23 @@
     .visual-search-section {
       background: #ffffff; border-radius: 20px; padding: 16px 14px; margin-bottom: 16px;
       border: 1px solid var(--border-light); box-shadow: 0 2px 10px rgba(0,0,0,0.02);
-      display: none; animation: fadeIn 0.25s ease-out;
+      display: none; animation: fadeIn 0.25s ease-out; max-height: 400px; overflow-y: auto;
     }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
 
-    .v-grid-header { font-size: 13px; font-weight: 900; color: #333; text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; }
+    .v-grid-header { font-size: 13px; font-weight: 900; color: #333; text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; background: white; z-index: 10; padding-bottom: 4px; }
     .v-grid-close { font-size: 11px; font-weight: 800; color: var(--primary-red); cursor: pointer; }
 
     .visual-grid-3col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px 10px; }
     .v-item-card { display: flex; flex-direction: column; align-items: center; text-align: center; cursor: pointer; transition: 0.15s; }
     .v-item-card:active { transform: scale(0.92); }
     .v-img-box {
-      width: 76px; height: 76px; border-radius: 50%; overflow: hidden;
+      width: 72px; height: 72px; border-radius: 50%; overflow: hidden;
       background: #f0f0f0; border: 2px solid #ffffff; box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-      margin-bottom: 6px; position: relative;
+      margin-bottom: 6px;
     }
     .v-img-box img { width: 100%; height: 100%; object-fit: cover; }
-    .v-item-name { font-size: 11.5px; font-weight: 800; color: #222; line-height: 1.2; }
+    .v-item-name { font-size: 11px; font-weight: 800; color: #222; line-height: 1.2; }
 
     .section-title { font-size: 12.5px; font-weight: 900; color: #555; text-transform: uppercase; letter-spacing: 0.5px; margin: 12px 2px 8px; }
 
@@ -173,7 +172,7 @@
 
     .cf-right-btn { background: var(--primary-red); color: white; font-size: 12.5px; font-weight: 900; padding: 8px 14px; border-radius: 10px; display: flex; align-items: center; gap: 4px; box-shadow: 0 4px 14px rgba(226,55,68,0.4); }
 
-    /* 🌟 BOTTOM NAV WITH LPUKART BRANDING 🌟 */
+    /* Bottom Nav */
     .footer-nav {
       position: fixed; bottom: 0; left: 0; right: 0;
       background: rgba(255, 255, 255, 0.95);
@@ -201,7 +200,6 @@
       background: var(--primary-red); border-radius: 4px;
     }
 
-    /* 🔴 BOTTOM LPUKART VIP BRAND TAB */
     .bottom-lpukart-tab {
       background: linear-gradient(135deg, #E23744 0%, #111111 100%);
       color: #ffffff !important; padding: 6px 14px; border-radius: 14px;
@@ -224,7 +222,7 @@
 </head>
 <body>
 
-  <!-- Top Header with LPUKART -->
+  <!-- Top Header -->
   <header>
     <div class="header-top">
       <div class="loc-box" onclick="openLocationModal()">
@@ -236,7 +234,6 @@
       </div>
       
       <div class="header-right">
-        <!-- TOP BRANDING -->
         <div class="brand-logo-lpukart" onclick="location.reload()">LPUKART</div>
         <div class="profile-avatar" onclick="openLocationModal()">H</div>
       </div>
@@ -264,7 +261,7 @@
     <!-- Category Chips -->
     <div class="category-scroll" id="categoryScroll"></div>
 
-    <!-- Zomato Style Visual Grid -->
+    <!-- ALL ZOMATO VISUAL SEARCH ITEMS -->
     <div class="visual-search-section" id="visualSearchBox">
       <div class="v-grid-header">
         <span>WHAT'S ON YOUR MIND?</span>
@@ -289,7 +286,7 @@
     <div class="cf-right-btn">View Cart & Token ➔</div>
   </div>
 
-  <!-- 🌟 BOTTOM NAV BAR WITH LPUKART BRANDING 🌟 -->
+  <!-- BOTTOM NAV BAR -->
   <div class="footer-nav">
     <div class="tab-item active" onclick="filterCategory('All', this)">
       <span class="tab-icon">🛵</span>
@@ -308,7 +305,6 @@
       <span>Shakes</span>
     </div>
     
-    <!-- BOTTOM BRANDING BUTTON -->
     <div class="bottom-lpukart-tab" onclick="openLocationModal()">
       <span>🛍️</span>
       <span class="tab-title">LPUKART</span>
@@ -396,185 +392,107 @@
   <script>
     const ADMIN_WHATSAPP = "918957645702";
 
+    // 🌟 COMPLETE VISUAL ITEMS LIST FROM YOUR VIDEO & SCREENSHOTS 🌟
     const VISUAL_CATEGORIES = [
       { name: "Pizza", img: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=300", searchKey: "Pizza" },
       { name: "Biryani", img: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=300", searchKey: "Biryani" },
       { name: "Paneer", img: "https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=300", searchKey: "Paneer" },
       { name: "Burger", img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=300", searchKey: "Burger" },
-      { name: "Fries", img: "https://images.unsplash.com/photo-1576107232684-1279f3908594?w=300", searchKey: "Fries" },
-      { name: "Momo", img: "https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=300", searchKey: "Momos" },
+      { name: "North Indian", img: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=300", searchKey: "Meals" },
+      { name: "Veg Meal", img: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=300", searchKey: "Meals" },
+      { name: "Noodles", img: "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=300", searchKey: "Fast Food" },
+      { name: "Rolls", img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=300", searchKey: "Fast Food" },
+      { name: "Beverages", img: "https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?w=300", searchKey: "Cold Drinks" },
+      { name: "Momo", img: "https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=300", searchKey: "Fast Food" },
+      { name: "Fries", img: "https://images.unsplash.com/photo-1576107232684-1279f3908594?w=300", searchKey: "Fast Food" },
       { name: "Thali", img: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=300", searchKey: "Meals" },
-      { name: "Chai", img: "https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=300", searchKey: "Chai" },
-      { name: "Drinks", img: "https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?w=300", searchKey: "Cold Drinks" },
-      { name: "Shakes", img: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=300", searchKey: "Shakes" },
-      { name: "Fruits", img: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=300", searchKey: "Fruits" },
-      { name: "Chole Bhature", img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=300", searchKey: "Chole Bhature" }
+      { name: "Chinese", img: "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=300", searchKey: "Fast Food" },
+      { name: "Samosa", img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=300", searchKey: "Fast Food" },
+      { name: "Chole Bhature", img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=300", searchKey: "Meals" },
+      { name: "Paratha", img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=300", searchKey: "Meals" },
+      { name: "Shake", img: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=300", searchKey: "Fruit Shakes" },
+      { name: "Pastry & Cake", img: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=300", searchKey: "Desserts" },
+      { name: "Sandwich", img: "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=300", searchKey: "Fast Food" },
+      { name: "Dosa", img: "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?w=300", searchKey: "Meals" },
+      { name: "Maggi", img: "https://images.unsplash.com/photo-1612927601601-6638404737ce?w=300", searchKey: "Fast Food" },
+      { name: "Dal Makhani", img: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=300", searchKey: "Meals" },
+      { name: "Tea & Chai", img: "https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=300", searchKey: "Tea & Chai" },
+      { name: "Cold Coffee", img: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=300", searchKey: "Cold Drinks" }
     ];
 
     const MENU_ITEMS = [
-      // 🥤 COLD DRINKS
+      // 🥤 COLD DRINKS & BEVERAGES
       {
         id: 1, name: "Chilled Sprite Can / Bottle", cat: "Cold Drinks", price: 40, veg: "veg",
-        images: [
-          "https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?w=600",
-          "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=600",
-          "https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=600",
-          "https://images.unsplash.com/photo-1556881286-fc6915169721?w=600"
-        ]
+        images: ["https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?w=600", "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=600", "https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=600", "https://images.unsplash.com/photo-1556881286-fc6915169721?w=600"]
       },
       {
         id: 2, name: "Maaza Real Mango Juicy Drink", cat: "Cold Drinks", price: 35, veg: "veg",
-        images: [
-          "https://images.unsplash.com/photo-1546173159-315724a31696?w=600",
-          "https://images.unsplash.com/photo-1553279768-865429fa0078?w=600",
-          "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
-          "https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?w=600"
-        ]
+        images: ["https://images.unsplash.com/photo-1546173159-315724a31696?w=600", "https://images.unsplash.com/photo-1553279768-865429fa0078?w=600", "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600", "https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?w=600"]
       },
       {
-        id: 3, name: "Mountain Dew (Chilled Bottle / Can)", cat: "Cold Drinks", price: 40, veg: "veg",
-        images: [
-          "https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?w=600",
-          "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=600",
-          "https://images.unsplash.com/photo-1554866585-cd94860890b7?w=600",
-          "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=600"
-        ]
+        id: 3, name: "Mountain Dew (Chilled Bottle)", cat: "Cold Drinks", price: 40, veg: "veg",
+        images: ["https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?w=600", "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=600", "https://images.unsplash.com/photo-1554866585-cd94860890b7?w=600", "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=600"]
       },
       {
-        id: 4, name: "Chilled Coca-Cola Can (300ml)", cat: "Cold Drinks", price: 40, veg: "veg",
-        images: [
-          "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=600",
-          "https://images.unsplash.com/photo-1554866585-cd94860890b7?w=600",
-          "https://images.unsplash.com/photo-1629203851122-3726ecdf080e?w=600",
-          "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=600"
-        ]
+        id: 4, name: "Chilled Coca-Cola Can", cat: "Cold Drinks", price: 40, veg: "veg",
+        images: ["https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=600", "https://images.unsplash.com/photo-1554866585-cd94860890b7?w=600", "https://images.unsplash.com/photo-1629203851122-3726ecdf080e?w=600", "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=600"]
       },
       {
-        id: 5, name: "Thums Up Toofani (300ml Can)", cat: "Cold Drinks", price: 40, veg: "veg",
-        images: [
-          "https://images.unsplash.com/photo-1629203851122-3726ecdf080e?w=600",
-          "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=600",
-          "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=600",
-          "https://images.unsplash.com/photo-1554866585-cd94860890b7?w=600"
-        ]
+        id: 5, name: "Iced Cold Coffee with Ice Cream", cat: "Cold Drinks", price: 79, veg: "veg",
+        images: ["https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=600", "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=600", "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=600", "https://images.unsplash.com/photo-1577805947697-89e18249d767?w=600"]
       },
 
       // ☕ TEA & CHAI
       {
-        id: 6, name: "Kadak Masala Chai (Kullad)", cat: "Tea & Chai", price: 25, veg: "veg",
-        images: [
-          "https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=600",
-          "https://images.unsplash.com/photo-1597481499750-3e6b22637e12?w=600",
-          "https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=600",
-          "https://images.unsplash.com/photo-1561336313-0bd5e0b27ec8?w=600"
-        ]
+        id: 6, name: "Kadak Masala Kullad Chai", cat: "Tea & Chai", price: 25, veg: "veg",
+        images: ["https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=600", "https://images.unsplash.com/photo-1597481499750-3e6b22637e12?w=600", "https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=600", "https://images.unsplash.com/photo-1561336313-0bd5e0b27ec8?w=600"]
       },
       {
-        id: 7, name: "Adrak Elaichi Special Chai", cat: "Tea & Chai", price: 30, veg: "veg",
-        images: [
-          "https://images.unsplash.com/photo-1597481499750-3e6b22637e12?w=600",
-          "https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=600",
-          "https://images.unsplash.com/photo-1561336313-0bd5e0b27ec8?w=600",
-          "https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=600"
-        ]
+        id: 7, name: "Adrak Elaichi Special Tea", cat: "Tea & Chai", price: 30, veg: "veg",
+        images: ["https://images.unsplash.com/photo-1597481499750-3e6b22637e12?w=600", "https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=600", "https://images.unsplash.com/photo-1561336313-0bd5e0b27ec8?w=600", "https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=600"]
       },
 
-      // 🥭 FRUIT SHAKES
+      // 🥭 SHAKES
       {
-        id: 8, name: "Rich Alphonso Mango Shake with Ice Cream", cat: "Fruit Shakes", price: 90, veg: "veg",
-        images: [
-          "https://images.unsplash.com/photo-1546173159-315724a31696?w=600",
-          "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=600",
-          "https://images.unsplash.com/photo-1577805947697-89e18249d767?w=600",
-          "https://images.unsplash.com/photo-1553530666-ba11a7da3888?w=600"
-        ]
+        id: 8, name: "Rich Alphonso Mango Shake", cat: "Fruit Shakes", price: 90, veg: "veg",
+        images: ["https://images.unsplash.com/photo-1546173159-315724a31696?w=600", "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=600", "https://images.unsplash.com/photo-1577805947697-89e18249d767?w=600", "https://images.unsplash.com/photo-1553530666-ba11a7da3888?w=600"]
       },
       {
         id: 9, name: "High-Protein Banana Honey Shake", cat: "Fruit Shakes", price: 80, veg: "veg",
-        images: [
-          "https://images.unsplash.com/photo-1577805947697-89e18249d767?w=600",
-          "https://images.unsplash.com/photo-1553530666-ba11a7da3888?w=600",
-          "https://images.unsplash.com/photo-1546173159-315724a31696?w=600",
-          "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=600"
-        ]
-      },
-      {
-        id: 10, name: "Fresh Strawberry Shake with Real Pulp", cat: "Fruit Shakes", price: 90, veg: "veg",
-        images: [
-          "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=600",
-          "https://images.unsplash.com/photo-1553530666-ba11a7da3888?w=600",
-          "https://images.unsplash.com/photo-1546173159-315724a31696?w=600",
-          "https://images.unsplash.com/photo-1577805947697-89e18249d767?w=600"
-        ]
-      },
-
-      // 🍎 FRESH FRUITS
-      {
-        id: 11, name: "Royal Mixed Fresh Fruit Bowl", cat: "Fruits", price: 80, veg: "veg",
-        images: [
-          "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600",
-          "https://images.unsplash.com/photo-1568584711075-3d021a7c3ca3?w=600",
-          "https://images.unsplash.com/photo-1550258987-190a2d41a8ba?w=600",
-          "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=600"
-        ]
+        images: ["https://images.unsplash.com/photo-1577805947697-89e18249d767?w=600", "https://images.unsplash.com/photo-1553530666-ba11a7da3888?w=600", "https://images.unsplash.com/photo-1546173159-315724a31696?w=600", "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=600"]
       },
 
       // 🍕 PIZZA
       {
-        id: 12, name: "Margherita Cheese Pizza", cat: "Pizza", price: 149, veg: "veg",
-        images: [
-          "https://images.unsplash.com/photo-1604382355076-af4b0eb60143?w=600",
-          "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600",
-          "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=600",
-          "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600"
-        ]
+        id: 10, name: "Margherita Cheese Pizza", cat: "Pizza", price: 149, veg: "veg",
+        images: ["https://images.unsplash.com/photo-1604382355076-af4b0eb60143?w=600", "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600", "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=600", "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600"]
       },
       {
-        id: 13, name: "Farmhouse Veggie Delight Pizza", cat: "Pizza", price: 229, veg: "veg",
-        images: [
-          "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600",
-          "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600",
-          "https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?w=600",
-          "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=600"
-        ]
+        id: 11, name: "Farmhouse Veggie Delight Pizza", cat: "Pizza", price: 229, veg: "veg",
+        images: ["https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600", "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600", "https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?w=600", "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=600"]
       },
 
-      // 🍔 BURGER & FRIES
+      // 🍔 BURGER & FAST FOOD
       {
-        id: 14, name: "Crispy Aloo Tikki Burger", cat: "Burger", price: 59, veg: "veg",
-        images: [
-          "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600",
-          "https://images.unsplash.com/photo-1550547660-d9450f859349?w=600",
-          "https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?w=600",
-          "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=600"
-        ]
+        id: 12, name: "Crispy Aloo Tikki Burger", cat: "Burger", price: 59, veg: "veg",
+        images: ["https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600", "https://images.unsplash.com/photo-1550547660-d9450f859349?w=600", "https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?w=600", "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=600"]
       },
       {
-        id: 15, name: "Peri Peri French Fries", cat: "Fast Food", price: 89, veg: "veg",
-        images: [
-          "https://images.unsplash.com/photo-1576107232684-1279f3908594?w=600",
-          "https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?w=600",
-          "https://images.unsplash.com/photo-1585109649139-366815a0d713?w=600",
-          "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=600"
-        ]
+        id: 13, name: "Peri Peri French Fries", cat: "Fast Food", price: 89, veg: "veg",
+        images: ["https://images.unsplash.com/photo-1576107232684-1279f3908594?w=600", "https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?w=600", "https://images.unsplash.com/photo-1585109649139-366815a0d713?w=600", "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=600"]
       },
       {
-        id: 16, name: "Steamed Veg Paneer Momos (6 Pcs)", cat: "Fast Food", price: 89, veg: "veg",
-        images: [
-          "https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=600",
-          "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=600",
-          "https://images.unsplash.com/photo-1496116218417-1a781b1c416c?w=600",
-          "https://images.unsplash.com/photo-1541696432-82c6da8ce7bf?w=600"
-        ]
+        id: 14, name: "Steamed Veg Paneer Momos (6 Pcs)", cat: "Fast Food", price: 89, veg: "veg",
+        images: ["https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=600", "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=600", "https://images.unsplash.com/photo-1496116218417-1a781b1c416c?w=600", "https://images.unsplash.com/photo-1541696432-82c6da8ce7bf?w=600"]
       },
       {
-        id: 17, name: "Delhi Special Chole Bhature (2 Pcs)", cat: "Meals", price: 129, veg: "veg",
-        images: [
-          "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600",
-          "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=600",
-          "https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=600",
-          "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600"
-        ]
+        id: 15, name: "Delhi Special Chole Bhature", cat: "Meals", price: 129, veg: "veg",
+        images: ["https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600", "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=600", "https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=600", "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600"]
+      },
+      {
+        id: 16, name: "Paneer Butter Masala Thali", cat: "Meals", price: 169, veg: "veg",
+        images: ["https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600", "https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=600", "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=600", "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600"]
       }
     ];
 
