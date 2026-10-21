@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>LPUKART - Blinkit Style Campus Delivery</title>
+  <title>LPUKART - Campus Express Delivery</title>
   <meta name="theme-color" content="#F7C400">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -39,7 +39,7 @@
       100% { transform: scale(1); opacity: 1; }
     }
 
-    /* BLINKIT HEADER STYLE */
+    /* HEADER STYLE */
     header { background: var(--blink-yellow); padding: 12px 16px 14px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
     .header-top { display: flex; justify-content: space-between; align-items: center; max-width: 600px; margin: 0 auto; }
     
@@ -73,15 +73,24 @@
     .grid-section { background: #fff; border-radius: 18px; padding: 14px; margin-bottom: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
     .grid-title { font-size: 15px; font-weight: 900; color: #111; margin-bottom: 12px; }
 
-    /* PRODUCT CARDS */
+    /* PRODUCT CARDS WITH IMAGE CAROUSEL */
     .products-scroll { display: flex; gap: 12px; overflow-x: auto; scrollbar-width: none; padding-bottom: 6px; }
     .products-scroll::-webkit-scrollbar { display: none; }
     
     .item-card-blinkit {
-      min-width: 140px; width: 140px; background: #fff; border: 1px solid #EAEAEA;
+      min-width: 145px; width: 145px; background: #fff; border: 1px solid #EAEAEA;
       border-radius: 16px; padding: 10px; position: relative; display: flex; flex-direction: column; justify-content: space-between;
     }
-    .item-img { width: 100%; height: 90px; object-fit: contain; margin-bottom: 6px; }
+    
+    .img-carousel-box { position: relative; width: 100%; height: 95px; border-radius: 10px; overflow: hidden; margin-bottom: 6px; background: #fafafa; }
+    .img-slider { display: flex; height: 100%; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+    .img-slider::-webkit-scrollbar { display: none; }
+    .img-slider img { min-width: 100%; height: 100%; object-fit: cover; scroll-snap-align: start; }
+    
+    .carousel-dots { position: absolute; bottom: 4px; left: 0; right: 0; display: flex; justify-content: center; gap: 3px; z-index: 5; }
+    .dot { width: 4px; height: 4px; border-radius: 50%; background: rgba(0,0,0,0.25); }
+    .dot.active { background: var(--blink-green); width: 8px; border-radius: 4px; }
+
     .item-time-badge { font-size: 9px; font-weight: 900; background: #F1F5F9; color: #475569; padding: 2px 6px; border-radius: 6px; display: inline-block; margin-bottom: 4px; width: fit-content; }
     .item-name { font-size: 11.5px; font-weight: 800; color: #111; height: 32px; overflow: hidden; line-height: 1.2; }
     .item-weight { font-size: 10px; font-weight: 700; color: #777; margin: 4px 0 8px; }
@@ -112,7 +121,7 @@
     /* BOTTOM NAV */
     .footer-nav {
       position: fixed; bottom: 0; left: 0; right: 0; background: #fff;
-      border-top: 1px solid #eee; display: flex; justify-space-around;
+      border-top: 1px solid #eee; display: flex; justify-content: space-around;
       padding: 8px 0 env(safe-area-inset-bottom, 8px); z-index: 90; max-width: 600px; margin: 0 auto;
     }
     .nav-tab { display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 10px; font-weight: 800; color: #777; cursor: pointer; }
@@ -135,12 +144,12 @@
     <div class="splash-logo">LPUKART</div>
   </div>
 
-  <!-- BLINKIT HEADER -->
+  <!-- HEADER -->
   <header>
     <div class="header-top">
       <div class="delivery-info" onclick="openLocationModal()">
         <div class="delivery-time">LPUKART in <span>12 minutes</span></div>
-        <div class="delivery-loc"><span id="locHeader">BH-1 (Boys Hostel)</span> ▾</div>
+        <div class="delivery-loc"><span id="locHeader">⚖️ School of Law</span> ▾</div>
       </div>
       
       <div class="header-right-actions">
@@ -161,76 +170,76 @@
   <!-- CATEGORY TOP TABS -->
   <div class="cat-tabs">
     <div class="cat-tab active" onclick="filterTab('All', this)">All</div>
-    <div class="cat-tab" onclick="filterTab('Fruits', this)">Fruits</div>
-    <div class="cat-tab" onclick="filterTab('Snacks', this)">Snacks</div>
-    <div class="cat-tab" onclick="filterTab('Beverages', this)">Beverages</div>
+    <div class="cat-tab" onclick="filterTab('Fruits', this)">Fresh Fruits</div>
+    <div class="cat-tab" onclick="filterTab('Snacks', this)">Snacks & Noodles</div>
+    <div class="cat-tab" onclick="filterTab('Beverages', this)">Tea & Drinks</div>
     <div class="cat-tab" onclick="filterTab('Burgers', this)">Burgers & Rolls</div>
-    <div class="cat-tab" onclick="filterTab('Pizza', this)">Pizza</div>
+    <div class="cat-tab" onclick="filterTab('Pizza', this)">Pizza & Garlic Bread</div>
     <div class="cat-tab" onclick="filterTab('Sandwiches', this)">Sandwiches</div>
     <div class="cat-tab" onclick="filterTab('Momos', this)">Momos</div>
     <div class="cat-tab" onclick="filterTab('Fries', this)">Fries & Side Snacks</div>
-    <div class="cat-tab" onclick="filterTab('Main Food', this)">Main Food</div>
+    <div class="cat-tab" onclick="filterTab('Main Food', this)">Main Food & Meals</div>
   </div>
 
   <div class="content-area">
 
     <!-- FRUITS SECTION -->
     <div class="grid-section" id="section-Fruits">
-      <div class="grid-title">Fresh Fruits (ताज़ा फल)</div>
+      <div class="grid-title">Fresh Fruits</div>
       <div class="products-scroll" id="container-Fruits"></div>
     </div>
 
-    <!-- BURGERS & WRAPS -->
+    <!-- BURGERS & ROLLS -->
     <div class="grid-section" id="section-Burgers">
-      <div class="grid-title">Burgers & Wraps (बर्गर और रोल)</div>
+      <div class="grid-title">Burgers & Kathi Rolls</div>
       <div class="products-scroll" id="container-Burgers"></div>
     </div>
 
     <!-- MOMOS & DIM SUMS -->
     <div class="grid-section" id="section-Momos">
-      <div class="grid-title">Momos & Dim Sums (मोमोज़)</div>
+      <div class="grid-title">Momos & Dim Sums</div>
       <div class="products-scroll" id="container-Momos"></div>
     </div>
 
     <!-- PIZZA & GARLIC BREAD -->
     <div class="grid-section" id="section-Pizza">
-      <div class="grid-title">Pizza & Garlic Bread (पिज्जा और गार्लिक ब्रेड)</div>
+      <div class="grid-title">Pizza & Garlic Bread</div>
       <div class="products-scroll" id="container-Pizza"></div>
     </div>
 
     <!-- SNACKS & STREET FOOD -->
     <div class="grid-section" id="section-Snacks">
-      <div class="grid-title">Snacks & Street Food (स्नैक्स)</div>
+      <div class="grid-title">Snacks & Street Food</div>
       <div class="products-scroll" id="container-Snacks"></div>
     </div>
 
     <!-- SANDWICHES & TOASTS -->
     <div class="grid-section" id="section-Sandwiches">
-      <div class="grid-title">Sandwiches & Toasts (सैंडविच)</div>
+      <div class="grid-title">Sandwiches & Toasts</div>
       <div class="products-scroll" id="container-Sandwiches"></div>
     </div>
 
     <!-- FRIES & SIDE SNACKS -->
     <div class="grid-section" id="section-Fries">
-      <div class="grid-title">Fries & Quick Bites (फ्राइज और बाइट्स)</div>
+      <div class="grid-title">Fries & Quick Bites</div>
       <div class="products-scroll" id="container-Fries"></div>
     </div>
 
     <!-- BEVERAGES -->
     <div class="grid-section" id="section-Beverages">
-      <div class="grid-title">Beverages (चाय, कॉफ़ी और कोल्ड ड्रिंक्स)</div>
+      <div class="grid-title">Tea, Coffee & Beverages</div>
       <div class="products-scroll" id="container-Beverages"></div>
     </div>
 
     <!-- MAIN FOOD ITEMS -->
     <div class="grid-section" id="section-Main Food">
-      <div class="grid-title">Main Food Items (मुख्य भोजन)</div>
+      <div class="grid-title">Main Course & Meals</div>
       <div class="products-scroll" id="container-Main Food"></div>
     </div>
 
   </div>
 
-  <!-- FLOATING GREEN BLINKIT CART -->
+  <!-- FLOATING GREEN CART -->
   <div class="cart-float-green" id="cartFloat" style="display:none;" onclick="openCheckoutModal()">
     <div class="cf-green-left">
       <div class="cf-green-text">
@@ -264,7 +273,7 @@
   <!-- Location Modal -->
   <div class="modal-overlay" id="locationModal">
     <div class="modal-sheet">
-      <div style="font-size:16px; font-weight:900; margin-bottom:12px;">Select LPU Delivery Spot</div>
+      <div style="font-size:16px; font-weight:900; margin-bottom:12px;">Select Delivery Spot</div>
       <form onsubmit="saveUserProfile(event)">
         <div style="margin-bottom:10px;">
           <label style="font-size:11px; font-weight:800; color:#666;">STUDENT NAME</label>
@@ -277,41 +286,41 @@
         <div style="margin-bottom:10px;">
           <label style="font-size:11px; font-weight:800; color:#666;">CAMPUS LOCATION / BLOCK</label>
           <select id="userLocationSelect" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:8px;" required>
-            <optgroup label="Academic Blocks & Key Spots">
-              <option value="School of Law (SOL)">School of Law (SOL)</option>
-              <option value="Uni-Mall">Uni-Mall</option>
-              <option value="Uni-Health Centre">Uni-Health Centre</option>
-              <option value="Main Gate">Main Gate</option>
-              <option value="Robo Park">Robo Park</option>
-              <option value="Uni Parking">Uni Parking</option>
-              <option value="Agriculture Block">Agriculture Block</option>
-              <option value="Civil Block">Civil Block</option>
-              <option value="Block 13 Food Court">Block 13 Food Court</option>
-              <option value="Block 33 / 34">Block 33 / 34</option>
+            <optgroup label="Academic Blocks & Campus Spots">
+              <option value="⚖️ School of Law (SOL)" selected>⚖️ School of Law (SOL)</option>
+              <option value="🛍️ Uni-Mall">🛍️ Uni-Mall</option>
+              <option value="🏥 Uni-Health Centre">🏥 Uni-Health Centre</option>
+              <option value="🚪 Main Gate">🚪 Main Gate</option>
+              <option value="🤖 Robo Park">🤖 Robo Park</option>
+              <option value="🅿️ Uni Parking">🅿️ Uni Parking</option>
+              <option value="🌾 Agriculture Block">🌾 Agriculture Block</option>
+              <option value="🏗️ Civil Block">🏗️ Civil Block</option>
+              <option value="🍔 Block 13 Food Court">🍔 Block 13 Food Court</option>
+              <option value="🏫 Block 33 / 34">🏫 Block 33 / 34</option>
             </optgroup>
             <optgroup label="Boys Hostels (BH-1 to BH-12)">
-              <option value="BH-1 (Boys Hostel)" selected>BH-1 (Boys Hostel)</option>
-              <option value="BH-2 (Boys Hostel)">BH-2 (Boys Hostel)</option>
-              <option value="BH-3 (Boys Hostel)">BH-3 (Boys Hostel)</option>
-              <option value="BH-4 (Boys Hostel)">BH-4 (Boys Hostel)</option>
-              <option value="BH-5 (Boys Hostel)">BH-5 (Boys Hostel)</option>
-              <option value="BH-6 (Boys Hostel)">BH-6 (Boys Hostel)</option>
-              <option value="BH-7 (Boys Hostel)">BH-7 (Boys Hostel)</option>
-              <option value="BH-8 (Boys Hostel)">BH-8 (Boys Hostel)</option>
-              <option value="BH-9 (Boys Hostel)">BH-9 (Boys Hostel)</option>
-              <option value="BH-10 (Boys Hostel)">BH-10 (Boys Hostel)</option>
-              <option value="BH-11 (Boys Hostel)">BH-11 (Boys Hostel)</option>
-              <option value="BH-12 (Boys Hostel)">BH-12 (Boys Hostel)</option>
+              <option value="👦 BH-1 (Boys Hostel)">👦 BH-1 (Boys Hostel)</option>
+              <option value="👦 BH-2 (Boys Hostel)">👦 BH-2 (Boys Hostel)</option>
+              <option value="👦 BH-3 (Boys Hostel)">👦 BH-3 (Boys Hostel)</option>
+              <option value="👦 BH-4 (Boys Hostel)">👦 BH-4 (Boys Hostel)</option>
+              <option value="👦 BH-5 (Boys Hostel)">👦 BH-5 (Boys Hostel)</option>
+              <option value="👦 BH-6 (Boys Hostel)">👦 BH-6 (Boys Hostel)</option>
+              <option value="👦 BH-7 (Boys Hostel)">👦 BH-7 (Boys Hostel)</option>
+              <option value="👦 BH-8 (Boys Hostel)">👦 BH-8 (Boys Hostel)</option>
+              <option value="👦 BH-9 (Boys Hostel)">👦 BH-9 (Boys Hostel)</option>
+              <option value="👦 BH-10 (Boys Hostel)">👦 BH-10 (Boys Hostel)</option>
+              <option value="👦 BH-11 (Boys Hostel)">👦 BH-11 (Boys Hostel)</option>
+              <option value="👦 BH-12 (Boys Hostel)">👦 BH-12 (Boys Hostel)</option>
             </optgroup>
             <optgroup label="Girls Hostels (GH-1 to GH-8)">
-              <option value="GH-1 (Girls Hostel)">GH-1 (Girls Hostel)</option>
-              <option value="GH-2 (Girls Hostel)">GH-2 (Girls Hostel)</option>
-              <option value="GH-3 (Girls Hostel)">GH-3 (Girls Hostel)</option>
-              <option value="GH-4 (Girls Hostel)">GH-4 (Girls Hostel)</option>
-              <option value="GH-5 (Girls Hostel)">GH-5 (Girls Hostel)</option>
-              <option value="GH-6 (Girls Hostel)">GH-6 (Girls Hostel)</option>
-              <option value="GH-7 (Girls Hostel)">GH-7 (Girls Hostel)</option>
-              <option value="GH-8 (Girls Hostel)">GH-8 (Girls Hostel)</option>
+              <option value="👧 GH-1 (Girls Hostel)">👧 GH-1 (Girls Hostel)</option>
+              <option value="👧 GH-2 (Girls Hostel)">👧 GH-2 (Girls Hostel)</option>
+              <option value="👧 GH-3 (Girls Hostel)">👧 GH-3 (Girls Hostel)</option>
+              <option value="👧 GH-4 (Girls Hostel)">👧 GH-4 (Girls Hostel)</option>
+              <option value="👧 GH-5 (Girls Hostel)">👧 GH-5 (Girls Hostel)</option>
+              <option value="👧 GH-6 (Girls Hostel)">👧 GH-6 (Girls Hostel)</option>
+              <option value="👧 GH-7 (Girls Hostel)">👧 GH-7 (Girls Hostel)</option>
+              <option value="👧 GH-8 (Girls Hostel)">👧 GH-8 (Girls Hostel)</option>
             </optgroup>
           </select>
         </div>
@@ -361,103 +370,60 @@
     let user = JSON.parse(localStorage.getItem('lpukart_user')) || {
       name: "Himanshu Yadav",
       phone: "9876543210",
-      location: "School of Law (SOL)"
+      location: "⚖️ School of Law (SOL)"
     };
 
+    // ALL PRODUCTS WITH ACCURATE MULTIPLE IMAGES
     const PRODUCTS = [
       // 1. FRUITS
-      { id: 101, name: "Apple (सेब)", cat: "Fruits", price: 120, weight: "1 kg", time: "10 MINS", img: "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=300" },
-      { id: 102, name: "Banana (केला)", cat: "Fruits", price: 50, weight: "1 Dozen", time: "10 MINS", img: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=300" },
-      { id: 103, name: "Orange (संतरा)", cat: "Fruits", price: 80, weight: "1 kg", time: "10 MINS", img: "https://images.unsplash.com/photo-1547514701-42782101795e?w=300" },
-      { id: 104, name: "Mango (आम)", cat: "Fruits", price: 110, weight: "1 kg", time: "10 MINS", img: "https://images.unsplash.com/photo-1553279768-865429fa0078?w=300" },
-      { id: 105, name: "Pomegranate (अनार)", cat: "Fruits", price: 140, weight: "1 kg", time: "10 MINS", img: "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=300" },
-      { id: 106, name: "Grapes (अंगूर)", cat: "Fruits", price: 90, weight: "500g", time: "10 MINS", img: "https://images.unsplash.com/photo-1537640538966-79f369143f8f?w=300" },
-      { id: 107, name: "Papaya (पपीता)", cat: "Fruits", price: 60, weight: "1 Pc", time: "10 MINS", img: "https://images.unsplash.com/photo-1517260739337-6799d239ce83?w=300" },
-      { id: 108, name: "Pineapple (अनानास)", cat: "Fruits", price: 80, weight: "1 Pc", time: "10 MINS", img: "https://images.unsplash.com/photo-1550258987-190a2d41a8ba?w=300" },
-      { id: 109, name: "Watermelon (तरबूज)", cat: "Fruits", price: 70, weight: "1 Pc", time: "10 MINS", img: "https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=300" },
-      { id: 110, name: "Guava (अमरूद)", cat: "Fruits", price: 60, weight: "1 kg", time: "10 MINS", img: "https://images.unsplash.com/photo-1536511157201-5222b3366a62?w=300" },
+      { id: 101, name: "Fresh Red Apple", cat: "Fruits", price: 120, weight: "1 kg", time: "10 MINS", imgs: ["https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=400", "https://images.unsplash.com/photo-1570913149827-d2ac84ab3f9a?w=400", "https://images.unsplash.com/photo-1567306226416-28f0efdc88ce?w=400"] },
+      { id: 102, name: "Fresh Banana", cat: "Fruits", price: 50, weight: "1 Dozen", time: "10 MINS", imgs: ["https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=400", "https://images.unsplash.com/photo-1528825871115-3581a5387919?w=400", "https://images.unsplash.com/photo-1603833665858-e61d17a86224?w=400"] },
+      { id: 103, name: "Juicy Orange", cat: "Fruits", price: 80, weight: "1 kg", time: "10 MINS", imgs: ["https://images.unsplash.com/photo-1547514701-42782101795e?w=400", "https://images.unsplash.com/photo-1611080626919-7cf5a9dbab5b?w=400", "https://images.unsplash.com/photo-1582979512210-99b6a53385f9?w=400"] },
+      { id: 104, name: "Sweet Mango", cat: "Fruits", price: 110, weight: "1 kg", time: "10 MINS", imgs: ["https://images.unsplash.com/photo-1553279768-865429fa0078?w=400", "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?w=400", "https://images.unsplash.com/photo-1591073113125-e46713c829ed?w=400"] },
+      { id: 105, name: "Red Pomegranate", cat: "Fruits", price: 140, weight: "1 kg", time: "10 MINS", imgs: ["https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=400", "https://images.unsplash.com/photo-1541344999736-83eca272f6fc?w=400"] },
 
       // 2. SNACKS & STREET FOOD
-      { id: 201, name: "Veg Chow Mein", cat: "Snacks", price: 70, weight: "1 Plate", time: "12 MINS", img: "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=300" },
-      { id: 202, name: "Hakka Noodles", cat: "Snacks", price: 90, weight: "1 Plate", time: "12 MINS", img: "https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?w=300" },
-      { id: 203, name: "Schezwan Noodles", cat: "Snacks", price: 100, weight: "1 Plate", time: "12 MINS", img: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=300" },
-      { id: 204, name: "Veg Fried Rice", cat: "Snacks", price: 80, weight: "1 Plate", time: "12 MINS", img: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=300" },
-      { id: 205, name: "Schezwan Fried Rice", cat: "Snacks", price: 95, weight: "1 Plate", time: "12 MINS", img: "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=300" },
-      { id: 206, name: "Paneer Fried Rice", cat: "Snacks", price: 110, weight: "1 Plate", time: "12 MINS", img: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=300" },
-      { id: 207, name: "Classic Veg Maggi", cat: "Snacks", price: 40, weight: "1 Bowl", time: "8 MINS", img: "https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?w=300" },
-      { id: 208, name: "Cheese Maggi", cat: "Snacks", price: 60, weight: "1 Bowl", time: "8 MINS", img: "https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?w=300" },
-      { id: 209, name: "Peri Peri Maggi", cat: "Snacks", price: 50, weight: "1 Bowl", time: "8 MINS", img: "https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?w=300" },
-      { id: 210, name: "Red Sauce Pasta", cat: "Snacks", price: 110, weight: "1 Plate", time: "15 MINS", img: "https://images.unsplash.com/photo-1621996346565-e3def6164286?w=300" },
-      { id: 211, name: "White Sauce Pasta", cat: "Snacks", price: 130, weight: "1 Plate", time: "15 MINS", img: "https://images.unsplash.com/photo-1645112411341-6c4fd023714a?w=300" },
-      { id: 212, name: "Mix Sauce Pasta", cat: "Snacks", price: 120, weight: "1 Plate", time: "15 MINS", img: "https://images.unsplash.com/photo-1621996346565-e3def6164286?w=300" },
-      { id: 213, name: "Samosa", cat: "Snacks", price: 15, weight: "1 Pc", time: "5 MINS", img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=300" },
-      { id: 214, name: "Veg Pakoda", cat: "Snacks", price: 60, weight: "200g", time: "10 MINS", img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=300" },
+      { id: 201, name: "Veg Chow Mein", cat: "Snacks", price: 70, weight: "1 Plate", time: "12 MINS", imgs: ["https://images.unsplash.com/photo-1585032226651-759b368d7246?w=400", "https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?w=400"] },
+      { id: 202, name: "Hakka Noodles", cat: "Snacks", price: 90, weight: "1 Plate", time: "12 MINS", imgs: ["https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?w=400", "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=400"] },
+      { id: 203, name: "Veg Fried Rice", cat: "Snacks", price: 80, weight: "1 Plate", time: "12 MINS", imgs: ["https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=400", "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=400"] },
+      { id: 204, name: "Classic Veg Maggi", cat: "Snacks", price: 40, weight: "1 Bowl", time: "8 MINS", imgs: ["https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?w=400", "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=400"] },
+      { id: 205, name: "Creamy Red Sauce Pasta", cat: "Snacks", price: 110, weight: "1 Plate", time: "15 MINS", imgs: ["https://images.unsplash.com/photo-1621996346565-e3def6164286?w=400", "https://images.unsplash.com/photo-1645112411341-6c4fd023714a?w=400"] },
+      { id: 206, name: "Crispy Samosa", cat: "Snacks", price: 15, weight: "1 Pc", time: "5 MINS", imgs: ["https://images.unsplash.com/photo-1601050690597-df0568f70950?w=400", "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=400"] },
 
       // 3. BEVERAGES
-      { id: 301, name: "Masala Tea (मसाला चाय)", cat: "Beverages", price: 20, weight: "1 Cup", time: "6 MINS", img: "https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=300" },
-      { id: 302, name: "Ginger Tea (अदरक चाय)", cat: "Beverages", price: 20, weight: "1 Cup", time: "6 MINS", img: "https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=300" },
-      { id: 303, name: "Green Tea", cat: "Beverages", price: 25, weight: "1 Cup", time: "5 MINS", img: "https://images.unsplash.com/photo-1627435601361-ec25f5b1d0e5?w=300" },
-      { id: 304, name: "Hot Coffee", cat: "Beverages", price: 30, weight: "1 Cup", time: "6 MINS", img: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=300" },
-      { id: 305, name: "Cold Coffee", cat: "Beverages", price: 60, weight: "300 ml", time: "8 MINS", img: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=300" },
-      { id: 306, name: "Cold Coffee + Ice Cream", cat: "Beverages", price: 80, weight: "350 ml", time: "8 MINS", img: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=300" },
-      { id: 307, name: "Coca-Cola / Pepsi", cat: "Beverages", price: 40, weight: "300 ml Can", time: "5 MINS", img: "https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?w=300" },
-      { id: 308, name: "Thumbs Up", cat: "Beverages", price: 40, weight: "300 ml Can", time: "5 MINS", img: "https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?w=300" },
-      { id: 309, name: "Sprite / 7UP", cat: "Beverages", price: 40, weight: "300 ml Can", time: "5 MINS", img: "https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?w=300" },
-      { id: 310, name: "Frooti / Maaza", cat: "Beverages", price: 30, weight: "250 ml", time: "5 MINS", img: "https://images.unsplash.com/photo-1546173159-315724a31696?w=300" },
-      { id: 311, name: "Red Bull Energy Drink", cat: "Beverages", price: 125, weight: "250 ml Can", time: "5 MINS", img: "https://images.unsplash.com/photo-1622543925917-763c34d1a86e?w=300" },
-      { id: 312, name: "Fresh Lime Soda", cat: "Beverages", price: 50, weight: "300 ml", time: "6 MINS", img: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=300" },
+      { id: 301, name: "Masala Kulhad Tea", cat: "Beverages", price: 20, weight: "1 Cup", time: "6 MINS", imgs: ["https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=400", "https://images.unsplash.com/photo-1561336313-0bd5e0b27ec8?w=400"] },
+      { id: 302, name: "Cold Coffee Shake", cat: "Beverages", price: 60, weight: "300 ml", time: "8 MINS", imgs: ["https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=400", "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=400"] },
+      { id: 303, name: "Chilled Coca-Cola Can", cat: "Beverages", price: 40, weight: "300 ml", time: "5 MINS", imgs: ["https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?w=400", "https://images.unsplash.com/photo-1554866585-cd94860890b7?w=400"] },
 
       // 4. MAIN FOOD ITEMS
-      { id: 401, name: "Veg Thali (Full Meal)", cat: "Main Food", price: 120, weight: "1 Thali", time: "15 MINS", img: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=300" },
-      { id: 402, name: "Special Paneer Thali", cat: "Main Food", price: 160, weight: "1 Thali", time: "15 MINS", img: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=300" },
-      { id: 403, name: "Dal Makhani", cat: "Main Food", price: 110, weight: "1 Bowl", time: "12 MINS", img: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=300" },
-      { id: 404, name: "Paneer Butter Masala", cat: "Main Food", price: 150, weight: "1 Bowl", time: "12 MINS", img: "https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=300" },
-      { id: 405, name: "Kadhai Paneer", cat: "Main Food", price: 150, weight: "1 Bowl", time: "12 MINS", img: "https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=300" },
-      { id: 406, name: "Chole Bhature", cat: "Main Food", price: 110, weight: "2 Bhature", time: "12 MINS", img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=300" },
-      { id: 407, name: "Pav Bhaji", cat: "Main Food", price: 90, weight: "2 Pav", time: "10 MINS", img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=300" },
-      { id: 408, name: "Veg Biryani / Veg Pulao", cat: "Main Food", price: 120, weight: "1 Plate", time: "12 MINS", img: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=300" },
-      { id: 409, name: "Plain / Butter Tandoori Roti", cat: "Main Food", price: 15, weight: "1 Pc", time: "5 MINS", img: "https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=300" },
-      { id: 410, name: "Naan (Plain/Butter/Garlic)", cat: "Main Food", price: 40, weight: "1 Pc", time: "5 MINS", img: "https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=300" },
+      { id: 401, name: "Special Deluxe Veg Thali", cat: "Main Food", price: 120, weight: "1 Thali", time: "15 MINS", imgs: ["https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=400", "https://images.unsplash.com/photo-1589301760014-d929f39729f0?w=400"] },
+      { id: 402, name: "Paneer Butter Masala", cat: "Main Food", price: 150, weight: "1 Bowl", time: "12 MINS", imgs: ["https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=400", "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=400"] },
+      { id: 403, name: "Punjabi Chole Bhature", cat: "Main Food", price: 110, weight: "2 Bhature", time: "12 MINS", imgs: ["https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=400", "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=400"] },
+      { id: 404, name: "Hyderabadi Veg Biryani", cat: "Main Food", price: 120, weight: "1 Plate", time: "12 MINS", imgs: ["https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=400", "https://images.unsplash.com/photo-1633945274405-b6c8069047b0?w=400"] },
 
-      // 5. BURGERS & WRAPS
-      { id: 501, name: "Veg Aloo Tikki Burger", cat: "Burgers", price: 49, weight: "1 Pc", time: "10 MINS", img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=300" },
-      { id: 502, name: "Veg Cheese Burger", cat: "Burgers", price: 69, weight: "1 Pc", time: "10 MINS", img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=300" },
-      { id: 503, name: "Paneer Crispy Burger", cat: "Burgers", price: 89, weight: "1 Pc", time: "10 MINS", img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=300" },
-      { id: 504, name: "Double Patty Supreme Burger", cat: "Burgers", price: 119, weight: "1 Pc", time: "12 MINS", img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=300" },
-      { id: 505, name: "Veg Kathi Roll", cat: "Burgers", price: 60, weight: "1 Roll", time: "10 MINS", img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=300" },
-      { id: 506, name: "Paneer Tikka Roll", cat: "Burgers", price: 90, weight: "1 Roll", time: "10 MINS", img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=300" },
-      { id: 507, name: "Schezwan Veg Roll", cat: "Burgers", price: 75, weight: "1 Roll", time: "10 MINS", img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=300" },
+      // 5. BURGERS & ROLLS (CORRECT ROLLS IMAGES ADDED)
+      { id: 501, name: "Crispy Aloo Tikki Burger", cat: "Burgers", price: 49, weight: "1 Pc", time: "10 MINS", imgs: ["https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400", "https://images.unsplash.com/photo-1550547660-d9450f859349?w=400"] },
+      { id: 502, name: "Crispy Paneer Supreme Burger", cat: "Burgers", price: 89, weight: "1 Pc", time: "10 MINS", imgs: ["https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=400", "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400"] },
+      { id: 503, name: "Veg Kathi Roll", cat: "Burgers", price: 60, weight: "1 Roll", time: "10 MINS", imgs: ["https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=400", "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=400"] },
+      { id: 504, name: "Paneer Tikka Roll", cat: "Burgers", price: 90, weight: "1 Roll", time: "10 MINS", imgs: ["https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=400", "https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=400"] },
+      { id: 505, name: "Schezwan Veg Roll", cat: "Burgers", price: 75, weight: "1 Roll", time: "10 MINS", imgs: ["https://images.unsplash.com/photo-1601050690597-df0568f70950?w=400", "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=400"] },
 
       // 6. PIZZA & GARLIC BREAD
-      { id: 601, name: "Margherita Pizza (Classic)", cat: "Pizza", price: 149, weight: "7 inch", time: "15 MINS", img: "https://images.unsplash.com/photo-1604382355076-af4b0eb60143?w=300" },
-      { id: 602, name: "Farmhouse Veggie Supreme", cat: "Pizza", price: 219, weight: "7 inch", time: "15 MINS", img: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=300" },
-      { id: 603, name: "Paneer Special Pizza", cat: "Pizza", price: 239, weight: "7 inch", time: "15 MINS", img: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=300" },
-      { id: 604, name: "Corn & Cheese Pizza", cat: "Pizza", price: 169, weight: "7 inch", time: "15 MINS", img: "https://images.unsplash.com/photo-1604382355076-af4b0eb60143?w=300" },
-      { id: 605, name: "Stuffed Garlic Bread", cat: "Pizza", price: 129, weight: "1 Pack", time: "12 MINS", img: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=300" },
-      { id: 606, name: "Cheese Garlic Bread Strips", cat: "Pizza", price: 109, weight: "4 Pcs", time: "12 MINS", img: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=300" },
+      { id: 601, name: "Classic Margherita Cheese Pizza", cat: "Pizza", price: 149, weight: "7 inch", time: "15 MINS", imgs: ["https://images.unsplash.com/photo-1604382355076-af4b0eb60143?w=400", "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400"] },
+      { id: 602, name: "Farmhouse Veggie Supreme Pizza", cat: "Pizza", price: 219, weight: "7 inch", time: "15 MINS", imgs: ["https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400", "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=400"] },
+      { id: 603, name: "Stuffed Cheese Garlic Bread", cat: "Pizza", price: 129, weight: "1 Pack", time: "12 MINS", imgs: ["https://images.unsplash.com/photo-1573140247632-f8fd74997d5c?w=400", "https://images.unsplash.com/photo-1541745537411-b8046dc6d66c?w=400"] },
 
-      // 7. SANDWICHES & TOASTS
-      { id: 701, name: "Veg Grilled Sandwich", cat: "Sandwiches", price: 60, weight: "2 Pcs", time: "10 MINS", img: "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=300" },
-      { id: 702, name: "Cheese Corn Grilled Sandwich", cat: "Sandwiches", price: 80, weight: "2 Pcs", time: "10 MINS", img: "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=300" },
-      { id: 703, name: "Paneer Tikka Sandwich", cat: "Sandwiches", price: 95, weight: "2 Pcs", time: "10 MINS", img: "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=300" },
-      { id: 704, name: "Club Sandwich (3 Layer)", cat: "Sandwiches", price: 120, weight: "1 Pc", time: "12 MINS", img: "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=300" },
-      { id: 705, name: "Chili Cheese Toast", cat: "Sandwiches", price: 70, weight: "2 Pcs", time: "8 MINS", img: "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=300" },
+      // 7. SANDWICHES
+      { id: 701, name: "Veg Cheese Grilled Sandwich", cat: "Sandwiches", price: 60, weight: "2 Pcs", time: "10 MINS", imgs: ["https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=400", "https://images.unsplash.com/photo-1553909489-cd47e0907980?w=400"] },
+      { id: 702, name: "Paneer Tikka Grilled Sandwich", cat: "Sandwiches", price: 95, weight: "2 Pcs", time: "10 MINS", imgs: ["https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=400", "https://images.unsplash.com/photo-1553909489-cd47e0907980?w=400"] },
 
       // 8. MOMOS
-      { id: 801, name: "Veg Steamed Momos", cat: "Momos", price: 60, weight: "8 Pcs", time: "10 MINS", img: "https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=300" },
-      { id: 802, name: "Veg Fried Momos", cat: "Momos", price: 75, weight: "8 Pcs", time: "10 MINS", img: "https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=300" },
-      { id: 803, name: "Paneer Steamed Momos", cat: "Momos", price: 80, weight: "8 Pcs", time: "10 MINS", img: "https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=300" },
-      { id: 804, name: "Paneer Kurkure Momos", cat: "Momos", price: 110, weight: "6 Pcs", time: "12 MINS", img: "https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=300" },
-      { id: 805, name: "Veg Kurkure Momos", cat: "Momos", price: 95, weight: "6 Pcs", time: "12 MINS", img: "https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=300" },
-      { id: 806, name: "Gravy / Tandoori Momos", cat: "Momos", price: 120, weight: "6 Pcs", time: "12 MINS", img: "https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=300" },
+      { id: 801, name: "Veg Steamed Momos", cat: "Momos", price: 60, weight: "8 Pcs", time: "10 MINS", imgs: ["https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=400", "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=400"] },
+      { id: 802, name: "Paneer Kurkure Momos", cat: "Momos", price: 110, weight: "6 Pcs", time: "12 MINS", imgs: ["https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=400", "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=400"] },
 
-      // 9. FRIES & QUICK BITES
-      { id: 901, name: "Classic Salted French Fries", cat: "Fries", price: 70, weight: "Regular", time: "8 MINS", img: "https://images.unsplash.com/photo-1576107232684-1279f3908594?w=300" },
-      { id: 902, name: "Peri Peri French Fries", cat: "Fries", price: 85, weight: "Regular", time: "8 MINS", img: "https://images.unsplash.com/photo-1576107232684-1279f3908594?w=300" },
-      { id: 903, name: "Cheesy Loaded Fries", cat: "Fries", price: 110, weight: "Large", time: "10 MINS", img: "https://images.unsplash.com/photo-1576107232684-1279f3908594?w=300" },
-      { id: 904, name: "Veg Nuggets", cat: "Fries", price: 75, weight: "8 Pcs", time: "8 MINS", img: "https://images.unsplash.com/photo-1576107232684-1279f3908594?w=300" },
-      { id: 905, name: "Cheese Corn Balls", cat: "Fries", price: 95, weight: "6 Pcs", time: "8 MINS", img: "https://images.unsplash.com/photo-1576107232684-1279f3908594?w=300" },
-      { id: 906, name: "Veg Spring Rolls", cat: "Fries", price: 80, weight: "2 Rolls", time: "10 MINS", img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=300" }
+      // 9. FRIES
+      { id: 901, name: "Classic Peri Peri Fries", cat: "Fries", price: 85, weight: "Regular", time: "8 MINS", imgs: ["https://images.unsplash.com/photo-1576107232684-1279f3908594?w=400", "https://images.unsplash.com/photo-1585109649139-366815a0d713?w=400"] },
+      { id: 902, name: "Cheesy Loaded Fries", cat: "Fries", price: 110, weight: "Large", time: "10 MINS", imgs: ["https://images.unsplash.com/photo-1576107232684-1279f3908594?w=400", "https://images.unsplash.com/photo-1585109649139-366815a0d713?w=400"] }
     ];
 
     window.addEventListener('DOMContentLoaded', () => {
@@ -468,7 +434,7 @@
     });
 
     function init() {
-      document.getElementById('locHeader').innerText = user.location ? user.location.split('(')[0] : "School of Law";
+      document.getElementById('locHeader').innerText = user.location ? user.location.split('(')[0] : "⚖️ School of Law";
       renderAll();
     }
 
@@ -494,11 +460,22 @@
           if (containerEl) {
             containerEl.innerHTML = list.map(p => {
               const qty = cart[p.id] ? cart[p.id].qty : 0;
+              
+              const imgsHtml = p.imgs.map(url => `<img src="${url}" alt="${p.name}" loading="lazy">`).join('');
+              const dotsHtml = p.imgs.length > 1 ? p.imgs.map((_, i) => `<div class="dot ${i === 0 ? 'active' : ''}"></div>`).join('') : '';
+
               return `
                 <div class="item-card-blinkit">
                   <div>
+                    <div class="img-carousel-box">
+                      <div class="img-slider">
+                        ${imgsHtml}
+                      </div>
+                      <div class="carousel-dots">
+                        ${dotsHtml}
+                      </div>
+                    </div>
                     <span class="item-time-badge">⏱️ ${p.time}</span>
-                    <img src="${p.img}" class="item-img" alt="${p.name}">
                     <div class="item-name">${p.name}</div>
                     <div class="item-weight">${p.weight}</div>
                   </div>
@@ -555,7 +532,7 @@
     function openLocationModal() { document.getElementById('locationModal').style.display = 'flex'; }
     function openCheckoutModal() {
       const items = Object.values(cart);
-      if (items.length === 0) return alert("Pehle items cart me add karein!");
+      if (items.length === 0) return alert("Add items to cart first!");
       const list = document.getElementById('checkoutList');
       let total = 0;
       list.innerHTML = items.map(i => {
@@ -597,7 +574,7 @@
 
     function processOrder() {
       const lm = document.getElementById('orderLandmark').value;
-      if (!lm) return alert("Room No / Spot detail enter karein!");
+      if (!lm) return alert("Enter Room No / Spot details!");
       const id = "#" + Math.floor(1000 + Math.random() * 9000);
       const items = Object.values(cart);
       let total = 0;
