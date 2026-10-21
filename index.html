@@ -23,7 +23,7 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; }
     body { background-color: var(--bg-gray); color: var(--text-black); padding-bottom: 110px; -webkit-tap-highlight-color: transparent; }
 
-    /* ONLY LPUKART SPLASH SCREEN */
+    /* SPLASH SCREEN */
     #splashScreen {
       position: fixed; inset: 0; background: #E23744;
       z-index: 9999; display: flex; align-items: center; justify-content: center;
@@ -121,7 +121,7 @@
     /* BOTTOM NAV */
     .footer-nav {
       position: fixed; bottom: 0; left: 0; right: 0; background: #fff;
-      border-top: 1px solid #eee; display: flex; justify-content: space-around;
+      border-top: 1px solid #eee; display: flex; justify-space-around;
       padding: 8px 0 env(safe-area-inset-bottom, 8px); z-index: 90; max-width: 600px; margin: 0 auto;
     }
     .nav-tab { display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 10px; font-weight: 800; color: #777; cursor: pointer; }
@@ -129,17 +129,21 @@
 
     /* MODAL */
     .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; align-items: flex-end; justify-content: center; z-index: 200; }
-    .modal-sheet { background: white; width: 100%; max-width: 600px; border-radius: 20px 20px 0 0; padding: 20px; max-height: 80vh; overflow-y: auto; }
+    .modal-sheet { background: white; width: 100%; max-width: 600px; border-radius: 20px 20px 0 0; padding: 20px; max-height: 80vh; overflow-y: auto; position: relative; }
     .btn-green { width: 100%; background: var(--blink-green); color: white; border: none; padding: 14px; border-radius: 12px; font-size: 15px; font-weight: 900; cursor: pointer; margin-top: 10px; }
+    .btn-cancel { width: 100%; background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; padding: 12px; border-radius: 12px; font-size: 14px; font-weight: 800; cursor: pointer; margin-top: 8px; text-align: center; }
     
     .pay-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin: 10px 0; }
     .pay-btn { padding: 10px; border: 1px solid #ccc; border-radius: 10px; font-size: 12px; font-weight: 800; text-align: center; cursor: pointer; }
     .pay-btn.active { border-color: var(--blink-green); background: #F0FDF4; color: var(--blink-green); }
+
+    .modal-header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .close-x-btn { background: #eee; border: none; font-size: 16px; font-weight: 900; width: 28px; height: 28px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; }
   </style>
 </head>
 <body>
 
-  <!-- ONLY LPUKART SPLASH SCREEN -->
+  <!-- SPLASH SCREEN -->
   <div id="splashScreen">
     <div class="splash-logo">LPUKART</div>
   </div>
@@ -273,7 +277,10 @@
   <!-- Location Modal -->
   <div class="modal-overlay" id="locationModal">
     <div class="modal-sheet">
-      <div style="font-size:16px; font-weight:900; margin-bottom:12px;">Select Delivery Spot</div>
+      <div class="modal-header-flex">
+        <div style="font-size:16px; font-weight:900;">Select Delivery Spot</div>
+        <button class="close-x-btn" onclick="closeModal('locationModal')">✕</button>
+      </div>
       <form onsubmit="saveUserProfile(event)">
         <div style="margin-bottom:10px;">
           <label style="font-size:11px; font-weight:800; color:#666;">STUDENT NAME</label>
@@ -332,7 +339,10 @@
   <!-- Checkout Modal -->
   <div class="modal-overlay" id="checkoutModal">
     <div class="modal-sheet">
-      <div style="font-size:16px; font-weight:900; margin-bottom:12px;">Checkout - LPUKART</div>
+      <div class="modal-header-flex">
+        <div style="font-size:16px; font-weight:900;">Checkout - LPUKART</div>
+        <button class="close-x-btn" onclick="closeModal('checkoutModal')">✕</button>
+      </div>
       <div id="checkoutList" style="margin-bottom:12px; border-bottom:1px dashed #ccc; padding-bottom:10px;"></div>
       
       <div style="margin-bottom:10px;">
@@ -351,13 +361,17 @@
       </div>
 
       <button class="btn-green" onclick="processOrder()">PLACE ORDER NOW 🚀</button>
+      <button class="btn-cancel" onclick="closeModal('checkoutModal')">⬅️ BACK TO MENU</button>
     </div>
   </div>
 
   <!-- Vendor Orders Modal -->
   <div class="modal-overlay" id="shopkeeperModal">
     <div class="modal-sheet">
-      <div style="font-size:16px; font-weight:900; margin-bottom:12px;">🏪 Vendor Live Orders</div>
+      <div class="modal-header-flex">
+        <div style="font-size:16px; font-weight:900;">🏪 Vendor Live Orders</div>
+        <button class="close-x-btn" onclick="closeModal('shopkeeperModal')">✕</button>
+      </div>
       <div id="shopOrdersContainer">No orders yet.</div>
     </div>
   </div>
@@ -373,7 +387,7 @@
       location: "⚖️ School of Law (SOL)"
     };
 
-    // ALL PRODUCTS WITH ACCURATE MULTIPLE IMAGES
+    // ACCURATE & UNIQUE PRODUCT IMAGE URLS
     const PRODUCTS = [
       // 1. FRUITS
       { id: 101, name: "Fresh Red Apple", cat: "Fruits", price: 120, weight: "1 kg", time: "10 MINS", imgs: ["https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=400", "https://images.unsplash.com/photo-1570913149827-d2ac84ab3f9a?w=400", "https://images.unsplash.com/photo-1567306226416-28f0efdc88ce?w=400"] },
@@ -401,7 +415,7 @@
       { id: 403, name: "Punjabi Chole Bhature", cat: "Main Food", price: 110, weight: "2 Bhature", time: "12 MINS", imgs: ["https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=400", "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=400"] },
       { id: 404, name: "Hyderabadi Veg Biryani", cat: "Main Food", price: 120, weight: "1 Plate", time: "12 MINS", imgs: ["https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=400", "https://images.unsplash.com/photo-1633945274405-b6c8069047b0?w=400"] },
 
-      // 5. BURGERS & ROLLS (CORRECT ROLLS IMAGES ADDED)
+      // 5. BURGERS & ROLLS (CORRECT ROLLS IMAGES FIXED)
       { id: 501, name: "Crispy Aloo Tikki Burger", cat: "Burgers", price: 49, weight: "1 Pc", time: "10 MINS", imgs: ["https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400", "https://images.unsplash.com/photo-1550547660-d9450f859349?w=400"] },
       { id: 502, name: "Crispy Paneer Supreme Burger", cat: "Burgers", price: 89, weight: "1 Pc", time: "10 MINS", imgs: ["https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=400", "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400"] },
       { id: 503, name: "Veg Kathi Roll", cat: "Burgers", price: 60, weight: "1 Roll", time: "10 MINS", imgs: ["https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=400", "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=400"] },
@@ -529,6 +543,10 @@
       renderAll();
     }
 
+    function closeModal(id) {
+      document.getElementById(id).style.display = 'none';
+    }
+
     function openLocationModal() { document.getElementById('locationModal').style.display = 'flex'; }
     function openCheckoutModal() {
       const items = Object.values(cart);
@@ -544,6 +562,7 @@
       }).join('') + `<div style="display:flex; justify-content:space-between; font-weight:900; color:var(--blink-green); margin-top:8px;"><span>Total:</span><span>₹${total}</span></div>`;
       document.getElementById('checkoutModal').style.display = 'flex';
     }
+
     function openShopkeeperModal() {
       const wrap = document.getElementById('shopOrdersContainer');
       wrap.innerHTML = liveOrders.length === 0 ? "No orders yet." : liveOrders.map(o => `
@@ -568,7 +587,7 @@
       user.phone = document.getElementById('userPhoneInput').value;
       user.location = document.getElementById('userLocationSelect').value;
       localStorage.setItem('lpukart_user', JSON.stringify(user));
-      document.getElementById('locationModal').style.display = 'none';
+      closeModal('locationModal');
       init();
     }
 
@@ -586,7 +605,7 @@
       localStorage.setItem('lpukart_orders', JSON.stringify(liveOrders));
       cart = {};
       updateCartBar();
-      document.getElementById('checkoutModal').style.display = 'none';
+      closeModal('checkoutModal');
       alert(`✅ Order Placed!\nID: ${id}\nPayment: ${activePay}`);
       openShopkeeperModal();
     }
