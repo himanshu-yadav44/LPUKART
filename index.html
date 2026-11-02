@@ -4,10 +4,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>LPUKART - Campus Express Delivery</title>
+  
   <meta name="theme-color" content="#F7C400">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="LPUKART">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- FIREBASE SDKs FOR REAL SMS OTP -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
 
   <style>
     :root {
@@ -16,12 +26,18 @@
       --primary-red: #E23744;
       --text-black: #1C1C1C;
       --text-gray: #666666;
-      --bg-gray: #F4F6F8;
-      --card-bg: #FFFFFF;
+      --bg-gray: #F8F9FA;
+      --border-gray: #ECECEC;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; }
-    body { background-color: var(--bg-gray); color: var(--text-black); padding-bottom: 110px; -webkit-tap-highlight-color: transparent; }
+    
+    body {
+      background-color: var(--bg-gray);
+      color: var(--text-black);
+      padding-bottom: 120px;
+      -webkit-tap-highlight-color: transparent;
+    }
 
     /* SPLASH SCREEN */
     #splashScreen {
@@ -30,7 +46,7 @@
       transition: opacity 0.5s ease-out, visibility 0.5s;
     }
     .splash-logo {
-      font-size: 50px; font-weight: 900; font-style: italic; color: #ffffff;
+      font-size: 52px; font-weight: 900; font-style: italic; color: #ffffff;
       letter-spacing: -2px; text-transform: uppercase;
       animation: splashPop 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
@@ -39,97 +55,84 @@
       100% { transform: scale(1); opacity: 1; }
     }
 
-    /* HEADER STYLE */
-    header { background: var(--blink-yellow); padding: 12px 16px 14px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-    .header-top { display: flex; justify-content: space-between; align-items: center; max-width: 600px; margin: 0 auto; }
-    
-    .delivery-info { display: flex; flex-direction: column; cursor: pointer; }
-    .delivery-time { font-size: 20px; font-weight: 900; color: #000; line-height: 1.1; display: flex; align-items: center; gap: 4px; }
-    .delivery-time span { color: #E23744; font-style: italic; }
-    .delivery-loc { font-size: 11.5px; font-weight: 700; color: #222; margin-top: 2px; display: flex; align-items: center; gap: 2px; }
-
-    .header-right-actions { display: flex; align-items: center; gap: 10px; }
-    .brand-title { font-size: 22px; font-weight: 900; font-style: italic; color: #000; letter-spacing: -1px; }
-    .vendor-btn { background: #000; color: #fff; font-size: 10px; font-weight: 800; padding: 5px 10px; border-radius: 20px; cursor: pointer; }
-    .profile-btn { width: 32px; height: 32px; border-radius: 50%; background: #000; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; cursor: pointer; }
-
-    /* SEARCH BAR */
-    .search-container { max-width: 600px; margin: 10px auto 0; }
-    .search-box {
-      background: #ffffff; border-radius: 12px; padding: 10px 14px;
-      display: flex; align-items: center; gap: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    /* TOP HEADER BAR */
+    header {
+      background: #FFFFFF;
+      border-bottom: 1px solid var(--border-gray);
+      position: sticky; top: 0; z-index: 100;
+      padding: 12px 24px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.03);
     }
-    .search-box input { border: none; outline: none; width: 100%; font-size: 13.5px; font-weight: 600; color: #333; }
+    
+    .header-container {
+      max-width: 1280px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand-logo-box { display: flex; align-items: center; gap: 16px; cursor: pointer; }
+    .brand-logo-text { font-size: 28px; font-weight: 900; font-style: italic; color: #F7C400; letter-spacing: -1.5px; line-height: 1; }
+    .brand-logo-text span { color: var(--blink-green); }
+
+    .delivery-info-box { display: flex; flex-direction: column; cursor: pointer; border-left: 1px solid #eee; padding-left: 16px; min-width: 180px; }
+    .delivery-status { font-size: 14px; font-weight: 900; color: #000; line-height: 1.2; }
+    .delivery-spot-name { font-size: 12px; font-weight: 600; color: #555; display: flex; align-items: center; gap: 4px; }
+
+    /* CENTER SEARCH BAR */
+    .header-search-wrap { flex: 1; max-width: 680px; }
+    .search-input-box { background: #F3F4F6; border-radius: 12px; padding: 11px 16px; display: flex; align-items: center; gap: 12px; border: 1px solid transparent; transition: all 0.2s ease; }
+    .search-input-box:focus-within { border-color: var(--blink-green); background: #FFFFFF; box-shadow: 0 0 0 3px rgba(12, 131, 31, 0.1); }
+    .search-input-box input { border: none; outline: none; background: transparent; width: 100%; font-size: 14px; font-weight: 600; color: #222; }
+
+    /* RIGHT ACTIONS */
+    .header-actions { display: flex; align-items: center; gap: 16px; }
+    .login-btn-text { font-size: 15px; font-weight: 800; color: #333; cursor: pointer; padding: 8px 14px; border-radius: 10px; background: #F1F5F9; }
+    .login-btn-text:hover { background: #E2E8F0; }
+    .vendor-pill { background: #000; color: #fff; font-size: 11px; font-weight: 800; padding: 7px 14px; border-radius: 20px; cursor: pointer; text-transform: uppercase; }
+    .my-cart-btn { background: var(--blink-green); color: #fff; padding: 10px 18px; border-radius: 10px; font-size: 14px; font-weight: 800; display: flex; align-items: center; gap: 8px; cursor: pointer; box-shadow: 0 4px 12px rgba(12, 131, 31, 0.2); }
+
+    /* MAIN CONTAINER */
+    .main-wrapper { max-width: 1280px; margin: 0 auto; padding: 20px 16px; }
+
+    /* HERO BANNERS */
+    .hero-banner-main { background: linear-gradient(100deg, #0f5132 0%, #198754 100%); border-radius: 20px; color: white; padding: 32px 40px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; position: relative; overflow: hidden; }
+    .hero-content h1 { font-size: 34px; font-weight: 900; margin-bottom: 8px; line-height: 1.1; letter-spacing: -0.5px; }
+    .hero-content p { font-size: 15px; opacity: 0.9; margin-bottom: 18px; font-weight: 500; max-width: 480px; }
+    .shop-now-btn { background: #FFFFFF; color: #0f5132; border: none; padding: 12px 28px; border-radius: 10px; font-size: 15px; font-weight: 900; cursor: pointer; display: inline-block; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
 
     /* CATEGORY TABS */
-    .cat-tabs { display: flex; gap: 10px; overflow-x: auto; padding: 12px 16px; scrollbar-width: none; background: #fff; border-bottom: 1px solid #eee; }
+    .cat-tabs { display: flex; gap: 10px; overflow-x: auto; padding: 10px 0 16px; scrollbar-width: none; border-bottom: 1px solid #EAEAEA; margin-bottom: 20px; }
     .cat-tabs::-webkit-scrollbar { display: none; }
-    .cat-tab { display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 11px; font-weight: 800; color: #555; white-space: nowrap; cursor: pointer; }
-    .cat-tab.active { color: var(--blink-green); border-bottom: 2.5px solid var(--blink-green); padding-bottom: 4px; }
-
-    .content-area { max-width: 600px; margin: 0 auto; padding: 12px 14px; }
+    .cat-tab { font-size: 13px; font-weight: 800; color: #666; white-space: nowrap; cursor: pointer; padding: 8px 16px; border-radius: 20px; background: #fff; border: 1px solid #E2E8F0; }
+    .cat-tab.active { color: #fff; background: var(--blink-green); border-color: var(--blink-green); }
 
     /* GRID CATEGORY SECTIONS */
-    .grid-section { background: #fff; border-radius: 18px; padding: 14px; margin-bottom: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
-    .grid-title { font-size: 15px; font-weight: 900; color: #111; margin-bottom: 12px; }
+    .grid-section { background: #fff; border-radius: 20px; padding: 20px; margin-bottom: 20px; border: 1px solid #ECECEC; }
+    .grid-title { font-size: 18px; font-weight: 900; color: #111; margin-bottom: 16px; }
 
-    /* PRODUCT CARDS WITH IMAGE CAROUSEL */
-    .products-scroll { display: flex; gap: 12px; overflow-x: auto; scrollbar-width: none; padding-bottom: 6px; }
+    /* PRODUCT CARDS CAROUSEL */
+    .products-scroll { display: flex; gap: 16px; overflow-x: auto; scrollbar-width: none; padding-bottom: 6px; }
     .products-scroll::-webkit-scrollbar { display: none; }
     
-    .item-card-blinkit {
-      min-width: 145px; width: 145px; background: #fff; border: 1px solid #EAEAEA;
-      border-radius: 16px; padding: 10px; position: relative; display: flex; flex-direction: column; justify-content: space-between;
-    }
+    .item-card-blinkit { min-width: 170px; width: 170px; background: #fff; border: 1px solid #EAEAEA; border-radius: 16px; padding: 12px; position: relative; display: flex; flex-direction: column; justify-content: space-between; }
     
-    .img-carousel-box { position: relative; width: 100%; height: 95px; border-radius: 10px; overflow: hidden; margin-bottom: 6px; background: #fafafa; }
+    .img-carousel-box { position: relative; width: 100%; height: 110px; border-radius: 10px; overflow: hidden; margin-bottom: 8px; background: #fafafa; }
     .img-slider { display: flex; height: 100%; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
     .img-slider::-webkit-scrollbar { display: none; }
     .img-slider img { min-width: 100%; height: 100%; object-fit: cover; scroll-snap-align: start; }
-    
-    .carousel-dots { position: absolute; bottom: 4px; left: 0; right: 0; display: flex; justify-content: center; gap: 3px; z-index: 5; }
-    .dot { width: 4px; height: 4px; border-radius: 50%; background: rgba(0,0,0,0.25); }
-    .dot.active { background: var(--blink-green); width: 8px; border-radius: 4px; }
 
     .item-time-badge { font-size: 9px; font-weight: 900; background: #F1F5F9; color: #475569; padding: 2px 6px; border-radius: 6px; display: inline-block; margin-bottom: 4px; width: fit-content; }
-    .item-name { font-size: 11.5px; font-weight: 800; color: #111; height: 32px; overflow: hidden; line-height: 1.2; }
+    .item-name { font-size: 12px; font-weight: 800; color: #111; height: 34px; overflow: hidden; line-height: 1.25; }
     .item-weight { font-size: 10px; font-weight: 700; color: #777; margin: 4px 0 8px; }
     .item-bottom { display: flex; justify-content: space-between; align-items: center; }
-    .item-price { font-size: 13px; font-weight: 900; color: #111; }
+    .item-price { font-size: 13.5px; font-weight: 900; color: #111; }
     
-    .btn-add-blinkit {
-      background: #F0FDF4; border: 1px solid var(--blink-green); color: var(--blink-green);
-      font-size: 11px; font-weight: 900; padding: 5px 12px; border-radius: 8px; cursor: pointer;
-    }
-    .qty-btn-blinkit {
-      background: var(--blink-green); color: white; font-size: 11px; font-weight: 900;
-      padding: 4px 8px; border-radius: 8px; display: flex; align-items: center; gap: 6px;
-    }
+    .btn-add-blinkit { background: #F0FDF4; border: 1px solid var(--blink-green); color: var(--blink-green); font-size: 12px; font-weight: 900; padding: 6px 14px; border-radius: 8px; cursor: pointer; }
+    .qty-btn-blinkit { background: var(--blink-green); color: white; font-size: 12px; font-weight: 900; padding: 5px 10px; border-radius: 8px; display: flex; align-items: center; gap: 8px; }
 
-    /* FLOATING GREEN CART */
-    .cart-float-green {
-      position: fixed; bottom: 75px; left: 16px; right: 16px; max-width: 568px; margin: 0 auto;
-      background: var(--blink-green); color: white; border-radius: 14px; padding: 10px 16px;
-      display: flex; justify-content: space-between; align-items: center;
-      box-shadow: 0 8px 24px rgba(12, 131, 31, 0.4); z-index: 95; cursor: pointer;
-    }
-    .cf-green-text { display: flex; flex-direction: column; }
-    .cf-green-count { font-size: 12px; font-weight: 900; text-transform: uppercase; }
-    .cf-green-sub { font-size: 10px; opacity: 0.9; }
-    .cf-green-btn { font-size: 13px; font-weight: 900; display: flex; align-items: center; gap: 4px; }
-
-    /* BOTTOM NAV */
-    .footer-nav {
-      position: fixed; bottom: 0; left: 0; right: 0; background: #fff;
-      border-top: 1px solid #eee; display: flex; justify-space-around;
-      padding: 8px 0 env(safe-area-inset-bottom, 8px); z-index: 90; max-width: 600px; margin: 0 auto;
-    }
-    .nav-tab { display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 10px; font-weight: 800; color: #777; cursor: pointer; }
-    .nav-tab.active { color: var(--blink-green); }
-
-    /* MODAL */
-    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; align-items: flex-end; justify-content: center; z-index: 200; }
-    .modal-sheet { background: white; width: 100%; max-width: 600px; border-radius: 20px 20px 0 0; padding: 20px; max-height: 80vh; overflow-y: auto; position: relative; }
+    /* MODALS */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 200; padding: 16px; }
+    .modal-sheet { background: white; width: 100%; max-width: 460px; border-radius: 20px; padding: 24px; max-height: 90vh; overflow-y: auto; position: relative; }
     .btn-green { width: 100%; background: var(--blink-green); color: white; border: none; padding: 14px; border-radius: 12px; font-size: 15px; font-weight: 900; cursor: pointer; margin-top: 10px; }
     .btn-cancel { width: 100%; background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; padding: 12px; border-radius: 12px; font-size: 14px; font-weight: 800; cursor: pointer; margin-top: 8px; text-align: center; }
     
@@ -137,8 +140,20 @@
     .pay-btn { padding: 10px; border: 1px solid #ccc; border-radius: 10px; font-size: 12px; font-weight: 800; text-align: center; cursor: pointer; }
     .pay-btn.active { border-color: var(--blink-green); background: #F0FDF4; color: var(--blink-green); }
 
-    .modal-header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-    .close-x-btn { background: #eee; border: none; font-size: 16px; font-weight: 900; width: 28px; height: 28px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+    .modal-header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+    .close-x-btn { background: #eee; border: none; font-size: 16px; font-weight: 900; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+
+    .link-action { font-size: 12px; font-weight: 700; color: var(--blink-green); cursor: pointer; text-decoration: underline; }
+
+    @media (max-width: 768px) {
+      header { padding: 10px 14px; }
+      .header-container { flex-wrap: wrap; gap: 10px; }
+      .brand-logo-text { font-size: 22px; }
+      .delivery-info-box { border-left: none; padding-left: 0; min-width: auto; }
+      .header-search-wrap { order: 3; width: 100%; max-width: 100%; margin-top: 4px; }
+      .hero-banner-main { padding: 24px; flex-direction: column; text-align: center; }
+      .hero-content h1 { font-size: 24px; }
+    }
   </style>
 </head>
 <body>
@@ -150,127 +165,118 @@
 
   <!-- HEADER -->
   <header>
-    <div class="header-top">
-      <div class="delivery-info" onclick="openLocationModal()">
-        <div class="delivery-time">LPUKART in <span>12 minutes</span></div>
-        <div class="delivery-loc"><span id="locHeader">⚖️ School of Law</span> ▾</div>
+    <div class="header-container">
+      <div class="brand-logo-box" onclick="location.reload()">
+        <div class="brand-logo-text">LPU<span>KART</span></div>
       </div>
-      
-      <div class="header-right-actions">
-        <div class="vendor-btn" onclick="openShopkeeperModal()">🏪 VENDOR</div>
-        <div class="brand-title" onclick="location.reload()">LPUKART</div>
-        <div class="profile-btn" onclick="openLocationModal()">H</div>
-      </div>
-    </div>
 
-    <div class="search-container">
-      <div class="search-box">
-        <span>🔍</span>
-        <input type="text" id="searchInput" placeholder='Search "apple, burger, momo, pizza, thali, coffee"' onkeyup="renderAll()">
+      <div class="delivery-info-box" onclick="openLocationModal()">
+        <div class="delivery-status">Delivery in 12 minutes</div>
+        <div class="delivery-spot-name"><span id="locHeader">⚖️ School of Law</span> ▾</div>
+      </div>
+
+      <div class="header-search-wrap">
+        <div class="search-input-box">
+          <span>🔍</span>
+          <input type="text" id="searchInput" placeholder='Search "burger, pizza, momos, biryani, dosa, milk"' onkeyup="renderAll()">
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <div class="vendor-pill" onclick="openShopkeeperModal()">🏪 VENDOR</div>
+        <div class="login-btn-text" id="headerAuthBtn" onclick="openAuthModal()">Login</div>
+        <div class="my-cart-btn" onclick="openCheckoutModal()">
+          <span>🛒</span>
+          <span id="cartHeaderLabel">My Cart</span>
+        </div>
       </div>
     </div>
   </header>
 
-  <!-- CATEGORY TOP TABS -->
-  <div class="cat-tabs">
-    <div class="cat-tab active" onclick="filterTab('All', this)">All</div>
-    <div class="cat-tab" onclick="filterTab('Fruits', this)">Fresh Fruits</div>
-    <div class="cat-tab" onclick="filterTab('Snacks', this)">Snacks & Noodles</div>
-    <div class="cat-tab" onclick="filterTab('Beverages', this)">Tea & Drinks</div>
-    <div class="cat-tab" onclick="filterTab('Burgers', this)">Burgers & Rolls</div>
-    <div class="cat-tab" onclick="filterTab('Pizza', this)">Pizza & Garlic Bread</div>
-    <div class="cat-tab" onclick="filterTab('Sandwiches', this)">Sandwiches</div>
-    <div class="cat-tab" onclick="filterTab('Momos', this)">Momos</div>
-    <div class="cat-tab" onclick="filterTab('Fries', this)">Fries & Side Snacks</div>
-    <div class="cat-tab" onclick="filterTab('Main Food', this)">Main Food & Meals</div>
-  </div>
+  <!-- MAIN WRAPPER -->
+  <div class="main-wrapper">
 
-  <div class="content-area">
-
-    <!-- FRUITS SECTION -->
-    <div class="grid-section" id="section-Fruits">
-      <div class="grid-title">Fresh Fruits</div>
-      <div class="products-scroll" id="container-Fruits"></div>
-    </div>
-
-    <!-- BURGERS & ROLLS -->
-    <div class="grid-section" id="section-Burgers">
-      <div class="grid-title">Burgers & Kathi Rolls</div>
-      <div class="products-scroll" id="container-Burgers"></div>
-    </div>
-
-    <!-- MOMOS & DIM SUMS -->
-    <div class="grid-section" id="section-Momos">
-      <div class="grid-title">Momos & Dim Sums</div>
-      <div class="products-scroll" id="container-Momos"></div>
-    </div>
-
-    <!-- PIZZA & GARLIC BREAD -->
-    <div class="grid-section" id="section-Pizza">
-      <div class="grid-title">Pizza & Garlic Bread</div>
-      <div class="products-scroll" id="container-Pizza"></div>
-    </div>
-
-    <!-- SNACKS & STREET FOOD -->
-    <div class="grid-section" id="section-Snacks">
-      <div class="grid-title">Snacks & Street Food</div>
-      <div class="products-scroll" id="container-Snacks"></div>
-    </div>
-
-    <!-- SANDWICHES & TOASTS -->
-    <div class="grid-section" id="section-Sandwiches">
-      <div class="grid-title">Sandwiches & Toasts</div>
-      <div class="products-scroll" id="container-Sandwiches"></div>
-    </div>
-
-    <!-- FRIES & SIDE SNACKS -->
-    <div class="grid-section" id="section-Fries">
-      <div class="grid-title">Fries & Quick Bites</div>
-      <div class="products-scroll" id="container-Fries"></div>
-    </div>
-
-    <!-- BEVERAGES -->
-    <div class="grid-section" id="section-Beverages">
-      <div class="grid-title">Tea, Coffee & Beverages</div>
-      <div class="products-scroll" id="container-Beverages"></div>
-    </div>
-
-    <!-- MAIN FOOD ITEMS -->
-    <div class="grid-section" id="section-Main Food">
-      <div class="grid-title">Main Course & Meals</div>
-      <div class="products-scroll" id="container-Main Food"></div>
-    </div>
-
-  </div>
-
-  <!-- FLOATING GREEN CART -->
-  <div class="cart-float-green" id="cartFloat" style="display:none;" onclick="openCheckoutModal()">
-    <div class="cf-green-left">
-      <div class="cf-green-text">
-        <div class="cf-green-count" id="cartItemsCount">0 ITEMS</div>
-        <div class="cf-green-sub" id="cartTotalSum">₹0</div>
+    <!-- HERO PROMOTIONAL BANNER -->
+    <div class="hero-banner-main">
+      <div class="hero-content">
+        <h1>Food, Snacks & Essentials Delivered in 12 Mins</h1>
+        <p>Order North/South Indian Meals, Fast Food, Desserts & Blinkit Groceries right to your Hostel or Block!</p>
+        <button class="shop-now-btn" onclick="window.scrollTo({top: 400, behavior: 'smooth'})">Shop Now</button>
       </div>
+      <div style="font-size: 90px; user-select: none;">🍔🍕🧃</div>
     </div>
-    <div class="cf-green-btn">View Cart ➔</div>
+
+    <!-- CATEGORY TABS -->
+    <div class="cat-tabs">
+      <div class="cat-tab active" onclick="filterTab('All', this)">All Categories</div>
+      <div class="cat-tab" onclick="filterTab('North Indian', this)">North Indian</div>
+      <div class="cat-tab" onclick="filterTab('South Indian', this)">South Indian</div>
+      <div class="cat-tab" onclick="filterTab('Fast Food & Asian', this)">Fast Food & Asian</div>
+      <div class="cat-tab" onclick="filterTab('Burgers & Rolls', this)">Burgers & Kathi Rolls</div>
+      <div class="cat-tab" onclick="filterTab('Pizza & Garlic Bread', this)">Pizza & Garlic Bread</div>
+      <div class="cat-tab" onclick="filterTab('Momos', this)">Momos & Dim Sums</div>
+      <div class="cat-tab" onclick="filterTab('Snacks & Beverages', this)">Snacks & Beverages</div>
+      <div class="cat-tab" onclick="filterTab('Desserts & Bakery', this)">Desserts & Bakery</div>
+      <div class="cat-tab" onclick="filterTab('Healthy & Fitness', this)">Healthy & Fitness</div>
+      <div class="cat-tab" onclick="filterTab('Groceries & Essentials', this)">Groceries & Essentials</div>
+    </div>
+
+    <!-- SECTIONS -->
+    <div class="content-area">
+      <div class="grid-section" id="section-North Indian"><div class="grid-title">North Indian Specials</div><div class="products-scroll" id="container-North Indian"></div></div>
+      <div class="grid-section" id="section-South Indian"><div class="grid-title">South Indian Delights</div><div class="products-scroll" id="container-South Indian"></div></div>
+      <div class="grid-section" id="section-Fast Food & Asian"><div class="grid-title">Fast Food & Asian Favorites</div><div class="products-scroll" id="container-Fast Food & Asian"></div></div>
+      <div class="grid-section" id="section-Burgers & Rolls"><div class="grid-title">Burgers & Kathi Rolls</div><div class="products-scroll" id="container-Burgers & Rolls"></div></div>
+      <div class="grid-section" id="section-Pizza & Garlic Bread"><div class="grid-title">Pizza & Garlic Bread</div><div class="products-scroll" id="container-Pizza & Garlic Bread"></div></div>
+      <div class="grid-section" id="section-Momos"><div class="grid-title">Momos & Dim Sums</div><div class="products-scroll" id="container-Momos"></div></div>
+      <div class="grid-section" id="section-Snacks & Beverages"><div class="grid-title">Snacks & Beverages</div><div class="products-scroll" id="container-Snacks & Beverages"></div></div>
+      <div class="grid-section" id="section-Desserts & Bakery"><div class="grid-title">Desserts & Bakery</div><div class="products-scroll" id="container-Desserts & Bakery"></div></div>
+      <div class="grid-section" id="section-Healthy & Fitness"><div class="grid-title">Healthy & Fitness Bowls</div><div class="products-scroll" id="container-Healthy & Fitness"></div></div>
+      <div class="grid-section" id="section-Groceries & Essentials"><div class="grid-title">Groceries & Essentials (Blinkit)</div><div class="products-scroll" id="container-Groceries & Essentials"></div></div>
+    </div>
+
   </div>
 
-  <!-- BOTTOM NAV BAR -->
-  <div class="footer-nav">
-    <div class="nav-tab active" onclick="location.reload()">
-      <span style="font-size:18px;">🏠</span>
-      <span>Home</span>
-    </div>
-    <div class="nav-tab" onclick="openLocationModal()">
-      <span style="font-size:18px;">📍</span>
-      <span>Location</span>
-    </div>
-    <div class="nav-tab" onclick="openShopkeeperModal()">
-      <span style="font-size:18px;">🏪</span>
-      <span>Vendor</span>
-    </div>
-    <div class="nav-tab" onclick="openCheckoutModal()">
-      <span style="font-size:18px;">🛒</span>
-      <span>Cart</span>
+  <!-- AUTH / LOGIN MODAL (WITH REAL FIREBASE OTP) -->
+  <div class="modal-overlay" id="authModal">
+    <div class="modal-sheet">
+      <div class="modal-header-flex">
+        <div style="font-size:18px; font-weight:900;" id="authModalTitle">LPUKART Account 🚀</div>
+        <button class="close-x-btn" onclick="closeModal('authModal')">✕</button>
+      </div>
+
+      <!-- INVISIBLE RECAPTCHA FOR FIREBASE -->
+      <div id="recaptcha-container"></div>
+
+      <!-- STEP 1: PHONE NUMBER INPUT -->
+      <div id="phoneStep">
+        <div style="font-size:13px; color:#666; margin-bottom:16px;">Log in or Sign up via Real SMS OTP</div>
+        
+        <div style="margin-bottom:14px;">
+          <label style="font-size:11px; font-weight:800; color:#666;">MOBILE NUMBER</label>
+          <div style="display:flex; gap:8px; margin-top:4px;">
+            <span style="padding:10px; background:#f1f5f9; border:1px solid #ccc; border-radius:8px; font-weight:800; font-size:14px;">+91</span>
+            <input type="tel" id="authPhone" placeholder="Enter 10-digit number" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:8px; font-weight:700;" maxlength="10">
+          </div>
+        </div>
+
+        <button class="btn-green" onclick="sendRealOTP()">SEND REAL SMS OTP 📲</button>
+      </div>
+
+      <!-- STEP 2: OTP VERIFICATION -->
+      <div id="otpStep" style="display:none;">
+        <div style="font-size:13px; color:#666; margin-bottom:16px;">OTP sent to <strong id="sentPhoneText">+91 XXXXXXXX</strong></div>
+        <div style="margin-bottom:14px;">
+          <label style="font-size:11px; font-weight:800; color:#666;">ENTER 6-DIGIT REAL OTP</label>
+          <input type="text" id="authOtp" placeholder="Enter OTP received" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:8px; font-weight:800; text-align:center; letter-spacing:4px; font-size:18px;" maxlength="6">
+        </div>
+        <div style="margin-bottom:14px;">
+          <label style="font-size:11px; font-weight:800; color:#666;">YOUR NAME</label>
+          <input type="text" id="authName" placeholder="Himanshu Yadav" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:8px; font-weight:700;">
+        </div>
+        <button class="btn-green" onclick="verifyRealOTP()">VERIFY & LOGIN 🎉</button>
+        <button class="btn-cancel" onclick="showPhoneStep()">Change Phone Number</button>
+      </div>
     </div>
   </div>
 
@@ -282,15 +288,15 @@
         <button class="close-x-btn" onclick="closeModal('locationModal')">✕</button>
       </div>
       <form onsubmit="saveUserProfile(event)">
-        <div style="margin-bottom:10px;">
+        <div style="margin-bottom:12px;">
           <label style="font-size:11px; font-weight:800; color:#666;">STUDENT NAME</label>
           <input type="text" id="userNameInput" placeholder="Himanshu Yadav" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:8px;" required>
         </div>
-        <div style="margin-bottom:10px;">
+        <div style="margin-bottom:12px;">
           <label style="font-size:11px; font-weight:800; color:#666;">PHONE NUMBER</label>
           <input type="tel" id="userPhoneInput" placeholder="9876543210" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:8px;" required>
         </div>
-        <div style="margin-bottom:10px;">
+        <div style="margin-bottom:12px;">
           <label style="font-size:11px; font-weight:800; color:#666;">CAMPUS LOCATION / BLOCK</label>
           <select id="userLocationSelect" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:8px;" required>
             <optgroup label="Academic Blocks & Campus Spots">
@@ -303,7 +309,6 @@
               <option value="🌾 Agriculture Block">🌾 Agriculture Block</option>
               <option value="🏗️ Civil Block">🏗️ Civil Block</option>
               <option value="🍔 Block 13 Food Court">🍔 Block 13 Food Court</option>
-              <option value="🏫 Block 33 / 34">🏫 Block 33 / 34</option>
             </optgroup>
             <optgroup label="Boys Hostels (BH-1 to BH-12)">
               <option value="👦 BH-1 (Boys Hostel)">👦 BH-1 (Boys Hostel)</option>
@@ -345,7 +350,7 @@
       </div>
       <div id="checkoutList" style="margin-bottom:12px; border-bottom:1px dashed #ccc; padding-bottom:10px;"></div>
       
-      <div style="margin-bottom:10px;">
+      <div style="margin-bottom:12px;">
         <label style="font-size:11px; font-weight:800; color:#666;">ROOM NO / BENCH / SPOT DETAIL</label>
         <input type="text" id="orderLandmark" placeholder="e.g. Room 412 / Gate No 2 / Bench 5" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:8px;" required>
       </div>
@@ -377,6 +382,70 @@
   </div>
 
   <script>
+    // FIREBASE CONFIGURATION (INTEGRATED WITH YOUR LPUKART PROJECT KEYS)
+    const firebaseConfig = {
+      apiKey: "AIzaSyCdep7omykWzg8HdKnE0vnqwP0Dq8Nl-Sc",
+      authDomain: "lpukart-5d2a6.firebaseapp.com",
+      projectId: "lpukart-5d2a6",
+      storageBucket: "lpukart-5d2a6.firebasestorage.app",
+      messagingSenderId: "488185456977",
+      appId: "1:488185456977:web:f680f2cbf74d5a2235cb70",
+      measurementId: "G-FZ8MYQRL3Q"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+
+    let confirmationResult = null;
+
+    window.onload = function() {
+      window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+        'size': 'invisible'
+      });
+    };
+
+    function sendRealOTP() {
+      const phoneNumber = "+91" + document.getElementById('authPhone').value;
+      if (document.getElementById('authPhone').value.length !== 10) {
+        alert("Kripya 10-digit mobile number dalein!");
+        return;
+      }
+      const appVerifier = window.recaptchaVerifier;
+      firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
+        .then((result) => {
+          confirmationResult = result;
+          alert("Real SMS OTP Sent to " + phoneNumber);
+          document.getElementById('sentPhoneText').innerText = phoneNumber;
+          document.getElementById('phoneStep').style.display = 'none';
+          document.getElementById('otpStep').style.display = 'block';
+        })
+        .catch((error) => {
+          alert("OTP Error: " + error.message);
+        });
+    }
+
+    function verifyRealOTP() {
+      const otp = document.getElementById('authOtp').value;
+      const name = document.getElementById('authName').value || "Himanshu Yadav";
+
+      if (!confirmationResult) return alert("Pehle OTP request karein!");
+
+      confirmationResult.confirm(otp)
+        .then((result) => {
+          const userObj = result.user;
+          user.name = name;
+          user.phone = userObj.phoneNumber;
+          user.isLoggedIn = true;
+          localStorage.setItem('lpukart_user', JSON.stringify(user));
+
+          closeModal('authModal');
+          alert("🎉 Real OTP Verified! Welcome to LPUKART, " + name);
+          init();
+        })
+        .catch((error) => {
+          alert("Galat OTP! Kripya sahi OTP dalein.");
+        });
+    }
+
     let activePay = "COD";
     let cart = {};
     let activeTab = "All";
@@ -384,78 +453,117 @@
     let user = JSON.parse(localStorage.getItem('lpukart_user')) || {
       name: "Himanshu Yadav",
       phone: "9876543210",
+      isLoggedIn: false,
       location: "⚖️ School of Law (SOL)"
     };
 
-    // ACCURATE & UNIQUE PRODUCT IMAGE URLS
     const PRODUCTS = [
-      // 1. FRUITS
-      { id: 101, name: "Fresh Red Apple", cat: "Fruits", price: 120, weight: "1 kg", time: "10 MINS", imgs: ["https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=400", "https://images.unsplash.com/photo-1570913149827-d2ac84ab3f9a?w=400", "https://images.unsplash.com/photo-1567306226416-28f0efdc88ce?w=400"] },
-      { id: 102, name: "Fresh Banana", cat: "Fruits", price: 50, weight: "1 Dozen", time: "10 MINS", imgs: ["https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=400", "https://images.unsplash.com/photo-1528825871115-3581a5387919?w=400", "https://images.unsplash.com/photo-1603833665858-e61d17a86224?w=400"] },
-      { id: 103, name: "Juicy Orange", cat: "Fruits", price: 80, weight: "1 kg", time: "10 MINS", imgs: ["https://images.unsplash.com/photo-1547514701-42782101795e?w=400", "https://images.unsplash.com/photo-1611080626919-7cf5a9dbab5b?w=400", "https://images.unsplash.com/photo-1582979512210-99b6a53385f9?w=400"] },
-      { id: 104, name: "Sweet Mango", cat: "Fruits", price: 110, weight: "1 kg", time: "10 MINS", imgs: ["https://images.unsplash.com/photo-1553279768-865429fa0078?w=400", "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?w=400", "https://images.unsplash.com/photo-1591073113125-e46713c829ed?w=400"] },
-      { id: 105, name: "Red Pomegranate", cat: "Fruits", price: 140, weight: "1 kg", time: "10 MINS", imgs: ["https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=400", "https://images.unsplash.com/photo-1541344999736-83eca272f6fc?w=400"] },
+      // NORTH INDIAN
+      { id: 1, name: "Veg Biryani", cat: "North Indian", price: 189, weight: "1 Serving", time: "15 MINS", imgs: ["https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=400"] },
+      { id: 2, name: "Butter Chicken", cat: "North Indian", price: 290, weight: "1 Bowl", time: "15 MINS", imgs: ["https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=400"] },
+      { id: 3, name: "Paneer Butter Masala", cat: "North Indian", price: 220, weight: "1 Bowl", time: "15 MINS", imgs: ["https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=400"] },
+      { id: 4, name: "Chole Bhature", cat: "North Indian", price: 120, weight: "2 Bhature", time: "12 MINS", imgs: ["https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=400"] },
+      { id: 5, name: "Dal Makhani", cat: "North Indian", price: 160, weight: "1 Bowl", time: "12 MINS", imgs: ["https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=400"] },
+      { id: 6, name: "Butter Naan / Roti", cat: "North Indian", price: 40, weight: "1 Pc", time: "10 MINS", imgs: ["https://images.unsplash.com/photo-1601050690597-df0568f70950?w=400"] },
+      { id: 7, name: "Paneer Paratha", cat: "North Indian", price: 70, weight: "1 Pc", time: "10 MINS", imgs: ["https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=400"] },
+      { id: 8, name: "Rajma Chawal", cat: "North Indian", price: 110, weight: "1 Meal Combo", time: "12 MINS", imgs: ["https://images.unsplash.com/photo-1626074353765-517a681e40be?w=400"] },
+      { id: 9, name: "Kadhi Chawal", cat: "North Indian", price: 100, weight: "1 Meal Combo", time: "12 MINS", imgs: ["https://images.unsplash.com/photo-1589301760014-d929f39729f0?w=400"] },
 
-      // 2. SNACKS & STREET FOOD
-      { id: 201, name: "Veg Chow Mein", cat: "Snacks", price: 70, weight: "1 Plate", time: "12 MINS", imgs: ["https://images.unsplash.com/photo-1585032226651-759b368d7246?w=400", "https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?w=400"] },
-      { id: 202, name: "Hakka Noodles", cat: "Snacks", price: 90, weight: "1 Plate", time: "12 MINS", imgs: ["https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?w=400", "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=400"] },
-      { id: 203, name: "Veg Fried Rice", cat: "Snacks", price: 80, weight: "1 Plate", time: "12 MINS", imgs: ["https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=400", "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=400"] },
-      { id: 204, name: "Classic Veg Maggi", cat: "Snacks", price: 40, weight: "1 Bowl", time: "8 MINS", imgs: ["https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?w=400", "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=400"] },
-      { id: 205, name: "Creamy Red Sauce Pasta", cat: "Snacks", price: 110, weight: "1 Plate", time: "15 MINS", imgs: ["https://images.unsplash.com/photo-1621996346565-e3def6164286?w=400", "https://images.unsplash.com/photo-1645112411341-6c4fd023714a?w=400"] },
-      { id: 206, name: "Crispy Samosa", cat: "Snacks", price: 15, weight: "1 Pc", time: "5 MINS", imgs: ["https://images.unsplash.com/photo-1601050690597-df0568f70950?w=400", "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=400"] },
+      // SOUTH INDIAN
+      { id: 10, name: "Masala Dosa", cat: "South Indian", price: 110, weight: "1 Pc", time: "12 MINS", imgs: ["https://images.unsplash.com/photo-1668236543090-82eba5ee5976?w=400"] },
+      { id: 11, name: "Idli Sambar", cat: "South Indian", price: 80, weight: "2 Pcs", time: "10 MINS", imgs: ["https://images.unsplash.com/photo-1589301760014-d929f39729f0?w=400"] },
+      { id: 12, name: "Medu Vada Sambar", cat: "South Indian", price: 90, weight: "2 Pcs", time: "10 MINS", imgs: ["https://images.unsplash.com/photo-1626074353765-517a681e40be?w=400"] },
+      { id: 13, name: "Onion Uttapam", cat: "South Indian", price: 120, weight: "1 Pc", time: "12 MINS", imgs: ["https://images.unsplash.com/photo-1668236543090-82eba5ee5976?w=400"] },
+      { id: 14, name: "Appam with Stew", cat: "South Indian", price: 130, weight: "2 Pcs", time: "12 MINS", imgs: ["https://images.unsplash.com/photo-1601050690597-df0568f70950?w=400"] },
+      { id: 15, name: "Hyderabadi Biryani", cat: "South Indian", price: 230, weight: "1 Bowl", time: "15 MINS", imgs: ["https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=400"] },
 
-      // 3. BEVERAGES
-      { id: 301, name: "Masala Kulhad Tea", cat: "Beverages", price: 20, weight: "1 Cup", time: "6 MINS", imgs: ["https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=400", "https://images.unsplash.com/photo-1561336313-0bd5e0b27ec8?w=400"] },
-      { id: 302, name: "Cold Coffee Shake", cat: "Beverages", price: 60, weight: "300 ml", time: "8 MINS", imgs: ["https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=400", "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=400"] },
-      { id: 303, name: "Chilled Coca-Cola Can", cat: "Beverages", price: 40, weight: "300 ml", time: "5 MINS", imgs: ["https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?w=400", "https://images.unsplash.com/photo-1554866585-cd94860890b7?w=400"] },
+      // FAST FOOD & ASIAN
+      { id: 16, name: "Pepperoni Pizza", cat: "Fast Food & Asian", price: 299, weight: "8 inch", time: "15 MINS", imgs: ["https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?w=400"] },
+      { id: 17, name: "Hakka Noodles", cat: "Fast Food & Asian", price: 120, weight: "1 Plate", time: "12 MINS", imgs: ["https://images.unsplash.com/photo-1585032226651-759b368d7246?w=400"] },
+      { id: 18, name: "Veg Manchurian Dry/Gravy", cat: "Fast Food & Asian", price: 130, weight: "1 Plate", time: "12 MINS", imgs: ["https://images.unsplash.com/photo-1525755662778-989d0524087e?w=400"] },
+      { id: 19, name: "Crispy Spring Rolls", cat: "Fast Food & Asian", price: 110, weight: "2 Pcs", time: "12 MINS", imgs: ["https://images.unsplash.com/photo-1541544741938-0af808871cc0?w=400"] },
+      { id: 20, name: "Chicken Shawarma", cat: "Fast Food & Asian", price: 140, weight: "1 Roll", time: "10 MINS", imgs: ["https://images.unsplash.com/photo-1561651823-34feb02250e4?w=400"] },
+      { id: 21, name: "Creamy White Sauce Pasta", cat: "Fast Food & Asian", price: 160, weight: "1 Bowl", time: "12 MINS", imgs: ["https://images.unsplash.com/photo-1621996346565-e3def6164286?w=400"] },
+      { id: 22, name: "Mexican Tacos", cat: "Fast Food & Asian", price: 150, weight: "2 Pcs", time: "12 MINS", imgs: ["https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=400"] },
 
-      // 4. MAIN FOOD ITEMS
-      { id: 401, name: "Special Deluxe Veg Thali", cat: "Main Food", price: 120, weight: "1 Thali", time: "15 MINS", imgs: ["https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=400", "https://images.unsplash.com/photo-1589301760014-d929f39729f0?w=400"] },
-      { id: 402, name: "Paneer Butter Masala", cat: "Main Food", price: 150, weight: "1 Bowl", time: "12 MINS", imgs: ["https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=400", "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=400"] },
-      { id: 403, name: "Punjabi Chole Bhature", cat: "Main Food", price: 110, weight: "2 Bhature", time: "12 MINS", imgs: ["https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=400", "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=400"] },
-      { id: 404, name: "Hyderabadi Veg Biryani", cat: "Main Food", price: 120, weight: "1 Plate", time: "12 MINS", imgs: ["https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=400", "https://images.unsplash.com/photo-1633945274405-b6c8069047b0?w=400"] },
+      // BURGERS & ROLLS
+      { id: 23, name: "Veg Aloo Tikki Burger", cat: "Burgers & Rolls", price: 49, weight: "1 Pc", time: "10 MINS", imgs: ["https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400"] },
+      { id: 24, name: "Veg Cheese Burger", cat: "Burgers & Rolls", price: 79, weight: "1 Pc", time: "10 MINS", imgs: ["https://images.unsplash.com/photo-1550547660-d9450f859349?w=400"] },
+      { id: 25, name: "Paneer Crispy Burger", cat: "Burgers & Rolls", price: 99, weight: "1 Pc", time: "10 MINS", imgs: ["https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=400"] },
+      { id: 26, name: "Double Patty Veg Supreme Burger", cat: "Burgers & Rolls", price: 129, weight: "1 Pc", time: "10 MINS", imgs: ["https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=400"] },
+      { id: 27, name: "Chicken Crispy Burger", cat: "Burgers & Rolls", price: 119, weight: "1 Pc", time: "10 MINS", imgs: ["https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?w=400"] },
+      { id: 28, name: "Veg Kathi Roll", cat: "Burgers & Rolls", price: 60, weight: "1 Roll", time: "10 MINS", imgs: ["https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=400"] },
+      { id: 29, name: "Paneer Tikka Roll", cat: "Burgers & Rolls", price: 110, weight: "1 Roll", time: "10 MINS", imgs: ["https://images.unsplash.com/photo-1561651823-34feb02250e4?w=400"] },
+      { id: 30, name: "Schezwan Veg Roll", cat: "Burgers & Rolls", price: 80, weight: "1 Roll", time: "10 MINS", imgs: ["https://images.unsplash.com/photo-1541544741938-0af808871cc0?w=400"] },
 
-      // 5. BURGERS & ROLLS (CORRECT ROLLS IMAGES FIXED)
-      { id: 501, name: "Crispy Aloo Tikki Burger", cat: "Burgers", price: 49, weight: "1 Pc", time: "10 MINS", imgs: ["https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400", "https://images.unsplash.com/photo-1550547660-d9450f859349?w=400"] },
-      { id: 502, name: "Crispy Paneer Supreme Burger", cat: "Burgers", price: 89, weight: "1 Pc", time: "10 MINS", imgs: ["https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=400", "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400"] },
-      { id: 503, name: "Veg Kathi Roll", cat: "Burgers", price: 60, weight: "1 Roll", time: "10 MINS", imgs: ["https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=400", "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=400"] },
-      { id: 504, name: "Paneer Tikka Roll", cat: "Burgers", price: 90, weight: "1 Roll", time: "10 MINS", imgs: ["https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=400", "https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=400"] },
-      { id: 505, name: "Schezwan Veg Roll", cat: "Burgers", price: 75, weight: "1 Roll", time: "10 MINS", imgs: ["https://images.unsplash.com/photo-1601050690597-df0568f70950?w=400", "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=400"] },
+      // PIZZA & GARLIC BREAD
+      { id: 31, name: "Margherita Pizza (Classic Cheese)", cat: "Pizza & Garlic Bread", price: 149, weight: "7 inch", time: "15 MINS", imgs: ["https://images.unsplash.com/photo-1604382355076-af4b0eb60143?w=400"] },
+      { id: 32, name: "Farmhouse / Veggie Supreme Pizza", cat: "Pizza & Garlic Bread", price: 219, weight: "7 inch", time: "15 MINS", imgs: ["https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400"] },
+      { id: 33, name: "Paneer Special Pizza", cat: "Pizza & Garlic Bread", price: 239, weight: "7 inch", time: "15 MINS", imgs: ["https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=400"] },
+      { id: 34, name: "Corn & Cheese Pizza", cat: "Pizza & Garlic Bread", price: 179, weight: "7 inch", time: "15 MINS", imgs: ["https://images.unsplash.com/photo-1573821663912-569905455b1c?w=400"] },
+      { id: 35, name: "Stuffed Garlic Bread", cat: "Pizza & Garlic Bread", price: 139, weight: "1 Order", time: "12 MINS", imgs: ["https://images.unsplash.com/photo-1619535860434-ba1d8fa12536?w=400"] },
+      { id: 36, name: "Cheese Garlic Bread Strips", cat: "Pizza & Garlic Bread", price: 119, weight: "4 Strips", time: "12 MINS", imgs: ["https://images.unsplash.com/photo-1573140247632-f8fd74997d5c?w=400"] },
 
-      // 6. PIZZA & GARLIC BREAD
-      { id: 601, name: "Classic Margherita Cheese Pizza", cat: "Pizza", price: 149, weight: "7 inch", time: "15 MINS", imgs: ["https://images.unsplash.com/photo-1604382355076-af4b0eb60143?w=400", "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400"] },
-      { id: 602, name: "Farmhouse Veggie Supreme Pizza", cat: "Pizza", price: 219, weight: "7 inch", time: "15 MINS", imgs: ["https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400", "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=400"] },
-      { id: 603, name: "Stuffed Cheese Garlic Bread", cat: "Pizza", price: 129, weight: "1 Pack", time: "12 MINS", imgs: ["https://images.unsplash.com/photo-1573140247632-f8fd74997d5c?w=400", "https://images.unsplash.com/photo-1541745537411-b8046dc6d66c?w=400"] },
+      // MOMOS & DIM SUMS
+      { id: 37, name: "Veg Steamed Momos", cat: "Momos", price: 60, weight: "8 Pcs", time: "10 MINS", imgs: ["https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=400"] },
+      { id: 38, name: "Veg Fried Momos", cat: "Momos", price: 80, weight: "8 Pcs", time: "10 MINS", imgs: ["https://images.unsplash.com/photo-1541696432-82c6da8ce7bf?w=400"] },
+      { id: 39, name: "Paneer Steamed Momos", cat: "Momos", price: 90, weight: "8 Pcs", time: "10 MINS", imgs: ["https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=400"] },
+      { id: 40, name: "Paneer Kurkure Momos", cat: "Momos", price: 120, weight: "6 Pcs", time: "12 MINS", imgs: ["https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=400"] },
+      { id: 41, name: "Veg Kurkure Momos", cat: "Momos", price: 100, weight: "6 Pcs", time: "12 MINS", imgs: ["https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=400"] },
+      { id: 42, name: "Gravy / Tandoori Momos", cat: "Momos", price: 130, weight: "6 Pcs", time: "12 MINS", imgs: ["https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=400"] },
+      { id: 43, name: "Chicken Steamed Momos", cat: "Momos", price: 110, weight: "8 Pcs", time: "10 MINS", imgs: ["https://images.unsplash.com/photo-1496116218417-1a781b1c416c?w=400"] },
 
-      // 7. SANDWICHES
-      { id: 701, name: "Veg Cheese Grilled Sandwich", cat: "Sandwiches", price: 60, weight: "2 Pcs", time: "10 MINS", imgs: ["https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=400", "https://images.unsplash.com/photo-1553909489-cd47e0907980?w=400"] },
-      { id: 702, name: "Paneer Tikka Grilled Sandwich", cat: "Sandwiches", price: 95, weight: "2 Pcs", time: "10 MINS", imgs: ["https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=400", "https://images.unsplash.com/photo-1553909489-cd47e0907980?w=400"] },
+      // SNACKS & BEVERAGES
+      { id: 44, name: "Samosa", cat: "Snacks & Beverages", price: 20, weight: "2 Pcs", time: "8 MINS", imgs: ["https://images.unsplash.com/photo-1601050690597-df0568f70950?w=400"] },
+      { id: 45, name: "Khasta Kachori", cat: "Snacks & Beverages", price: 25, weight: "2 Pcs", time: "8 MINS", imgs: ["https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=400"] },
+      { id: 46, name: "Grilled Veg Cheese Sandwich", cat: "Snacks & Beverages", price: 80, weight: "1 Pc", time: "10 MINS", imgs: ["https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=400"] },
+      { id: 47, name: "Crispy French Fries", cat: "Snacks & Beverages", price: 70, weight: "1 Portion", time: "10 MINS", imgs: ["https://images.unsplash.com/photo-1576107232684-1279f3908594?w=400"] },
+      { id: 48, name: "Cold Coffee Shake", cat: "Snacks & Beverages", price: 80, weight: "350 ml", time: "8 MINS", imgs: ["https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=400"] },
+      { id: 49, name: "Masala Chai", cat: "Snacks & Beverages", price: 20, weight: "1 Cup", time: "5 MINS", imgs: ["https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=400"] },
+      { id: 50, name: "Chocolate Shake", cat: "Snacks & Beverages", price: 90, weight: "350 ml", time: "8 MINS", imgs: ["https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=400"] },
+      { id: 51, name: "Boba Tea", cat: "Snacks & Beverages", price: 140, weight: "350 ml", time: "8 MINS", imgs: ["https://images.unsplash.com/photo-1558857563-b371033873b8?w=400"] },
 
-      // 8. MOMOS
-      { id: 801, name: "Veg Steamed Momos", cat: "Momos", price: 60, weight: "8 Pcs", time: "10 MINS", imgs: ["https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=400", "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=400"] },
-      { id: 802, name: "Paneer Kurkure Momos", cat: "Momos", price: 110, weight: "6 Pcs", time: "12 MINS", imgs: ["https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=400", "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=400"] },
+      // DESSERTS & BAKERY
+      { id: 52, name: "Chocolate Cake Slice", cat: "Desserts & Bakery", price: 90, weight: "1 Slice", time: "8 MINS", imgs: ["https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400"] },
+      { id: 53, name: "Gulab Jamun", cat: "Desserts & Bakery", price: 40, weight: "2 Pcs", time: "5 MINS", imgs: ["https://images.unsplash.com/photo-1601050690597-df0568f70950?w=400"] },
+      { id: 54, name: "Rasgulla", cat: "Desserts & Bakery", price: 40, weight: "2 Pcs", time: "5 MINS", imgs: ["https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=400"] },
+      { id: 55, name: "Chocolate Waffles", cat: "Desserts & Bakery", price: 120, weight: "1 Pc", time: "10 MINS", imgs: ["https://images.unsplash.com/photo-1562376552-0d160a2f238d?w=400"] },
 
-      // 9. FRIES
-      { id: 901, name: "Classic Peri Peri Fries", cat: "Fries", price: 85, weight: "Regular", time: "8 MINS", imgs: ["https://images.unsplash.com/photo-1576107232684-1279f3908594?w=400", "https://images.unsplash.com/photo-1585109649139-366815a0d713?w=400"] },
-      { id: 902, name: "Cheesy Loaded Fries", cat: "Fries", price: 110, weight: "Large", time: "10 MINS", imgs: ["https://images.unsplash.com/photo-1576107232684-1279f3908594?w=400", "https://images.unsplash.com/photo-1585109649139-366815a0d713?w=400"] }
+      // HEALTHY & FITNESS
+      { id: 56, name: "Fresh Veg Salad Bowl", cat: "Healthy & Fitness", price: 99, weight: "1 Bowl", time: "10 MINS", imgs: ["https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400"] },
+      { id: 57, name: "Protein Oats Bowl", cat: "Healthy & Fitness", price: 110, weight: "1 Bowl", time: "10 MINS", imgs: ["https://images.unsplash.com/photo-1517673400267-0251440c45dc?w=400"] },
+
+      // GROCERIES & ESSENTIALS
+      { id: 58, name: "Amul Taaza T-Special Milk", cat: "Groceries & Essentials", price: 27, weight: "500 ml", time: "5 MINS", imgs: ["https://images.unsplash.com/photo-1550583724-b2692b85b150?w=400"] },
+      { id: 59, name: "Brown Bread & Eggs Combo", cat: "Groceries & Essentials", price: 95, weight: "1 Pack", time: "5 MINS", imgs: ["https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400"] },
+      { id: 60, name: "Fortune Sunlite Sunflower Oil", cat: "Groceries & Essentials", price: 145, weight: "1 Ltr", time: "5 MINS", imgs: ["https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=400"] }
     ];
 
     window.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => {
         const splash = document.getElementById('splashScreen');
         if (splash) { splash.style.opacity = '0'; splash.style.visibility = 'hidden'; }
-      }, 1500);
+      }, 1200);
     });
 
     function init() {
       document.getElementById('locHeader').innerText = user.location ? user.location.split('(')[0] : "⚖️ School of Law";
+      
+      const authBtn = document.getElementById('headerAuthBtn');
+      if (user.isLoggedIn) {
+        authBtn.innerText = `👤 ${user.name.split(' ')[0]}`;
+        authBtn.onclick = logoutUser;
+      } else {
+        authBtn.innerText = "Login";
+        authBtn.onclick = openAuthModal;
+      }
+
       renderAll();
     }
 
     function renderAll() {
       const search = document.getElementById('searchInput').value.toLowerCase();
-      
-      const categories = ['Fruits', 'Burgers', 'Momos', 'Pizza', 'Snacks', 'Sandwiches', 'Fries', 'Beverages', 'Main Food'];
+      const categories = ['North Indian', 'South Indian', 'Fast Food & Asian', 'Burgers & Rolls', 'Pizza & Garlic Bread', 'Momos', 'Snacks & Beverages', 'Desserts & Bakery', 'Healthy & Fitness', 'Groceries & Essentials'];
 
       categories.forEach(catKey => {
         const sectionEl = document.getElementById('section-' + catKey);
@@ -474,20 +582,13 @@
           if (containerEl) {
             containerEl.innerHTML = list.map(p => {
               const qty = cart[p.id] ? cart[p.id].qty : 0;
-              
               const imgsHtml = p.imgs.map(url => `<img src="${url}" alt="${p.name}" loading="lazy">`).join('');
-              const dotsHtml = p.imgs.length > 1 ? p.imgs.map((_, i) => `<div class="dot ${i === 0 ? 'active' : ''}"></div>`).join('') : '';
 
               return `
                 <div class="item-card-blinkit">
                   <div>
                     <div class="img-carousel-box">
-                      <div class="img-slider">
-                        ${imgsHtml}
-                      </div>
-                      <div class="carousel-dots">
-                        ${dotsHtml}
-                      </div>
+                      <div class="img-slider">${imgsHtml}</div>
                     </div>
                     <span class="item-time-badge">⏱️ ${p.time}</span>
                     <div class="item-name">${p.name}</div>
@@ -527,24 +628,37 @@
 
     function updateCartBar() {
       const items = Object.values(cart);
-      const bar = document.getElementById('cartFloat');
-      if (items.length === 0) { bar.style.display = 'none'; return; }
-      bar.style.display = 'flex';
-      const count = items.reduce((s, i) => s + i.qty, 0);
-      const sum = items.reduce((s, i) => s + (i.qty * i.price), 0);
-      document.getElementById('cartItemsCount').innerText = `${count} ITEM${count > 1 ? 'S' : ''}`;
-      document.getElementById('cartTotalSum').innerText = `₹${sum}`;
+      const label = document.getElementById('cartHeaderLabel');
+      if (items.length === 0) {
+        label.innerText = "My Cart";
+      } else {
+        const count = items.reduce((s, i) => s + i.qty, 0);
+        const sum = items.reduce((s, i) => s + (i.qty * i.price), 0);
+        label.innerText = `${count} Items (₹${sum})`;
+      }
     }
 
     function filterTab(tab, el) {
       activeTab = tab;
       document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
-      el.classList.add('active');
+      if (el) el.classList.add('active');
       renderAll();
     }
 
-    function closeModal(id) {
-      document.getElementById(id).style.display = 'none';
+    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+    function openAuthModal() { showPhoneStep(); document.getElementById('authModal').style.display = 'flex'; }
+    
+    function showPhoneStep() {
+      document.getElementById('phoneStep').style.display = 'block';
+      document.getElementById('otpStep').style.display = 'none';
+    }
+
+    function logoutUser() {
+      if (confirm("Logout from LPUKART?")) {
+        user.isLoggedIn = false;
+        localStorage.setItem('lpukart_user', JSON.stringify(user));
+        init();
+      }
     }
 
     function openLocationModal() { document.getElementById('locationModal').style.display = 'flex'; }
@@ -555,21 +669,21 @@
       let total = 0;
       list.innerHTML = items.map(i => {
         total += i.price * i.qty;
-        return `<div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:4px;">
+        return `<div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:6px;">
           <span>${i.name} x ${i.qty}</span>
           <strong>₹${i.price * i.qty}</strong>
         </div>`;
-      }).join('') + `<div style="display:flex; justify-content:space-between; font-weight:900; color:var(--blink-green); margin-top:8px;"><span>Total:</span><span>₹${total}</span></div>`;
+      }).join('') + `<div style="display:flex; justify-content:space-between; font-weight:900; color:var(--blink-green); font-size:15px; margin-top:10px;"><span>Total:</span><span>₹${total}</span></div>`;
       document.getElementById('checkoutModal').style.display = 'flex';
     }
 
     function openShopkeeperModal() {
       const wrap = document.getElementById('shopOrdersContainer');
       wrap.innerHTML = liveOrders.length === 0 ? "No orders yet." : liveOrders.map(o => `
-        <div style="background:#f8f9fa; border:1px solid #ddd; padding:10px; border-radius:10px; margin-bottom:8px;">
+        <div style="background:#f8f9fa; border:1px solid #ddd; padding:12px; border-radius:10px; margin-bottom:10px;">
           <div><strong>Order ${o.id}</strong> - ${o.payment} (₹${o.total})</div>
-          <div>Items: ${o.items}</div>
-          <div style="color:#d32f2f;">📍 Deliver to: ${o.location}</div>
+          <div style="margin: 4px 0; font-size:13px;">Items: ${o.items}</div>
+          <div style="color:#d32f2f; font-weight:700; font-size:13px;">📍 Deliver to: ${o.location}</div>
         </div>
       `).join('');
       document.getElementById('shopkeeperModal').style.display = 'flex';
