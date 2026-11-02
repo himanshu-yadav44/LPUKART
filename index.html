@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>LPUKART - Campus Express Delivery</title>
   
-  <meta name="theme-color" content="#F7C400">
+  <meta name="theme-color" content="#E23744">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -21,13 +21,13 @@
 
   <style>
     :root {
-      --blink-yellow: #F7C400;
+      --zomato-red: #E23744;
+      --zomato-dark-red: #CB202D;
       --blink-green: #0C831F;
-      --primary-red: #E23744;
       --text-black: #1C1C1C;
-      --text-gray: #666666;
+      --text-gray: #7E7E7E;
       --bg-gray: #F8F9FA;
-      --border-gray: #ECECEC;
+      --border-gray: #E8E8E8;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; }
@@ -41,7 +41,7 @@
 
     /* SPLASH SCREEN */
     #splashScreen {
-      position: fixed; inset: 0; background: #E23744;
+      position: fixed; inset: 0; background: var(--zomato-red);
       z-index: 9999; display: flex; align-items: center; justify-content: center;
       transition: opacity 0.5s ease-out, visibility 0.5s;
     }
@@ -71,7 +71,7 @@
     }
 
     .brand-logo-box { display: flex; align-items: center; gap: 16px; cursor: pointer; }
-    .brand-logo-text { font-size: 28px; font-weight: 900; font-style: italic; color: #F7C400; letter-spacing: -1.5px; line-height: 1; }
+    .brand-logo-text { font-size: 28px; font-weight: 900; font-style: italic; color: var(--zomato-red); letter-spacing: -1.5px; line-height: 1; }
     .brand-logo-text span { color: var(--blink-green); }
 
     .delivery-info-box { display: flex; flex-direction: column; cursor: pointer; border-left: 1px solid #eee; padding-left: 16px; min-width: 180px; }
@@ -81,7 +81,7 @@
     /* CENTER SEARCH BAR */
     .header-search-wrap { flex: 1; max-width: 680px; }
     .search-input-box { background: #F3F4F6; border-radius: 12px; padding: 11px 16px; display: flex; align-items: center; gap: 12px; border: 1px solid transparent; transition: all 0.2s ease; }
-    .search-input-box:focus-within { border-color: var(--blink-green); background: #FFFFFF; box-shadow: 0 0 0 3px rgba(12, 131, 31, 0.1); }
+    .search-input-box:focus-within { border-color: var(--zomato-red); background: #FFFFFF; box-shadow: 0 0 0 3px rgba(226, 55, 68, 0.1); }
     .search-input-box input { border: none; outline: none; background: transparent; width: 100%; font-size: 14px; font-weight: 600; color: #222; }
 
     /* RIGHT ACTIONS */
@@ -95,16 +95,16 @@
     .main-wrapper { max-width: 1280px; margin: 0 auto; padding: 20px 16px; }
 
     /* HERO BANNERS */
-    .hero-banner-main { background: linear-gradient(100deg, #0f5132 0%, #198754 100%); border-radius: 20px; color: white; padding: 32px 40px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; position: relative; overflow: hidden; }
+    .hero-banner-main { background: linear-gradient(100deg, #E23744 0%, #CB202D 100%); border-radius: 20px; color: white; padding: 32px 40px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; position: relative; overflow: hidden; }
     .hero-content h1 { font-size: 34px; font-weight: 900; margin-bottom: 8px; line-height: 1.1; letter-spacing: -0.5px; }
     .hero-content p { font-size: 15px; opacity: 0.9; margin-bottom: 18px; font-weight: 500; max-width: 480px; }
-    .shop-now-btn { background: #FFFFFF; color: #0f5132; border: none; padding: 12px 28px; border-radius: 10px; font-size: 15px; font-weight: 900; cursor: pointer; display: inline-block; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+    .shop-now-btn { background: #FFFFFF; color: var(--zomato-red); border: none; padding: 12px 28px; border-radius: 10px; font-size: 15px; font-weight: 900; cursor: pointer; display: inline-block; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
 
     /* CATEGORY TABS */
     .cat-tabs { display: flex; gap: 10px; overflow-x: auto; padding: 10px 0 16px; scrollbar-width: none; border-bottom: 1px solid #EAEAEA; margin-bottom: 20px; }
     .cat-tabs::-webkit-scrollbar { display: none; }
     .cat-tab { font-size: 13px; font-weight: 800; color: #666; white-space: nowrap; cursor: pointer; padding: 8px 16px; border-radius: 20px; background: #fff; border: 1px solid #E2E8F0; }
-    .cat-tab.active { color: #fff; background: var(--blink-green); border-color: var(--blink-green); }
+    .cat-tab.active { color: #fff; background: var(--zomato-red); border-color: var(--zomato-red); }
 
     /* GRID CATEGORY SECTIONS */
     .grid-section { background: #fff; border-radius: 20px; padding: 20px; margin-bottom: 20px; border: 1px solid #ECECEC; }
@@ -130,9 +130,41 @@
     .btn-add-blinkit { background: #F0FDF4; border: 1px solid var(--blink-green); color: var(--blink-green); font-size: 12px; font-weight: 900; padding: 6px 14px; border-radius: 8px; cursor: pointer; }
     .qty-btn-blinkit { background: var(--blink-green); color: white; font-size: 12px; font-weight: 900; padding: 5px 10px; border-radius: 8px; display: flex; align-items: center; gap: 8px; }
 
-    /* MODALS */
-    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 200; padding: 16px; }
-    .modal-sheet { background: white; width: 100%; max-width: 460px; border-radius: 20px; padding: 24px; max-height: 90vh; overflow-y: auto; position: relative; }
+    /* MODALS GENERAL */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.65); display: none; align-items: flex-end; justify-content: center; z-index: 200; }
+    .modal-sheet { background: white; width: 100%; max-width: 480px; border-radius: 24px 24px 0 0; padding: 24px; max-height: 90vh; overflow-y: auto; position: relative; animation: slideUp 0.3s ease-out; }
+    @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+
+    @media (min-width: 600px) {
+      .modal-overlay { align-items: center; }
+      .modal-sheet { border-radius: 24px; }
+    }
+
+    /* ZOMATO STYLE AUTH MODAL SPECIFICS */
+    .zomato-auth-header { text-align: center; margin-bottom: 20px; position: relative; }
+    .zomato-title { font-size: 22px; font-weight: 800; color: #1C1C1C; margin-bottom: 4px; }
+    
+    .phone-input-group { display: flex; gap: 10px; margin-bottom: 16px; }
+    .flag-box { border: 1px solid #E8E8E8; border-radius: 12px; padding: 12px 14px; display: flex; align-items: center; gap: 6px; background: #fff; font-size: 14px; font-weight: 700; color: #1C1C1C; }
+    .number-input-box { flex: 1; border: 1px solid #E8E8E8; border-radius: 12px; padding: 12px 16px; display: flex; align-items: center; gap: 8px; background: #fff; }
+    .number-input-box input { width: 100%; border: none; outline: none; font-size: 15px; font-weight: 600; color: #1C1C1C; letter-spacing: 0.5px; }
+
+    .btn-zomato-continue { width: 100%; background: var(--zomato-red); color: white; border: none; padding: 14px; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(226, 55, 68, 0.25); transition: background 0.2s; }
+    .btn-zomato-continue:active { background: var(--zomato-dark-red); }
+
+    .divider-box { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+    .divider-line { flex: 1; height: 1px; background: #E8E8E8; }
+    .divider-text { font-size: 11px; font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: 1px; }
+
+    .social-btns-row { display: flex; justify-content: center; gap: 16px; margin-bottom: 20px; }
+    .social-circle-btn { width: 50px; height: 50px; border-radius: 50%; border: 1px solid #E8E8E8; display: flex; align-items: center; justify-content: center; background: #fff; cursor: pointer; font-size: 20px; transition: transform 0.1s; }
+    .social-circle-btn:active { transform: scale(0.95); }
+
+    .terms-text { font-size: 11px; color: #828282; text-align: center; line-height: 1.5; font-weight: 500; }
+    .terms-text a { color: #1C1C1C; text-decoration: underline; font-weight: 600; }
+
+    .close-x-btn { position: absolute; right: 0; top: -4px; background: #F2F2F2; border: none; font-size: 14px; font-weight: 900; width: 28px; height: 28px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; color: #666; }
+
     .btn-green { width: 100%; background: var(--blink-green); color: white; border: none; padding: 14px; border-radius: 12px; font-size: 15px; font-weight: 900; cursor: pointer; margin-top: 10px; }
     .btn-cancel { width: 100%; background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; padding: 12px; border-radius: 12px; font-size: 14px; font-weight: 800; cursor: pointer; margin-top: 8px; text-align: center; }
     
@@ -141,9 +173,6 @@
     .pay-btn.active { border-color: var(--blink-green); background: #F0FDF4; color: var(--blink-green); }
 
     .modal-header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
-    .close-x-btn { background: #eee; border: none; font-size: 16px; font-weight: 900; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-
-    .link-action { font-size: 12px; font-weight: 700; color: var(--blink-green); cursor: pointer; text-decoration: underline; }
 
     @media (max-width: 768px) {
       header { padding: 10px 14px; }
@@ -237,46 +266,82 @@
 
   </div>
 
-  <!-- AUTH / LOGIN MODAL (WITH REAL FIREBASE OTP) -->
+  <!-- AUTH / LOGIN MODAL (ZOMATO STYLE WITH FIREBASE REAL SMS OTP) -->
   <div class="modal-overlay" id="authModal">
     <div class="modal-sheet">
-      <div class="modal-header-flex">
-        <div style="font-size:18px; font-weight:900;" id="authModalTitle">LPUKART Account 🚀</div>
-        <button class="close-x-btn" onclick="closeModal('authModal')">✕</button>
-      </div>
-
+      
       <!-- INVISIBLE RECAPTCHA FOR FIREBASE -->
       <div id="recaptcha-container"></div>
 
-      <!-- STEP 1: PHONE NUMBER INPUT -->
+      <!-- STEP 1: ZOMATO PHONE NUMBER UI -->
       <div id="phoneStep">
-        <div style="font-size:13px; color:#666; margin-bottom:16px;">Log in or Sign up via Real SMS OTP</div>
-        
-        <div style="margin-bottom:14px;">
-          <label style="font-size:11px; font-weight:800; color:#666;">MOBILE NUMBER</label>
-          <div style="display:flex; gap:8px; margin-top:4px;">
-            <span style="padding:10px; background:#f1f5f9; border:1px solid #ccc; border-radius:8px; font-weight:800; font-size:14px;">+91</span>
-            <input type="tel" id="authPhone" placeholder="Enter 10-digit number" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:8px; font-weight:700;" maxlength="10">
+        <div class="zomato-auth-header">
+          <div class="zomato-title">Log in or sign up</div>
+          <button class="close-x-btn" onclick="closeModal('authModal')">✕</button>
+        </div>
+
+        <div class="phone-input-group">
+          <div class="flag-box">
+            <span>🇮🇳</span>
+            <span>▾</span>
+          </div>
+          <div class="number-input-box">
+            <span style="font-weight:700; color:#1C1C1C;">+91</span>
+            <input type="tel" id="authPhone" placeholder="Enter Mobile Number" maxlength="10">
           </div>
         </div>
 
-        <button class="btn-green" onclick="sendRealOTP()">SEND REAL SMS OTP 📲</button>
+        <button class="btn-zomato-continue" onclick="sendRealOTP()">Continue</button>
+
+        <div class="divider-box">
+          <div class="divider-line"></div>
+          <div class="divider-text">or</div>
+          <div class="divider-line"></div>
+        </div>
+
+        <div class="social-btns-row">
+          <div class="social-circle-btn" onclick="alert('Google Auth is available via SMS login!')" title="Google">
+            <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
+          </div>
+          <div class="social-circle-btn" onclick="alert('Apple ID Auth is available via SMS login!')" title="Apple">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="#000"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 4.02c.67-.82 1.12-1.97.99-3.12-1 .04-2.22.67-2.91 1.48-.62.72-1.16 1.89-1.01 3.01 1.12.09 2.26-.55 2.93-1.37z"/></svg>
+          </div>
+          <div class="social-circle-btn" onclick="alert('Email Auth is available via SMS login!')" title="Mail">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="#E23744"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+          </div>
+        </div>
+
+        <div class="terms-text">
+          By continuing, you agree to our<br>
+          <a href="#">Terms of Service</a> &nbsp;<a href="#">Privacy Policy</a> &nbsp;<a href="#">Content Policies</a>
+        </div>
       </div>
 
-      <!-- STEP 2: OTP VERIFICATION -->
+      <!-- STEP 2: ZOMATO OTP VERIFICATION -->
       <div id="otpStep" style="display:none;">
-        <div style="font-size:13px; color:#666; margin-bottom:16px;">OTP sent to <strong id="sentPhoneText">+91 XXXXXXXX</strong></div>
-        <div style="margin-bottom:14px;">
-          <label style="font-size:11px; font-weight:800; color:#666;">ENTER 6-DIGIT REAL OTP</label>
-          <input type="text" id="authOtp" placeholder="Enter OTP received" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:8px; font-weight:800; text-align:center; letter-spacing:4px; font-size:18px;" maxlength="6">
+        <div class="zomato-auth-header">
+          <div class="zomato-title">Verify OTP</div>
+          <button class="close-x-btn" onclick="closeModal('authModal')">✕</button>
         </div>
-        <div style="margin-bottom:14px;">
-          <label style="font-size:11px; font-weight:800; color:#666;">YOUR NAME</label>
-          <input type="text" id="authName" placeholder="Himanshu Yadav" style="width:100%; padding:10px; border:1px solid #ccc; border-radius:8px; font-weight:700;">
+
+        <div style="font-size:13px; color:#666; margin-bottom:16px; text-align:center;">
+          Code sent to <strong id="sentPhoneText">+91 XXXXXXXX</strong>
         </div>
-        <button class="btn-green" onclick="verifyRealOTP()">VERIFY & LOGIN 🎉</button>
-        <button class="btn-cancel" onclick="showPhoneStep()">Change Phone Number</button>
+
+        <div style="margin-bottom:14px;">
+          <label style="font-size:11px; font-weight:800; color:#666; text-transform:uppercase;">6-Digit OTP</label>
+          <input type="text" id="authOtp" placeholder="••••••" style="width:100%; padding:12px; border:1px solid #E8E8E8; border-radius:12px; font-weight:800; text-align:center; letter-spacing:6px; font-size:20px; margin-top:4px;" maxlength="6">
+        </div>
+
+        <div style="margin-bottom:16px;">
+          <label style="font-size:11px; font-weight:800; color:#666; text-transform:uppercase;">Your Full Name</label>
+          <input type="text" id="authName" placeholder="Himanshu Yadav" style="width:100%; padding:12px; border:1px solid #E8E8E8; border-radius:12px; font-weight:700; margin-top:4px;">
+        </div>
+
+        <button class="btn-zomato-continue" onclick="verifyRealOTP()">Submit & Login</button>
+        <button class="btn-cancel" onclick="showPhoneStep()">Change Mobile Number</button>
       </div>
+
     </div>
   </div>
 
