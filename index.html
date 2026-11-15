@@ -97,10 +97,10 @@
     /* FOOD CATEGORY CIRCLES */
     .cat-scroll { display: flex; gap: 14px; overflow-x: auto; padding: 4px 16px 12px; scrollbar-width: none; }
     .cat-scroll::-webkit-scrollbar { display: none; }
-    .cat-item { display: flex; flex-direction: column; align-items: center; min-width: 64px; cursor: pointer; }
+    .cat-item { display: flex; flex-direction: column; align-items: center; min-width: 68px; cursor: pointer; }
     .cat-img-circle { width: 58px; height: 58px; border-radius: 50%; overflow: hidden; background: #F1F5F9; margin-bottom: 6px; border: 2px solid transparent; transition: 0.2s; }
     .cat-img-circle img { width: 100%; height: 100%; object-fit: cover; }
-    .cat-name { font-size: 11px; font-weight: 700; color: #334155; text-align: center; }
+    .cat-name { font-size: 11px; font-weight: 700; color: #334155; text-align: center; line-height: 1.2; }
     .cat-item.active .cat-name { color: var(--veg-green); font-weight: 900; }
     .cat-item.active .cat-img-circle { border-color: var(--veg-green); }
 
@@ -117,7 +117,7 @@
     .explore-icon { font-size: 24px; margin-bottom: 4px; }
     .explore-title { font-size: 11px; font-weight: 800; color: #1E293B; line-height: 1.2; }
 
-    /* RESTAURANTS / MENU LISTING */
+    /* RESTAURANTS / LIVE DB SECTION */
     .rest-heading { font-size: 11px; font-weight: 900; letter-spacing: 0.8px; color: #64748B; text-transform: uppercase; padding: 0 16px 12px; display: flex; justify-content: space-between; align-items: center; }
     .rest-grid { padding: 0 16px; display: grid; grid-template-columns: 1fr; gap: 16px; }
 
@@ -127,8 +127,6 @@
     .time-badge { position: absolute; bottom: 10px; right: 10px; background: rgba(255,255,255,0.95); font-size: 10px; font-weight: 900; padding: 4px 9px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
     .veg-dot { position: absolute; top: 10px; left: 10px; background: #FFF; padding: 3px; border-radius: 4px; border: 1.5px solid var(--veg-green); display: flex; align-items: center; justify-content: center; }
     .veg-dot span { width: 7px; height: 7px; background: var(--veg-green); border-radius: 50%; display: block; }
-    .nonveg-dot { position: absolute; top: 10px; left: 10px; background: #FFF; padding: 3px; border-radius: 4px; border: 1.5px solid #DC2626; display: flex; align-items: center; justify-content: center; }
-    .nonveg-dot span { width: 7px; height: 7px; background: #DC2626; border-radius: 50%; display: block; }
 
     .rest-info { padding: 14px; }
     .rest-name { font-size: 16px; font-weight: 900; color: #0F172A; }
@@ -192,7 +190,7 @@
       <div class="location-subtitle" id="locSubtitle">Government school , Chaheru, Phagwara...</div>
     </div>
     <div class="top-actions">
-      <div class="icon-circle" id="seedMenuBtn" onclick="seedAllProductsToFirestore()" title="Add All 16 Items to DB">⚡</div>
+      <div class="icon-circle" id="seedMenuBtn" onclick="seedAllProductsToFirestore()" title="Upload All 30 Items to Firebase">⚡</div>
       <div class="icon-circle" onclick="openModal('ordersModal')" title="Live Orders & Vendor">📦</div>
       <div class="profile-avatar" id="profileAvatarBtn" onclick="openModal('authModal')">H</div>
     </div>
@@ -202,7 +200,7 @@
   <div class="search-row">
     <div class="search-box">
       <span>🔍</span>
-      <input type="text" id="searchInput" placeholder='Search "comfort food"' onkeyup="renderProducts()">
+      <input type="text" id="searchInput" placeholder='Search "burger, pizza, momos, fries..."' onkeyup="renderProducts()">
     </div>
     <div class="voice-btn" onclick="document.getElementById('searchInput').focus()">🎙️</div>
     <div class="veg-mode-toggle">
@@ -218,46 +216,46 @@
   <div class="hero-banner">
     <div>
       <div class="hero-title">LPU Campus Express 🚀</div>
-      <div class="hero-sub">Fresh Meals & Snacks in 12 Mins</div>
+      <div class="hero-sub">Burgers, Pizzas, Momos & Fries in 12 Mins</div>
       <div class="order-now-pill" onclick="window.scrollTo({top: 380, behavior: 'smooth'})">Order now ></div>
     </div>
-    <div style="font-size: 52px;">🛵</div>
+    <div style="font-size: 52px;">🍔</div>
   </div>
 
-  <!-- CATEGORY CIRCLES -->
+  <!-- 5 EXACT CATEGORY CIRCLES -->
   <div class="cat-scroll">
     <div class="cat-item active" onclick="setCategory('All', this)">
       <div class="cat-img-circle"><img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=200" alt="All"></div>
       <div class="cat-name">All</div>
     </div>
-    <div class="cat-item" onclick="setCategory('Pizza', this)">
-      <div class="cat-img-circle"><img src="https://images.unsplash.com/photo-1604382355076-af4b0eb60143?w=200" alt="Pizza"></div>
-      <div class="cat-name">Pizza</div>
+    <div class="cat-item" onclick="setCategory('Burgers & Wraps', this)">
+      <div class="cat-img-circle"><img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=200" alt="Burgers & Wraps"></div>
+      <div class="cat-name">Burgers &<br>Wraps</div>
     </div>
-    <div class="cat-item" onclick="setCategory('Biryani', this)">
-      <div class="cat-img-circle"><img src="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=200" alt="Biryani"></div>
-      <div class="cat-name">Biryani</div>
+    <div class="cat-item" onclick="setCategory('Pizza & Garlic Bread', this)">
+      <div class="cat-img-circle"><img src="https://images.unsplash.com/photo-1604382355076-af4b0eb60143?w=200" alt="Pizza & Garlic Bread"></div>
+      <div class="cat-name">Pizza &<br>Bread</div>
     </div>
-    <div class="cat-item" onclick="setCategory('North Indian', this)">
-      <div class="cat-img-circle"><img src="https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=200" alt="North Indian"></div>
-      <div class="cat-name">North Ind...</div>
+    <div class="cat-item" onclick="setCategory('Sandwiches & Toasts', this)">
+      <div class="cat-img-circle"><img src="https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=200" alt="Sandwiches"></div>
+      <div class="cat-name">Sandwiches<br>& Toasts</div>
     </div>
-    <div class="cat-item" onclick="setCategory('Burgers & Momos', this)">
-      <div class="cat-img-circle"><img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=200" alt="Burgers & Momos"></div>
-      <div class="cat-name">Burgers</div>
+    <div class="cat-item" onclick="setCategory('Momos & Dim Sums', this)">
+      <div class="cat-img-circle"><img src="https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=200" alt="Momos"></div>
+      <div class="cat-name">Momos &<br>Dim Sums</div>
     </div>
-    <div class="cat-item" onclick="setCategory('Groceries', this)">
-      <div class="cat-img-circle"><img src="https://images.unsplash.com/photo-1550583724-b2692b85b150?w=200" alt="Groceries"></div>
-      <div class="cat-name">Groceries</div>
+    <div class="cat-item" onclick="setCategory('Fries & Side Snacks', this)">
+      <div class="cat-img-circle"><img src="https://images.unsplash.com/photo-1576107232684-1279f3908594?w=200" alt="Fries & Snacks"></div>
+      <div class="cat-name">Fries &<br>Snacks</div>
     </div>
   </div>
 
   <!-- FILTERS ROW -->
   <div class="filters-row">
+    <div class="filter-pill" onclick="seedAllProductsToFirestore()" style="border-color:#2563EB; color:#2563EB; background:#EFF6FF;">➕ Sync 30 Menu Items</div>
     <div class="filter-pill" onclick="toggleUnder150(this)">🏷️ Under ₹150</div>
-    <div class="filter-pill" onclick="setCategory('All', document.querySelector('.cat-item'))">⚡ Near & Fast</div>
     <div class="filter-pill" onclick="openModal('ordersModal')">📦 Live Orders</div>
-    <div class="filter-pill" onclick="seedAllProductsToFirestore()" style="border-color:#2563EB; color:#2563EB;">➕ Sync Full Menu</div>
+    <div class="filter-pill" onclick="openModal('locationModal')">📍 Campus Spots</div>
   </div>
 
   <!-- EXPLORE MORE -->
@@ -420,29 +418,52 @@
       location: "Government school , Chaheru, Phagwara..."
     };
 
-    // COMPLETE CAMPUS CATALOG (READY TO AUTO-UPLOAD TO FIRESTORE)
+    // YOUR EXACT 30 ITEMS ACROSS 5 CATEGORIES
     const FULL_CATALOG = [
-      { id: "1", name: "Veg Biryani", category: "Biryani", pricePaise: 18900, weight: "1 Serving", isVeg: true, preparationMinutes: 15, available: true, img: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=500" },
-      { id: "2", name: "Hyderabadi Chicken Biryani", category: "Biryani", pricePaise: 24900, weight: "1 Bowl", isVeg: false, preparationMinutes: 15, available: true, img: "https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=500" },
-      { id: "3", name: "Farmhouse Cheese Pizza", category: "Pizza", pricePaise: 24900, weight: "8 inch", isVeg: true, preparationMinutes: 15, available: true, img: "https://images.unsplash.com/photo-1604382355076-af4b0eb60143?w=500" },
-      { id: "4", name: "Margherita Classic Pizza", category: "Pizza", pricePaise: 14900, weight: "7 inch", isVeg: true, preparationMinutes: 12, available: true, img: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=500" },
-      { id: "5", name: "Paneer Tikka Pizza", category: "Pizza", pricePaise: 26900, weight: "8 inch", isVeg: true, preparationMinutes: 15, available: true, img: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=500" },
-      { id: "6", name: "Butter Paneer & Naan Combo", category: "North Indian", pricePaise: 22000, weight: "1 Combo", isVeg: true, preparationMinutes: 15, available: true, img: "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=500" },
-      { id: "7", name: "Chole Bhature Thali", category: "North Indian", pricePaise: 12000, weight: "2 Bhature", isVeg: true, preparationMinutes: 10, available: true, img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=500" },
-      { id: "8", name: "Butter Chicken Masala", category: "North Indian", pricePaise: 29000, weight: "1 Bowl", isVeg: false, preparationMinutes: 15, available: true, img: "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=500" },
-      { id: "9", name: "Rajma Chawal Bowl", category: "North Indian", pricePaise: 11000, weight: "1 Bowl", isVeg: true, preparationMinutes: 10, available: true, img: "https://images.unsplash.com/photo-1626074353765-517a681e40be?w=500" },
-      { id: "10", name: "Veg Aloo Tikki Burger", category: "Burgers & Momos", pricePaise: 4900, weight: "1 Pc", isVeg: true, preparationMinutes: 8, available: true, img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500" },
-      { id: "11", name: "Double Cheese Veg Burger", category: "Burgers & Momos", pricePaise: 9900, weight: "1 Pc", isVeg: true, preparationMinutes: 10, available: true, img: "https://images.unsplash.com/photo-1550547660-d9450f859349?w=500" },
-      { id: "12", name: "Veg Steamed Momos (8 Pcs)", category: "Burgers & Momos", pricePaise: 6000, weight: "8 Pcs", isVeg: true, preparationMinutes: 10, available: true, img: "https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=500" },
-      { id: "13", name: "Paneer Kurkure Momos", category: "Burgers & Momos", pricePaise: 11000, weight: "6 Pcs", isVeg: true, preparationMinutes: 12, available: true, img: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=500" },
-      { id: "14", name: "Cold Coffee Shake", category: "Groceries", pricePaise: 8000, weight: "350 ml", isVeg: true, preparationMinutes: 5, available: true, img: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=500" },
-      { id: "15", name: "Amul Taaza Milk 500ml", category: "Groceries", pricePaise: 2700, weight: "500 ml", isVeg: true, preparationMinutes: 5, available: true, img: "https://images.unsplash.com/photo-1550583724-b2692b85b150?w=500" },
-      { id: "16", name: "Brown Bread & Eggs Pack", category: "Groceries", pricePaise: 9500, weight: "1 Pack", isVeg: false, preparationMinutes: 5, available: true, img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=500" }
+      // 1. BURGERS & WRAPS
+      { id: "1", name: "Veg Aloo Tikki Burger", category: "Burgers & Wraps", pricePaise: 4900, weight: "1 Pc", isVeg: true, preparationMinutes: 10, available: true, img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500" },
+      { id: "2", name: "Veg Cheese Burger", category: "Burgers & Wraps", pricePaise: 7900, weight: "1 Pc", isVeg: true, preparationMinutes: 10, available: true, img: "https://images.unsplash.com/photo-1550547660-d9450f859349?w=500" },
+      { id: "3", name: "Paneer Crispy Burger", category: "Burgers & Wraps", pricePaise: 9900, weight: "1 Pc", isVeg: true, preparationMinutes: 12, available: true, img: "https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=500" },
+      { id: "4", name: "Double Patty Veg Supreme Burger", category: "Burgers & Wraps", pricePaise: 12900, weight: "1 Pc", isVeg: true, preparationMinutes: 12, available: true, img: "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=500" },
+      { id: "5", name: "Veg Roll / Kathi Roll", category: "Burgers & Wraps", pricePaise: 6000, weight: "1 Roll", isVeg: true, preparationMinutes: 10, available: true, img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=500" },
+      { id: "6", name: "Paneer Tikka Roll", category: "Burgers & Wraps", pricePaise: 11000, weight: "1 Roll", isVeg: true, preparationMinutes: 12, available: true, img: "https://images.unsplash.com/photo-1561651823-34feb02250e4?w=500" },
+      { id: "7", name: "Schezwan Veg Roll", category: "Burgers & Wraps", pricePaise: 8000, weight: "1 Roll", isVeg: true, preparationMinutes: 10, available: true, img: "https://images.unsplash.com/photo-1541544741938-0af808871cc0?w=500" },
+
+      // 2. PIZZA & GARLIC BREAD
+      { id: "8", name: "Margherita Pizza (Classic Cheese)", category: "Pizza & Garlic Bread", pricePaise: 14900, weight: "7 inch", isVeg: true, preparationMinutes: 15, available: true, img: "https://images.unsplash.com/photo-1604382355076-af4b0eb60143?w=500" },
+      { id: "9", name: "Farmhouse / Veggie Supreme Pizza", category: "Pizza & Garlic Bread", pricePaise: 21900, weight: "8 inch", isVeg: true, preparationMinutes: 15, available: true, img: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=500" },
+      { id: "10", name: "Paneer Special Pizza", category: "Pizza & Garlic Bread", pricePaise: 23900, weight: "8 inch", isVeg: true, preparationMinutes: 15, available: true, img: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=500" },
+      { id: "11", name: "Corn & Cheese Pizza", category: "Pizza & Garlic Bread", pricePaise: 17900, weight: "7 inch", isVeg: true, preparationMinutes: 15, available: true, img: "https://images.unsplash.com/photo-1573821663912-569905455b1c?w=500" },
+      { id: "12", name: "Stuffed Garlic Bread", category: "Pizza & Garlic Bread", pricePaise: 13900, weight: "1 Order", isVeg: true, preparationMinutes: 12, available: true, img: "https://images.unsplash.com/photo-1619535860434-ba1d8fa12536?w=500" },
+      { id: "13", name: "Cheese Garlic Bread Strips", category: "Pizza & Garlic Bread", pricePaise: 11900, weight: "4 Strips", isVeg: true, preparationMinutes: 12, available: true, img: "https://images.unsplash.com/photo-1573140247632-f8fd74997d5c?w=500" },
+
+      // 3. SANDWICHES & TOASTS
+      { id: "14", name: "Veg Grilled Sandwich", category: "Sandwiches & Toasts", pricePaise: 7000, weight: "2 Pcs", isVeg: true, preparationMinutes: 10, available: true, img: "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=500" },
+      { id: "15", name: "Cheese Corn Grilled Sandwich", category: "Sandwiches & Toasts", pricePaise: 9000, weight: "2 Pcs", isVeg: true, preparationMinutes: 10, available: true, img: "https://images.unsplash.com/photo-1553909489-cd47e0907980?w=500" },
+      { id: "16", name: "Paneer Tikka Sandwich", category: "Sandwiches & Toasts", pricePaise: 11000, weight: "2 Pcs", isVeg: true, preparationMinutes: 12, available: true, img: "https://images.unsplash.com/photo-1509722747041-616f39b57569?w=500" },
+      { id: "17", name: "Club Sandwich (3 Layer)", category: "Sandwiches & Toasts", pricePaise: 13000, weight: "4 Triangles", isVeg: true, preparationMinutes: 12, available: true, img: "https://images.unsplash.com/photo-1567234669003-dce7a7a88821?w=500" },
+      { id: "18", name: "Chili Cheese Toast", category: "Sandwiches & Toasts", pricePaise: 8500, weight: "4 Slices", isVeg: true, preparationMinutes: 8, available: true, img: "https://images.unsplash.com/photo-1525351484163-7529414344d8?w=500" },
+
+      // 4. MOMOS & DIM SUMS
+      { id: "19", name: "Veg Steamed Momos", category: "Momos & Dim Sums", pricePaise: 6000, weight: "8 Pcs", isVeg: true, preparationMinutes: 10, available: true, img: "https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=500" },
+      { id: "20", name: "Veg Fried Momos", category: "Momos & Dim Sums", pricePaise: 8000, weight: "8 Pcs", isVeg: true, preparationMinutes: 10, available: true, img: "https://images.unsplash.com/photo-1541696432-82c6da8ce7bf?w=500" },
+      { id: "21", name: "Paneer Steamed Momos", category: "Momos & Dim Sums", pricePaise: 9000, weight: "8 Pcs", isVeg: true, preparationMinutes: 10, available: true, img: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=500" },
+      { id: "22", name: "Paneer Kurkure Momos", category: "Momos & Dim Sums", pricePaise: 12000, weight: "6 Pcs", isVeg: true, preparationMinutes: 12, available: true, img: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=500" },
+      { id: "23", name: "Veg Kurkure Momos", category: "Momos & Dim Sums", pricePaise: 10000, weight: "6 Pcs", isVeg: true, preparationMinutes: 12, available: true, img: "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=500" },
+      { id: "24", name: "Gravy / Tandoori Momos", category: "Momos & Dim Sums", pricePaise: 13000, weight: "6 Pcs", isVeg: true, preparationMinutes: 12, available: true, img: "https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=500" },
+
+      // 5. FRIES & SIDE SNACKS
+      { id: "25", name: "Classic Salted French Fries", category: "Fries & Side Snacks", pricePaise: 7000, weight: "1 Portion", isVeg: true, preparationMinutes: 8, available: true, img: "https://images.unsplash.com/photo-1576107232684-1279f3908594?w=500" },
+      { id: "26", name: "Peri Peri French Fries", category: "Fries & Side Snacks", pricePaise: 8500, weight: "1 Portion", isVeg: true, preparationMinutes: 8, available: true, img: "https://images.unsplash.com/photo-1630384060421-cb20d0e0649d?w=500" },
+      { id: "27", name: "Cheesy Loaded Fries", category: "Fries & Side Snacks", pricePaise: 11000, weight: "1 Bowl", isVeg: true, preparationMinutes: 10, available: true, img: "https://images.unsplash.com/photo-1585109649139-366815a0d713?w=500" },
+      { id: "28", name: "Veg Nuggets", category: "Fries & Side Snacks", pricePaise: 9000, weight: "8 Pcs", isVeg: true, preparationMinutes: 8, available: true, img: "https://images.unsplash.com/photo-1562967914-608f82629710?w=500" },
+      { id: "29", name: "Cheese Balls / Cheese Corn Balls", category: "Fries & Side Snacks", pricePaise: 10000, weight: "6 Pcs", isVeg: true, preparationMinutes: 10, available: true, img: "https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?w=500" },
+      { id: "30", name: "Veg Spring Rolls", category: "Fries & Side Snacks", pricePaise: 9500, weight: "2 Rolls", isVeg: true, preparationMinutes: 10, available: true, img: "https://images.unsplash.com/photo-1541544741938-0af808871cc0?w=500" }
     ];
 
     let PRODUCTS = [];
 
-    // 1-CLICK FUNCTION TO UPLOAD ALL 16 PRODUCTS TO YOUR CLOUD FIRESTORE
+    // 1-CLICK UPLOAD ALL 30 PRODUCTS TO FIREBASE FIRESTORE
     async function seedAllProductsToFirestore() {
       const btn = document.getElementById('seedMenuBtn');
       if (btn) btn.innerText = "⏳";
@@ -463,7 +484,7 @@
         });
         await batch.commit();
         if (btn) btn.innerText = "✅";
-        alert("🎉 Saare 16 Food & Grocery items aapke Firestore Database mein add ho gaye hain!");
+        alert("🎉 Saare 30 Products (Burgers, Pizza, Sandwiches, Momos, Fries) aapke Firebase Database mein add ho gaye hain!");
       } catch (err) {
         if (btn) btn.innerText = "⚡";
         alert("Error adding items: " + err.message);
@@ -481,16 +502,15 @@
               dbItems.push({
                 id: doc.id,
                 name: d.name || "Campus Special",
-                cat: d.category || "North Indian",
+                cat: d.category || "Burgers & Wraps",
                 price: d.pricePaise ? Math.round(d.pricePaise / 100) : (d.price || 99),
                 weight: d.weight || "1 Serving",
                 isVeg: d.isVeg !== undefined ? d.isVeg : true,
-                time: (d.preparationMinutes || 15) + " MINS",
-                img: d.img || "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=500"
+                time: (d.preparationMinutes || 12) + " MINS",
+                img: d.img || "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500"
               });
             }
           });
-          // Sort by ID numerically
           dbItems.sort((a, b) => Number(a.id) - Number(b.id));
           PRODUCTS = dbItems;
           document.getElementById('dbStatusBadge').innerText = `● Live DB (${PRODUCTS.length} items)`;
@@ -499,7 +519,7 @@
       });
     }
 
-    // LIVE SYNC ORDERS & STATUS BUTTONS FROM FIRESTORE
+    // LIVE SYNC ORDERS & VENDOR STATUS BUTTONS
     function syncOrdersFromFirestore() {
       db.collection("orders").orderBy("createdAt", "desc").onSnapshot((snapshot) => {
         const listEl = document.getElementById('liveOrdersList');
@@ -564,7 +584,7 @@
           <div class="rest-card">
             <div class="rest-img-box">
               <img src="${p.img}" alt="${p.name}">
-              ${p.isVeg ? `<div class="veg-dot"><span></span></div>` : `<div class="nonveg-dot"><span></span></div>`}
+              <div class="veg-dot"><span></span></div>
               <span class="time-badge">⏱️ ${p.time}</span>
             </div>
             <div class="rest-info">
