@@ -84,7 +84,7 @@
     input:checked + .slider { background-color: var(--veg-green); }
     input:checked + .slider:before { transform: translateX(16px); }
 
-    /* HERO BANNER (CLEAN CAMPUS EXPRESS - NO DIWALI) */
+    /* HERO BANNER */
     .hero-banner {
       margin: 4px 16px 16px; background: linear-gradient(135deg, #E23744 0%, #B91C1C 100%);
       border-radius: 20px; padding: 20px; color: white; display: flex; justify-content: space-between; align-items: center;
@@ -94,7 +94,7 @@
     .hero-sub { font-size: 12px; font-weight: 600; opacity: 0.92; margin-top: 4px; }
     .order-now-pill { background: #000; color: #FFF; font-size: 11px; font-weight: 800; padding: 7px 14px; border-radius: 20px; margin-top: 10px; display: inline-block; cursor: pointer; }
 
-    /* FOOD CATEGORY CIRCLES HORIZONTAL SCROLL */
+    /* FOOD CATEGORY CIRCLES */
     .cat-scroll { display: flex; gap: 14px; overflow-x: auto; padding: 4px 16px 12px; scrollbar-width: none; }
     .cat-scroll::-webkit-scrollbar { display: none; }
     .cat-item { display: flex; flex-direction: column; align-items: center; min-width: 64px; cursor: pointer; }
@@ -145,7 +145,7 @@
       z-index: 210; box-shadow: 0 8px 24px rgba(37, 171, 75, 0.35); cursor: pointer;
     }
 
-    /* FLOATING BOTTOM DOCK (iOS STYLE) */
+    /* FLOATING BOTTOM DOCK */
     .bottom-dock-container {
       position: fixed; bottom: 14px; left: 0; right: 0;
       display: flex; justify-content: center; z-index: 200; pointer-events: none;
@@ -164,6 +164,21 @@
     
     .btn-main { width: 100%; background: var(--zomato-red); color: #FFF; border: none; padding: 14px; border-radius: 14px; font-size: 15px; font-weight: 900; cursor: pointer; margin-top: 12px; }
     .input-field { width: 100%; border: 1px solid #E2E8F0; border-radius: 12px; padding: 12px; font-weight: 700; font-size: 14px; outline: none; margin-bottom: 10px; }
+
+    /* PAYMENT GRID */
+    .pay-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin: 8px 0 12px; }
+    .pay-btn { padding: 10px; border: 1.5px solid #E2E8F0; border-radius: 12px; font-size: 12px; font-weight: 800; text-align: center; cursor: pointer; background: #FFF; }
+    .pay-btn.active { border-color: var(--veg-green); background: #F0FDF4; color: var(--veg-green); }
+
+    /* ORDER STATUS BADGES & VENDOR BUTTONS */
+    .status-badge { font-size: 10px; font-weight: 900; padding: 3px 8px; border-radius: 6px; text-transform: uppercase; }
+    .status-Pending { background: #FEF3C7; color: #B45309; }
+    .status-Accepted { background: #DBEAFE; color: #1D4ED8; }
+    .status-Out { background: #FCE7F3; color: #BE185D; }
+    .status-Delivered { background: #DCFCE7; color: #15803D; }
+
+    .vendor-actions { display: flex; gap: 6px; margin-top: 8px; padding-top: 8px; border-top: 1px dashed #E2E8F0; }
+    .v-btn { flex: 1; padding: 6px; border: none; border-radius: 8px; font-size: 11px; font-weight: 800; cursor: pointer; }
   </style>
 </head>
 <body>
@@ -175,7 +190,7 @@
       <div class="location-subtitle" id="locSubtitle">Government school , Chaheru, Phagwara...</div>
     </div>
     <div class="top-actions">
-      <div class="icon-circle" onclick="openModal('ordersModal')" title="Live Orders">📦</div>
+      <div class="icon-circle" onclick="openModal('ordersModal')" title="Live Orders & Vendor">📦</div>
       <div class="profile-avatar" id="profileAvatarBtn" onclick="openModal('authModal')">H</div>
     </div>
   </div>
@@ -196,7 +211,7 @@
     </div>
   </div>
 
-  <!-- HERO SLIDER BANNER -->
+  <!-- HERO BANNER -->
   <div class="hero-banner">
     <div>
       <div class="hero-title">LPU Campus Express 🚀</div>
@@ -290,7 +305,7 @@
     </div>
   </div>
 
-  <!-- AUTH MODAL (GOOGLE SIGN-IN + PHONE OTP) -->
+  <!-- AUTH MODAL -->
   <div class="sheet-overlay" id="authModal">
     <div class="sheet-card">
       <div id="recaptcha-container"></div>
@@ -339,28 +354,40 @@
     </div>
   </div>
 
-  <!-- CHECKOUT MODAL -->
+  <!-- CHECKOUT MODAL (WITH PAYMENT SELECTION) -->
   <div class="sheet-overlay" id="checkoutModal">
     <div class="sheet-card">
       <h3 style="font-size:18px; font-weight:900; margin-bottom:12px;">Checkout - LPUKART</h3>
       <div id="checkoutItemsList" style="margin-bottom:12px; font-size:13px;"></div>
-      <input type="text" id="orderLandmark" placeholder="Room No / Hostel / Gate Detail (e.g. BH-1 Room 302)" class="input-field">
+      
+      <input type="text" id="orderLandmark" placeholder="Room No / Hostel / Gate Detail (e.g. BH-1 Room 603)" class="input-field">
+      
+      <div style="font-size:11px; font-weight:800; color:#64748B; text-transform:uppercase; margin-top:4px;">Select Payment Mode</div>
+      <div class="pay-grid">
+        <div class="pay-btn active" id="pay-COD" onclick="selectPay('COD')">💵 Cash on Delivery</div>
+        <div class="pay-btn" id="pay-GPay" onclick="selectPay('GPay')">📱 Google Pay</div>
+        <div class="pay-btn" id="pay-PhonePe" onclick="selectPay('PhonePe')">🟣 PhonePe</div>
+        <div class="pay-btn" id="pay-Paytm" onclick="selectPay('Paytm')">🔷 Paytm UPI</div>
+      </div>
+
       <button class="btn-main" style="background:var(--veg-green);" onclick="processOrder()">PLACE ORDER NOW 🚀</button>
       <button class="btn-main" style="background:#F1F5F9; color:#334155;" onclick="closeModal('checkoutModal')">Back</button>
     </div>
   </div>
 
-  <!-- LIVE DATABASE ORDERS MODAL -->
+  <!-- LIVE DATABASE ORDERS & VENDOR STATUS MODAL -->
   <div class="sheet-overlay" id="ordersModal">
     <div class="sheet-card">
-      <h3 style="font-size:18px; font-weight:900; margin-bottom:12px;">📦 Live Firestore Orders</h3>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+        <h3 style="font-size:18px; font-weight:900;">📦 Live Orders & Vendor Panel</h3>
+        <span style="font-size:10px; font-weight:800; color:var(--veg-green);">● REAL-TIME SYNC</span>
+      </div>
       <div id="liveOrdersList" style="font-size:13px; color:#64748B;">Loading live orders from database...</div>
       <button class="btn-main" style="background:#F1F5F9; color:#334155;" onclick="closeModal('ordersModal')">Close</button>
     </div>
   </div>
 
   <script>
-    // FIREBASE CONFIGURATION (LPUKART-5D2A6)
     const firebaseConfig = {
       apiKey: "AIzaSyCdep7omykWzg8HdKnE0vnqwP0Dq8Nl-Sc",
       authDomain: "lpukart-5d2a6.firebaseapp.com",
@@ -376,6 +403,7 @@
 
     let confirmationResult = null;
     let selectedCat = "All";
+    let selectedPayMode = "COD";
     let onlyUnder150 = false;
     let cart = {};
     let user = JSON.parse(localStorage.getItem('lpukart_user')) || {
@@ -385,7 +413,7 @@
       location: "Government school , Chaheru, Phagwara..."
     };
 
-    // Fallback items (will automatically merge/sync with Firestore 'products' collection)
+    // Fallback menu (merges automatically with your Firestore 'products')
     let PRODUCTS = [
       { id: "1", name: "Veg Biryani", cat: "Biryani", price: 189, weight: "1 Serving", isVeg: true, time: "15 MINS", img: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=500" },
       { id: "2", name: "Butter Paneer & Naan Combo", cat: "North Indian", price: 220, weight: "1 Combo", isVeg: true, time: "15 MINS", img: "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=500" },
@@ -418,39 +446,50 @@
             PRODUCTS = dbItems;
             document.getElementById('dbStatusBadge').innerText = `● Live DB (${PRODUCTS.length} items)`;
           }
-        } else {
-          document.getElementById('dbStatusBadge').innerText = "● Live DB Ready";
         }
-        renderProducts();
-      }, (err) => {
-        console.error("Firestore Products Error:", err);
-        document.getElementById('dbStatusBadge').innerText = "● Local Menu";
         renderProducts();
       });
     }
 
-    // 2. LIVE SYNC ORDERS FROM FIRESTORE
+    // 2. LIVE SYNC ORDERS & STATUS BUTTONS FROM FIRESTORE
     function syncOrdersFromFirestore() {
       db.collection("orders").orderBy("createdAt", "desc").onSnapshot((snapshot) => {
         const listEl = document.getElementById('liveOrdersList');
         if (snapshot.empty) {
-          listEl.innerHTML = "Abhi database mein koi order nahi hai. Ek order place karke test karein!";
+          listEl.innerHTML = "Abhi database mein koi order nahi hai.";
           return;
         }
         listEl.innerHTML = snapshot.docs.map(doc => {
           const o = doc.data();
+          const statusClass = "status-" + (o.status || "Pending").split(' ')[0];
           return `
             <div style="background:#F8FAFC; border:1px solid #E2E8F0; padding:12px; border-radius:14px; margin-bottom:10px;">
-              <div style="display:flex; justify-content:space-between; font-weight:900; color:#0F172A;">
+              <div style="display:flex; justify-content:space-between; align-items:center; font-weight:900; color:#0F172A;">
                 <span>${o.orderId} • ${o.customerName}</span>
-                <span style="color:#25AB4B;">₹${o.total}</span>
+                <span class="status-badge ${statusClass}">${o.status || 'Pending'}</span>
               </div>
-              <div style="font-size:12px; margin:5px 0; color:#334155;">${o.items}</div>
+              <div style="font-size:12px; margin:6px 0; color:#334155;">${o.items} • <strong>₹${o.total}</strong> (${o.payment || 'COD'})</div>
               <div style="font-size:11px; font-weight:700; color:#E23744;">📍 ${o.location}</div>
+              
+              <!-- VENDOR LIVE STATUS UPDATE BUTTONS -->
+              <div class="vendor-actions">
+                <button class="v-btn" style="background:#DBEAFE; color:#1D4ED8;" onclick="updateOrderStatus('${doc.id}', 'Accepted')">✅ Accept</button>
+                <button class="v-btn" style="background:#FCE7F3; color:#BE185D;" onclick="updateOrderStatus('${doc.id}', 'Out for Delivery')">🛵 On Way</button>
+                <button class="v-btn" style="background:#DCFCE7; color:#15803D;" onclick="updateOrderStatus('${doc.id}', 'Delivered')">🎉 Delivered</button>
+              </div>
             </div>
           `;
         }).join('');
       });
+    }
+
+    // UPDATE ORDER STATUS IN FIRESTORE
+    async function updateOrderStatus(docId, newStatus) {
+      try {
+        await db.collection("orders").doc(docId).update({ status: newStatus });
+      } catch (err) {
+        alert("Status Update Error: " + err.message);
+      }
     }
 
     window.onload = () => {
@@ -524,6 +563,12 @@
       }
     }
 
+    function selectPay(mode) {
+      selectedPayMode = mode;
+      document.querySelectorAll('.pay-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('pay-' + mode).classList.add('active');
+    }
+
     function openCheckout() {
       const items = Object.values(cart);
       let total = 0;
@@ -536,7 +581,6 @@
       openModal('checkoutModal');
     }
 
-    // SAVE ORDER DIRECTLY TO FIRESTORE DATABASE
     async function processOrder() {
       const landmark = document.getElementById('orderLandmark').value;
       if (!landmark) return alert("Kripya Room No / Hostel / Gate detail dalein!");
@@ -553,6 +597,7 @@
         location: `${user.location} - ${landmark}`,
         items: itemSummary,
         total: total,
+        payment: selectedPayMode,
         status: "Pending",
         createdAt: new Date().toISOString()
       };
@@ -562,7 +607,7 @@
         cart = {};
         renderProducts();
         closeModal('checkoutModal');
-        alert(`✅ Order Saved in Firestore DB!\nOrder ID: ${orderObj.orderId}`);
+        alert(`✅ Order Saved!\nOrder ID: ${orderObj.orderId}\nPayment: ${selectedPayMode}`);
         openModal('ordersModal');
       } catch (e) {
         alert("Firestore Error: " + e.message);
@@ -609,9 +654,6 @@
         localStorage.setItem('lpukart_user', JSON.stringify(user));
         closeModal('authModal');
         updateUserUI();
-        alert("🎉 Welcome to LPUKART, " + user.name + "!");
-      }).catch((err) => {
-        alert("Google Sign-In Error: " + err.message);
       });
     }
 
@@ -623,8 +665,6 @@
         confirmationResult = res;
         document.getElementById('phoneStep').style.display = 'none';
         document.getElementById('otpStep').style.display = 'block';
-      }).catch((err) => {
-        alert("OTP Error: " + err.message);
       });
     }
 
@@ -636,9 +676,6 @@
         localStorage.setItem('lpukart_user', JSON.stringify(user));
         closeModal('authModal');
         updateUserUI();
-        alert("🎉 Logged in successfully!");
-      }).catch(() => {
-        alert("Galat OTP! Kripya sahi code dalein.");
       });
     }
   </script>
